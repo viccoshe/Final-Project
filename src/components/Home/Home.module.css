@@ -1,0 +1,173 @@
+.main {
+  width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.main .promo {
+  position: relative;
+  background: #B3A3A1;
+  width: 1440px;
+  height: 800px;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  display: flex;
+}
+.main .promo .main_photos {
+  width: 863px;
+}
+.main .promo .main_photos .promo1 {
+  width: 322.6px;
+  height: 324.03px;
+  left: 68.4px;
+  top: 103px;
+  position: relative;
+}
+.main .promo .main_photos .promo2 {
+  position: absolute;
+  width: 436.58px;
+  height: 436.58px;
+  left: 109px;
+  top: 214.6px;
+  z-index: 5;
+}
+.main .promo .content {
+  margin-top: 200px;
+  width: 456px;
+  height: 200px;
+  text-align: left;
+  color: #FCFFF5;
+}
+.main .promo .content h3 {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  margin-bottom: 24px;
+}
+.main .promo .content p {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.15px;
+  margin-bottom: 56px;
+}
+.main .promo .content .button {
+  border: 0;
+  padding: 16px 56px;
+  width: 201px;
+  height: 52px;
+  color: #494A4A;
+  background: #FFE0DB;
+  border-radius: 32px;
+}
+.main .bestsellers {
+  width: 1440px;
+  height: 900px;
+  background: #FFFFFF;
+  border: 2px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main .bestsellers .bestsellers_article {
+  position: relative;
+  border: 2px solid blue;
+  width: 360px;
+  height: 496px;
+  text-align: left;
+  margin-right: 34px;
+}
+.main .bestsellers .bestsellers_article h4 {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: #B3A3A1;
+  margin: 0;
+}
+.main .bestsellers .bestsellers_article p {
+  color: #494A4A;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+}
+.main .bestsellers .bestsellers_article .slider {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 8px;
+  width: 264px;
+  height: 256px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 12px 2px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+}
+.main .bestsellers .bestsellers_article .slider h5 {
+  text-align: center;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #494A4A;
+}
+.main .bestsellers .bestsellers_article .slider .slider_content {
+  position: relative;
+  padding: 32px;
+  border: 1px solid green;
+  display: flex;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  color: #494A4A;
+}
+.main .bestsellers .bestsellers_article .slider .slider_content img {
+  width: 100%;
+}
+.main .bestsellers .bestsellers_article .slider .slider_content a {
+  text-decoration: none;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  color: #B3A3A1;
+}
+.main .bestsellers .bestsellers_article .arrow {
+  position: absolute;
+  height: 23.9999828339px;
+  width: 12.9616737366px;
+  right: 2.2%;
+  top: 69%;
+}
+.main .bestsellers .bestsellers_article .arrow img {
+  width: 100%;
+}
+.main .bestsellers .bestsellers_article .bestsellersPhoto {
+  width: 744px;
+  height: 515.75px;
+  left: 540px;
+  top: 192px;
+}
+.main .articles {
+  width: 1440px;
+  height: 900px;
+  position: relative;
+}
+.main .articles .articleBlock {
+  position: absolute;
+  width: 708px;
+  height: 280px;
+  left: 732px;
+  top: 310px;
+  background: #B3A3A1;
+  opacity: 0.95;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  border-radius: 24px 0px 0px 24px;
+}/*# sourceMappingURL=Home.module.css.map */

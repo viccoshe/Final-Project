@@ -1,0 +1,161 @@
+.main {
+  max-width: 1440px;
+  width: 100%;
+  background: #FFFFFF;
+  border: 2px solid green;
+  margin: 0 auto 0;
+}
+.main .container {
+  max-width: 1200px;
+  border: 8px solid purple;
+  width: 100%;
+  margin: 0 auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: nowrap column;
+}
+.main .container h3 {
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+  color: #B3A3A1;
+}
+.main .container .cat {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 64px;
+}
+.main .container .cat .catBlock {
+  padding: 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: rgba(179, 163, 161, 0.75);
+}
+.main .container .cat .catBlock li:not(:last-child) {
+  margin-right: 24px;
+}
+.main .container .cat .catBlock .active {
+  font-weight: 600;
+  color: rgb(134, 109, 105);
+}
+.main .container .productsContainer {
+  max-width: 1128px;
+  width: 100%;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  height: 100%;
+  border: 1px solid goldenrod;
+}
+.main .container .productsContainer .productItem {
+  max-width: 1130px;
+  max-height: 264px;
+  height: 100%;
+  border: 3px solid green;
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+}
+.main .container .productsContainer .productItem .img {
+  position: relative;
+  border: 1px solid grey;
+  max-width: 200px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-height: 264px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0 24px;
+}
+.main .container .productsContainer .productItem .img .productCat {
+  position: absolute;
+  background: #B3A3A1;
+  z-index: 5;
+  border-radius: 0px 0px 0px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  min-width: 105px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  left: 96px;
+  top: 0px;
+}
+.main .container .productsContainer .productItem .img img {
+  width: 100%;
+  height: 100%;
+}
+.main .container .productsContainer .productItem .productInfo {
+  border: 3px solid maroon;
+  max-width: 264px;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  text-align: initial;
+}
+.main .container .productsContainer .productItem .productInfo h5 {
+  display: block;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.1px;
+  color: #494A4A;
+  margin: 0;
+}
+.main .container .productsContainer .productItem .productInfo .productDesc {
+  font-size: 8px;
+}
+.main .container .productsContainer .productItem .productInfo .productPrice {
+  display: block;
+  font-weight: 600;
+  color: inherit;
+}
+.main .container .productsContainer .productItem .productInfo .buttons {
+  background-color: #B3A3A1;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 5px;
+}
+.main .container .productsContainer .productItem .productInfo .buttons .fav {
+  margin-right: 60px;
+}
+.main .container .productsContainer .productItem .productInfo .buttons .remove {
+  margin-left: 60px;
+}
+.main .container .productsContainer .productItem .productInfo .buttons .minus, .main .container .productsContainer .productItem .productInfo .buttons .plus {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=Catalogue.module.css.map */
