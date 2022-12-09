@@ -1,14 +1,22 @@
 .main {
   max-width: 1440px;
-  width: 100%;
+  width: 100vw;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  min-height: 100vh;
   background: #FFFFFF;
-  border: 2px solid green;
+  border: 2px solid rgba(0, 128, 0, 0.278);
   margin: 0 auto 0;
 }
 .main .container {
   max-width: 1200px;
-  border: 8px solid purple;
+  border: 8px solid rgba(128, 0, 128, 0.311);
   width: 100%;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  min-height: 100vh;
   margin: 0 auto 0;
   display: flex;
   justify-content: center;
@@ -22,22 +30,11 @@
   color: #B3A3A1;
 }
 .main .container .cat {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  max-width: 261px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  flex-flow: row wrap;
   padding-bottom: 64px;
-}
-.main .container .cat .catBlock {
-  padding: 0;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  list-style: none;
-  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 14px;
@@ -46,12 +43,18 @@
   letter-spacing: 0.1px;
   color: rgba(179, 163, 161, 0.75);
 }
-.main .container .cat .catBlock li:not(:last-child) {
-  margin-right: 24px;
+.main .container .cat .productCategory {
+  cursor: pointer;
 }
-.main .container .cat .catBlock .active {
+.main .container .cat .productCategory:active {
   font-weight: 600;
-  color: rgb(134, 109, 105);
+  color: rgb(102, 82, 79);
+}
+.main .container .cat .productCategory:hover {
+  color: rgb(67, 54, 52);
+}
+.main .container .cat .productCategory:not(:last-child) {
+  margin: 0 13px 0;
 }
 .main .container .productsContainer {
   max-width: 1128px;
@@ -60,13 +63,12 @@
   max-height: -moz-fit-content;
   max-height: fit-content;
   height: 100%;
-  border: 1px solid goldenrod;
 }
 .main .container .productsContainer .productItem {
   max-width: 1130px;
   max-height: 264px;
   height: 100%;
-  border: 3px solid green;
+  border: 3px solid rgba(0, 128, 0, 0.314);
   margin-bottom: 48px;
   display: flex;
   flex-direction: row;
@@ -109,7 +111,7 @@
   height: 100%;
 }
 .main .container .productsContainer .productItem .productInfo {
-  border: 3px solid maroon;
+  border: 3px solid rgba(128, 0, 0, 0.489);
   max-width: 264px;
   width: 100%;
   height: -webkit-fit-content;

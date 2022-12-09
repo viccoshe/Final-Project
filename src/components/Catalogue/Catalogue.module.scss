@@ -1,17 +1,21 @@
 .main {
     max-width: 1440px;
     //max-height: 1797px;
-    width: 100%;
+    width: 100vw;
     //height: 100%;
+    max-height: fit-content;
+    min-height: 100vh;
+    //height: 100vh;
     background: #FFFFFF;
-    border: 2px solid green;
+    border: 2px solid rgba(0, 128, 0, 0.278);
     margin: 0 auto 0;
     
     .container {
     max-width: 1200px;
-    border: 8px solid purple;
+    border: 8px solid rgba(128, 0, 128, 0.311);
     width: 100%;
-    //height: 100%;
+    max-height: fit-content;
+    min-height: 100vh;
     margin: 0 auto 0;
     display: flex;
     justify-content: center;
@@ -24,44 +28,45 @@
             color: #B3A3A1;
         }
         .cat{
-            width: fit-content;
+            max-width: 261px;
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
+            flex-flow: row wrap;
             padding-bottom: 64px;
-            .catBlock {
-                padding: 0;
-                width: fit-content;
-                list-style: none;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 14px;
-                line-height: 20px;
-                text-align: center;
-                letter-spacing: 0.1px;
-                color: rgba(179, 163, 161, 0.75);
-                    li:not(:last-child){
-                        margin-right: 24px;
-                    }
-                    .active{
-                        font-weight: 600;
-                        color: rgb(134, 109, 105);
-                    } 
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+            letter-spacing: 0.1px;
+            color: rgba(179, 163, 161, 0.75);
+            .productCategory{
+                cursor: pointer;
+            }
+            .productCategory:active{
+                font-weight: 600;
+                color: rgb(102, 82, 79);
+            }
+            .productCategory:hover{
+                color: rgb(67, 54, 52);
             } 
+                
+            .productCategory:not(:last-child){
+                margin: 0 13px 0;
+            }      
+            
         }
         .productsContainer{
             max-width: 1128px;
             width: 100%;
             max-height: fit-content;
             height: 100%;
-            border: 1px solid goldenrod;
+            //border: 1px solid goldenrod;
             .productItem{
                 max-width: 1130px;
                 max-height: 264px;
                 height: 100%;
-                border: 3px solid green;
+                border: 3px solid rgba(0, 128, 0, 0.314);
                 margin-bottom: 48px;
                 display: flex;
                 flex-direction: row;
@@ -96,7 +101,7 @@
                     }
                 }
                 .productInfo{
-                    border: 3px solid maroon;
+                    border: 3px solid rgba(128, 0, 0, 0.489);
                     max-width: 264px;
                     width: 100%;
                     height: fit-content;
