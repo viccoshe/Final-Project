@@ -11,7 +11,7 @@ import { Routes, Route, Link, Outlet, useNavigate} from "react-router-dom";
 import Loader from "../../utiles/Loader/Loader";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import {User, UserCredential} from "firebase/auth";
-import { IProduct, IUser } from "../../utiles/UserContext";
+import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
 import { routes } from "../../utiles/routes";
 import Product from "./Product/Product";
@@ -22,7 +22,7 @@ const Catalogue: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
-    const {user, setUser} = useContext<any | IUser | UserCredential>(UserContext);
+    const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
     const navigate = useNavigate();
 
     const getCategory = (cat: string) =>{
@@ -35,9 +35,6 @@ const Catalogue: React.FC = () => {
         setSelectedCategory(filteredResult);
     }
 
-    const goToProduct = (id: string) => {
-        navigate(`product/${id}`);
-    }
 
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')
@@ -129,9 +126,6 @@ const Catalogue: React.FC = () => {
                                 <Link to={`product/:${id}`}>
                                     <div className={style.img}><img src={image} alt="product"/></div>
                                 </Link>
-                                {/* <Routes>
-                                  <Route path={`product/#\`} element={<Product/>}/>  
-                                </Routes>  */}
                                 
                                 
                             </div>

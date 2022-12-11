@@ -7,15 +7,15 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import style from "./Profile.module.css";
 //@ts-ignore
 import Exit from "../../img/exit.svg";
-import { IUser } from "../../utiles/UserContext";
+import { IUser } from "../../utiles/CatalogueContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../../utiles";
+import { UserCredential, User } from "firebase/auth";
 
 
 const Profile: React.FC = () => {
-    //let user: any = null;
     const [form, setForm] = useState<boolean>(false);
-    const {user, setUser} = useContext<any>(UserContext);
+    const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');

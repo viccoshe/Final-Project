@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import './App.css';
 import Catalogue from './components/Catalogue/Catalogue';
 import Footer from './components/Footer/Footer';
@@ -11,15 +11,27 @@ import { routes } from './utiles/routes';
 import { CatalogueContext } from './utiles/CatalogueContext';
 import { IProduct, UserContext } from './utiles/UserContext';
 import { UserContextType } from './utiles/UserContext';
-import { IUser } from './utiles/UserContext';
+// import { IUser } from './utiles/UserContext';
 import Product from './components/Catalogue/Product/Product';
+import { UserCredential } from 'firebase/auth';
+import {User} from "firebase/auth";
 
 //export const CatalogueContext: any = createContext(null);
 
 function App() {
   
-const [catalogue, setCatalogue] = useState<any>([]);
-const [user, setUser] = useState<IUser | null>(null);
+const [catalogue, setCatalogue] = useState<IProduct | {}>([]);
+const [user, setUser] = useState<null | UserCredential | User>(null);
+
+// const useEffect = (() => {
+//   if(user === null){
+//     try {
+//       setUser(user: User);
+//     } catch (error) {
+      
+//     }
+//   }
+// }, [])
 
 
   return (
