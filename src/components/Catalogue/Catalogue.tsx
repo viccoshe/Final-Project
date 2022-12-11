@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { useContext } from "react";
 //@ts-ignore
 import style from "./Catalogue.module.css";
 import  { useEffect, useState } from "react";
@@ -6,16 +6,24 @@ import  { useEffect, useState } from "react";
 import Bin from "../../img/musor.svg";
 //@ts-ignore
 import Like from "../../img/heart.svg";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link, Outlet, useNavigate} from "react-router-dom";
 //@ts-ignore
 import Loader from "../../utiles/Loader/Loader";
+import { CatalogueContext } from "../../utiles/CatalogueContext";
+import {User, UserCredential} from "firebase/auth";
+import { IProduct, IUser } from "../../utiles/UserContext";
+import { UserContext } from "../../utiles/UserContext";
+import { routes } from "../../utiles/routes";
+import Product from "./Product/Product";
 
 
 const Catalogue: React.FC = () => {
-    //const products: Array<any> = [];
+    const id: string = '';
     const [loading, setLoading] = useState<boolean>(true);
-    const [catalogue, setCatalogue] = useState<any>([]);
+    const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const {user, setUser} = useContext<any | IUser | UserCredential>(UserContext);
+    const navigate = useNavigate();
 
     const getCategory = (cat: string) =>{
         const filteredResult: Array<{}> = catalogue.filter((item: { category: string}, i: string) => {
@@ -25,6 +33,10 @@ const Catalogue: React.FC = () => {
         })
         console.log(filteredResult);
         setSelectedCategory(filteredResult);
+    }
+
+    const goToProduct = (id: string) => {
+        navigate(`product/${id}`);
     }
 
     useEffect(() => {
@@ -39,6 +51,16 @@ const Catalogue: React.FC = () => {
                 setLoading(false);
             })
     }, [])
+
+    const getToCart = (id: string): Array<IProduct> | null => {
+        let currentCartProduct = catalogue.find((item: IProduct) => {
+            if(item.id === id){
+                return item;
+            };
+        });
+        user.cart.push(currentCartProduct);
+        return user.cart;
+    }
 
 
     if (loading) {
@@ -69,51 +91,65 @@ const Catalogue: React.FC = () => {
 
                     {selectedCategory.length > 0 
                     
-                    ? selectedCategory.map((item: any, i: any) => {
+                    ? selectedCategory.map((item: IProduct, i: string) => {
                             console.log(item);
                             const {id, title, price, description: desc, category: cat, image} = item;
                             return <div key={id} className={style.productItem}> 
                                 <div className={style.img}>
                                     <div className={style.productCat}>{cat}</div>
-                                    <div className={style.img}><img src={image} alt="product"/></div>
+                                    <Link to={`product/:${id}`}>
+                                        <div className={style.img}><img src={image} alt="product"/></div>
+                                    </Link>
+                                    
                                 </div>
                                 <div className={style.productInfo}>
-                                    <h5>{title}</h5>
+                                    <Link to={`product/:${id}`}><h5>{title}</h5></Link>
                                     <p className={style.productDesc}>{desc}</p>
                                     <p className={style.productPrice}>{price} $</p> 
                                     <div className={style.buttons}>
-                                    <div className={style.fav}><img src={Like} alt="like" /></div>
-                                    <div className={style.minus}>-</div>
-                                    <div className={style.counter}>0</div>
-                                    <div className={style.plus} >+</div>
-                                    <div className={style.remove} ><img src={Bin} alt="remove" /></div>
+                                        <div className={style.fav}><img src={Like} alt="like" /></div>
+                                        <div className={style.minus}>-</div>
+                                        <div className={style.counter}>0</div>
+                                        <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
+                                        <div className={style.remove} ><img src={Bin} alt="remove" /></div>
                                 </div>
                             </div> 
+                            
                         </div>
                         })
                     :  selectedCategory.length <= 0 && catalogue.length > 0
                     
-                    ? catalogue.map((item: any, i: any) => {
+                    ? catalogue.map((item: {id: string, title: string, price: string, description: string, category: string, image: string}, i: string) => {
                         console.log(item);
                         const {id, title, price, description: desc, category: cat, image} = item;
                         return <div key={id} className={style.productItem}> 
                             <div className={style.img}>
                                 <div className={style.productCat}>{cat}</div>
-                                <div className={style.img}><img src={image} alt="product"/></div>
+                                
+                                <Link to={`product/:${id}`}>
+                                    <div className={style.img}><img src={image} alt="product"/></div>
+                                </Link>
+                                {/* <Routes>
+                                  <Route path={`product/#\`} element={<Product/>}/>  
+                                </Routes>  */}
+                                
+                                
                             </div>
                             <div className={style.productInfo}>
-                                <h5>{title}</h5>
+                                <Link to={`product/:${id}`}><h5>{title}</h5></Link>
                                 <p className={style.productDesc}>{desc}</p>
                                 <p className={style.productPrice}>{price} $</p> 
                                 <div className={style.buttons}>
                                 <div className={style.fav}><img src={Like} alt="like" /></div>
                                 <div className={style.minus}>-</div>
                                 <div className={style.counter}>0</div>
-                                <div className={style.plus} >+</div>
+                                <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
                                 <div className={style.remove} ><img src={Bin} alt="remove" /></div>
                             </div>
-                        </div> 
+                        </div>
+                     <Outlet/>
                     </div>
+                    
                     })
                     : <h3>THERE'S AN ERROR :C</h3>
                     }

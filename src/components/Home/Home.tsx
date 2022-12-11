@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 //@ts-ignore
 import Promo1 from "../../img/promo1.png";
 //@ts-ignore
@@ -13,6 +14,7 @@ import bestsellersPhoto from "../../img/bestsellers_main-photo.png";
 import articlesPhoto from "../../img/articles_main-photo.png";
 //@ts-ignore
 import Arrow from "../../img/arrow.svg.svg";
+import { routes } from "../../utiles/routes";
 
 
 const Home: React.FC = () => {
@@ -27,7 +29,9 @@ const Home: React.FC = () => {
                 <div className={style.content}>
                     <h3>Everything that surrounds us makes us stronger</h3>
                     <p>Exclusive designer furniture and fittings. Natural materials and individual approach when created, they will give an incomparably high level of quality and comfort</p>
-                <button className={style.button}>Go to catalog</button>
+                    <Link to={routes.catalogue}>
+                        <button className={style.button}>Go to catalogue</button>
+                    </Link>
                 </div>
             </div>
 

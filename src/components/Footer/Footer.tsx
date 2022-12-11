@@ -3,8 +3,6 @@ import style from "./Footer.module.css";
 //@ts-ignore
 import Arrow from "../../img/arrow2.svg";
 
-
-
 const Footer: React.FC = () => {
     return (
         <footer className={style.footer}>

@@ -21,11 +21,22 @@
   justify-content: end;
   width: 260px;
 }
+.header .nav ul a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.5s ease-out;
+}
+.header .nav ul a:hover {
+  color: #786b69;
+}
+.header .nav ul a:active {
+  color: #463c3b;
+}
+.header .nav ul a:not(:last-child) {
+  margin-right: 40px;
+}
 .header .nav ul li {
   list-style: none;
-}
-.header .nav ul li:not(:last-child) {
-  margin-right: 40px;
 }
 .header .header_buttons {
   display: flex;
@@ -36,6 +47,9 @@
 .header .header_buttons .icon {
   width: 24px;
   height: 24px;
+}
+.header .header_buttons .icon:hover {
+  cursor: pointer;
 }
 .header .header_buttons .icon:not(:last-child) {
   margin-right: 24px;

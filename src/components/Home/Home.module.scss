@@ -50,6 +50,8 @@
                 line-height: 40px;
                 margin-bottom: 24px;
             }
+            
+            
             p{
                 font-weight: 300;
                 font-size: 16px;
@@ -59,15 +61,34 @@
                 letter-spacing: 0.15px;
                 margin-bottom: 56px;
             }
-            .button {
+
+            a{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                
+                .button {
                 border: 0;
-                padding: 16px 56px;
+                //padding: 16px 56px;
                 width: 201px;
                 height: 52px;
                 color: #494A4A;
-                background: #FFE0DB;
                 border-radius: 32px;
+                width: 150px;
+                background: #FFE0DB;
+                -webkit-transition: background-color 0.5s ease-out;
+                -moz-transition: background-color 0.5s ease-out;
+                -o-transition: background-color 0.5s ease-out;
+                transition: background-color 0.5s ease-out;
+                &:hover{
+                    color: #FFE0DB;
+                    background: #494a4a57;
+                    cursor: pointer;
+                }
             }
+            }
+            
         }
     }
 

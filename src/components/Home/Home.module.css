@@ -55,14 +55,26 @@
   letter-spacing: 0.15px;
   margin-bottom: 56px;
 }
-.main .promo .content .button {
+.main .promo .content a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+.main .promo .content a .button {
   border: 0;
-  padding: 16px 56px;
   width: 201px;
   height: 52px;
   color: #494A4A;
-  background: #FFE0DB;
   border-radius: 32px;
+  width: 150px;
+  background: #FFE0DB;
+  transition: background-color 0.5s ease-out;
+}
+.main .promo .content a .button:hover {
+  color: #FFE0DB;
+  background: rgba(73, 74, 74, 0.3411764706);
+  cursor: pointer;
 }
 .main .bestsellers {
   width: 1440px;

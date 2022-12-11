@@ -10,7 +10,7 @@
     display: flex;
     justify-content: end;
     align-items: center;
-    
+
     .nav {
         display: block;
         letter-spacing: 0.1px;
@@ -22,16 +22,30 @@
             display: flex;
             justify-content: end;
             width: 260px; //
+            a{
+            text-decoration: none;
+            color: inherit;
+            -webkit-transition: color 0.5s ease-out;
+            -moz-transition: color 0.5s ease-out;
+            -o-transition: color 0.5s ease-out;
+            transition: color 0.5s ease-out;
+            
+            &:hover{
+                color: #786b69;
+            }
+            &:active{
+                color: #463c3b;
+            }
+            &:not(:last-child) {
+                margin-right: 40px;
+            }
+            }
             li{
                 list-style: none;
-                &:not(:last-child) {
-                    margin-right: 40px;
-                }
             } 
         }
     }
     .header_buttons{
-        //padding-top: 50px;
         display: flex;
         width: 125px;
         max-height: 100%;
@@ -39,12 +53,12 @@
         .icon{
             width: 24px;
             height: 24px;
+            &:hover{
+                cursor: pointer;
+            }
            &:not(:last-child) {
-            margin-right: 24px;
-            
-        } 
+            margin-right: 24px;  
+            } 
         }
-        
-
     }
 }
