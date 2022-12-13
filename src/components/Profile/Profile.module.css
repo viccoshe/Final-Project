@@ -5,7 +5,6 @@
   height: 100%;
   margin: 0 auto;
   background-color: #fff;
-  border: 1px solid green;
 }
 .main .profileContainer {
   max-width: 560px;
@@ -13,7 +12,6 @@
   max-height: 580px;
   height: 100%;
   margin: 0 auto;
-  border: 1px solid blue;
 }
 .main .profileContainer .profileHeader {
   width: 560px;
@@ -24,7 +22,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid red;
 }
 .main .profileContainer .profileHeader p span {
   font-weight: 600;
@@ -37,7 +34,6 @@
   width: -moz-fit-content;
   width: fit-content;
   height: 40px;
-  border: 1px solid red;
 }
 .main .stockContainer {
   margin-left: 156px;

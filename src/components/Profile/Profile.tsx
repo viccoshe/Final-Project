@@ -2,26 +2,29 @@ import { FormEvent, MouseEvent, useEffect, useState, useContext} from "react";
 import { UserContext } from "../../utiles/UserContext";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../utiles";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 //@ts-ignore
 import style from "./Profile.module.css";
 //@ts-ignore
 import Exit from "../../img/exit.svg";
 import { IUser } from "../../utiles/CatalogueContext";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { app } from "../../utiles";
 import { UserCredential, User } from "firebase/auth";
+import { CatalogueContext } from "../../utiles/CatalogueContext";
+import { IProduct } from "../../utiles/UserContext";
 
 
 const Profile: React.FC = () => {
     const [form, setForm] = useState<boolean>(false);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
+    const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [total, setTotal] = useState<number>(0);
 
     useEffect(() => {
-        const auth = getAuth(app);
             onAuthStateChanged(auth, (user) => {
             if (user) {
                 console.log(user);
@@ -32,14 +35,13 @@ const Profile: React.FC = () => {
                     cart: [],
                 }
                 setUser(currentUser);
+                // writeUserData(currentUser.id, currentUser.name, currentUser.favProducts, currentUser.cart);
             } else {
-                // User is signed out
-                // ...
+                setUser(null); //
                 console.error('User is signed out');
             }
             });
             console.log(user);
-
     }, []);
     
 
@@ -63,6 +65,38 @@ const loginViaGoogle = async (e:FormEvent) => {
     const result = await signInWithPopup(auth, provider);
     console.log(user);
     return setUser(result);
+}
+
+const logOut = async (e:FormEvent) => {
+    e.preventDefault();
+    signOut(auth).then(() => {
+        if(user){
+            console.log('user: ', user)
+        }
+        setUser(null);
+    }).catch((error) => {
+        console.error('user is still here')
+    });
+    console.log(user);
+}
+
+useEffect(() => {
+    getTotal();
+}, [])
+
+const getTotal = () => {
+    if(user.cart.length > 0 ?? false){
+        const prices: any[] = [];
+        user.cart.filter((item: IProduct) => {
+            if(item.price){
+                prices.push(+item.price);
+                console.log(prices);
+            }
+            const totalPrice = prices.reduce((acc, initVal) => acc + initVal, 0);
+            console.log(totalPrice);
+            setTotal(totalPrice);
+        })
+    }
 }
 
     return !user ? (
@@ -92,9 +126,9 @@ const loginViaGoogle = async (e:FormEvent) => {
             <div className={style.profileContainer}>
                 <div className={style.profileHeader}>
                     <div className={style.profileImg}><img src="" alt="" /></div>
-                    <p>Good afternoon,<br/><span>{user.name}</span></p>
-                    <div className={style.total}>Your total: </div>
-                    <div><img src={Exit} alt="Exit" /></div>
+                    <p>Good afternoon,<br/><span>{user ? user.name : ' guest'}</span></p>
+                    <div className={style.total}>Your total: {total.toFixed(2)}</div>
+                    <div onClick={(e: MouseEvent) =>{logOut(e)}}><img src={Exit} alt="Exit" /></div>
                 </div>
             </div>
 

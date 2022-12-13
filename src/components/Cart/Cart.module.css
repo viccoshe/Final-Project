@@ -1,15 +1,17 @@
 .main {
   max-width: 1440px;
-  max-height: 1797px;
+  width: 100vw;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
   min-height: 100vh;
-  width: 100%;
-  height: 100%;
   background: #FFFFFF;
-  border: 2px solid green;
   margin: 0 auto 0;
 }
 .main .container {
   width: 1200px;
+  min-height: 100vh;
+  height: 100%;
   margin: 0 auto 0;
   display: flex;
   justify-content: center;
@@ -23,7 +25,6 @@
   color: #B3A3A1;
 }
 .main .container .cat {
-  border: 2px solid blue;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -38,7 +39,6 @@
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  border: 2px solid green;
   list-style: none;
   display: flex;
   justify-content: center;
@@ -57,33 +57,44 @@
   color: rgb(134, 109, 105);
 }
 .main .container .cartContainer {
-  width: 1440px;
-  height: 636px;
   background: #B3A3A1;
   display: flex;
+  padding: 128px 158px;
+  max-width: 1440px;
+  width: 1440px;
   justify-content: center;
   align-items: center;
+  padding: 128px 0;
 }
 .main .container .cartContainer .itemsContainer {
   display: flex;
-  width: 840px;
-  height: 380px;
-  border: 2px solid blue;
-  justify-content: center;
+  max-width: 867px;
+  width: 100%;
   align-items: center;
+  overflow: scroll;
+  margin-right: 20px;
 }
 .main .container .cartContainer .itemsContainer .cartItem {
-  border: 2px solid red;
-  width: 264px;
+  max-width: 264px;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  height: 100%;
   height: 380px;
-  display: flex;
-  flex-direction: column;
-  margin: 128px 25px;
+}
+.main .container .cartContainer .itemsContainer .cartItem:not(:last-child) {
+  margin-right: 24px;
 }
 .main .container .cartContainer .itemsContainer .cartItem .img {
   height: 264px;
   width: 264px;
-  border: 2px solid violet;
+  background-color: #fff;
+}
+.main .container .cartContainer .itemsContainer .cartItem .img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .main .container .cartContainer .itemsContainer .cartItem .buttons {
   color: #fff;
@@ -94,9 +105,11 @@
 }
 .main .container .cartContainer .itemsContainer .cartItem .buttons .fav {
   margin-right: 60px;
+  cursor: pointer;
 }
 .main .container .cartContainer .itemsContainer .cartItem .buttons .remove {
   margin-left: 60px;
+  cursor: pointer;
 }
 .main .container .cartContainer .itemsContainer .cartItem .buttons .minus, .main .container .cartContainer .itemsContainer .cartItem .buttons .plus {
   width: 20px;
@@ -106,11 +119,21 @@
   color: #fff;
   font-size: 23px;
   line-height: 0.6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 .main .container .orderContainer {
-  height: 332px;
+  min-height: 332px;
   width: 264px;
-  border: 2px solid yellow;
+  color: #fff;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.main .container .orderContainer h3 {
+  color: #fff;
 }
 .main .container .orderContainer .button {
   border: 0;
@@ -123,4 +146,23 @@
   height: 52px;
   background: #FFE0DB;
   border-radius: 32px;
-}/*# sourceMappingURL=Service.module.css.map */
+  margin: 32px auto;
+  transition: background-color 0.5s ease-out;
+}
+.main .container .orderContainer .button:hover {
+  color: #FFE0DB;
+  background: rgba(73, 74, 74, 0.3411764706);
+  cursor: pointer;
+}
+.main .container .orderContainer .orderItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.main .container .orderContainer .orderItem .orderTitle {
+  font-size: 12px;
+  max-width: 168px;
+  width: 100%;
+  text-align: initial;
+}/*# sourceMappingURL=Cart.module.css.map */

@@ -101,7 +101,8 @@
                     }
                 }
                 .productInfo{
-                    border: 1px solid #cec2c1;
+                    border-left: 1px solid #cec2c1;
+                    padding-left: 5px;
                     max-width: 264px;
                     width: 100%;
                     height: fit-content;
@@ -116,8 +117,11 @@
                     font-weight: 400;
                     font-size: 14px;
                     letter-spacing: 0.1px;
-                    color: #494A4A;
+                    color: #5e6060;
                     margin: 0;
+                    &:hover{
+                        color: rgb(104, 21, 21);
+                    }
                     }
                     .productDesc{
                         font-size: 8px;
@@ -128,35 +132,22 @@
                     color: inherit;
                     } 
 
-                    .buttons {
-                        background-color: #B3A3A1;
-                        color: #fff;
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 5px 5px;
-
-                        .fav {
-                            margin-right: 60px;
-                            cursor: pointer;
-                        }
-
-                        .remove {
-                            margin-left: 60px;
-                            cursor: pointer;
-                        }
-                        
-                        .minus, .plus {
-                            width: 20px;
-                            height: 20px;
-                            border: 1px solid #fff;
-                            border-radius: 30px;
-                            color: #fff;
-                            font-size: 23px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
+                    .button {
+                        border: 0;
+                        //padding: 16px 56px;
+                        width: 201px;
+                        height: 44px;
+                        color: #494A4A;
+                        border-radius: 32px;
+                        width: 150px;
+                        background: #FFE0DB;
+                        -webkit-transition: background-color 0.5s ease-out;
+                        -moz-transition: background-color 0.5s ease-out;
+                        -o-transition: background-color 0.5s ease-out;
+                        transition: background-color 0.5s ease-out;
+                        &:hover{
+                            color: #FFE0DB;
+                            background: #494a4a57;
                             cursor: pointer;
                         }
                     }

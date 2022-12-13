@@ -6,15 +6,14 @@ import  { useEffect, useState } from "react";
 import Bin from "../../img/musor.svg";
 //@ts-ignore
 import Like from "../../img/heart.svg";
-import { Routes, Route, Link, Outlet, useNavigate} from "react-router-dom";
+import { Link, Outlet, useNavigate} from "react-router-dom";
 //@ts-ignore
 import Loader from "../../utiles/Loader/Loader";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import {User, UserCredential} from "firebase/auth";
 import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
-import { routes } from "../../utiles/routes";
-import Product from "./Product/Product";
+import { writeUserData, editUserData } from "../../utiles/database";
 
 
 const Catalogue: React.FC = () => {
@@ -24,6 +23,7 @@ const Catalogue: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
     const navigate = useNavigate();
+
 
     const getCategory = (cat: string) =>{
         const filteredResult: Array<{}> = catalogue.filter((item: { category: string}, i: string) => {
@@ -49,13 +49,25 @@ const Catalogue: React.FC = () => {
             })
     }, [])
 
-    const getToCart = (id: string): Array<IProduct> | null => {
-        let currentCartProduct = catalogue.find((item: IProduct) => {
-            if(item.id === id){
-                return item;
-            };
-        });
-        user.cart.push(currentCartProduct);
+   const getToCart = (id: string): Array<IProduct> | null => {
+        if(user){
+          let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
+                if(item.id === id){
+                    return item;
+                };
+            });
+
+            if(user.cart?.length > 0 ?? false ){
+                editUserData(user.id, user.name, currentCartProduct)
+            }else{
+                writeUserData(user.id,  user.name, currentCartProduct);
+            }
+            user.cart.push(currentCartProduct);  
+            
+        }else{
+            prompt('Sign in to continue');
+            //navigate(routes.profile);
+        }
         return user.cart;
     }
 
@@ -103,13 +115,7 @@ const Catalogue: React.FC = () => {
                                     <Link to={`product/:${id}`}><h5>{title}</h5></Link>
                                     <p className={style.productDesc}>{desc}</p>
                                     <p className={style.productPrice}>{price} $</p> 
-                                    <div className={style.buttons}>
-                                        <div className={style.fav}><img src={Like} alt="like" /></div>
-                                        <div className={style.minus}>-</div>
-                                        <div className={style.counter}>0</div>
-                                        <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
-                                        <div className={style.remove} ><img src={Bin} alt="remove" /></div>
-                                </div>
+                                    <button onClick={() =>{getToCart(id)}} className={style.button} >Add</button>
                             </div> 
                             
                         </div>
@@ -133,13 +139,7 @@ const Catalogue: React.FC = () => {
                                 <Link to={`product/:${id}`}><h5>{title}</h5></Link>
                                 <p className={style.productDesc}>{desc}</p>
                                 <p className={style.productPrice}>{price} $</p> 
-                                <div className={style.buttons}>
-                                <div className={style.fav}><img src={Like} alt="like" /></div>
-                                <div className={style.minus}>-</div>
-                                <div className={style.counter}>0</div>
-                                <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
-                                <div className={style.remove} ><img src={Bin} alt="remove" /></div>
-                            </div>
+                                <button onClick={() =>{getToCart(id)}} className={style.button} >Add</button>
                         </div>
                      <Outlet/>
                     </div>

@@ -15,9 +15,67 @@ import articlesPhoto from "../../img/articles_main-photo.png";
 //@ts-ignore
 import Arrow from "../../img/arrow.svg.svg";
 import { routes } from "../../utiles/routes";
+import { useEffect, useContext } from "react";
+import { CatalogueContext } from "../../utiles/CatalogueContext";
+import { UserContext } from "../../utiles/UserContext";
+import {User, UserCredential} from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../utiles";
+import { IUser } from "../../utiles/CatalogueContext";
+import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
+import { database } from "../../utiles";
+
 
 
 const Home: React.FC = () => {
+
+    const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
+    const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
+
+
+    if(user){
+        console.log(user.cart);
+        getUserData(user.id);
+    }
+
+    async function getUserData(id: string | undefined) {
+        const dbRef = ref(database);
+          await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
+            if (snapshot.exists()) {
+              console.log(snapshot.val());
+              const data = snapshot.val();
+              console.log(data.cart);
+                user.cart = data.cart;
+                console.log(user);
+              setUser(user);
+            }else{
+              console.log('no data available');
+            }
+          }).catch((error) => {
+            console.log(error);
+          })
+    }
+
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log(user);
+            const currentUser: IUser = {
+                id: user.uid,
+                name: user.displayName,
+                favProducts: [],
+                cart: [],
+            }
+            setUser(currentUser);
+        } else {
+            setUser(null); //
+            console.error('User is signed out');
+        }
+        });
+        console.log(user);
+}, []);
+    
     return (
         <div className={style.main}>
 

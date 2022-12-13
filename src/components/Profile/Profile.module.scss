@@ -5,7 +5,7 @@
     height: 100%;
     margin: 0 auto;
     background-color: #fff;
-    border: 1px solid green;
+   // border: 1px solid green;
 
     .profileContainer {
         max-width: 560px;
@@ -13,7 +13,7 @@
         max-height: 580px;
         height: 100%;
         margin: 0 auto;
-        border: 1px solid blue;
+        //border: 1px solid blue;
 
         .profileHeader {
             width: 560px;
@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
-            border: 1px solid red;
+            //border: 1px solid red;
             p {
 
                 span{
@@ -37,7 +37,7 @@
             .total {
                 width: fit-content;
                 height: 40px;
-                border: 1px solid red;
+                //border: 1px solid red;
             }
         }
     }
