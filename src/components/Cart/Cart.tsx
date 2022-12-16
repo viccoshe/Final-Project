@@ -8,51 +8,50 @@ import { IProduct, UserContext } from "../../utiles/UserContext";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import { useContext, useEffect, useState } from "react";
 import {User, UserCredential} from "firebase/auth";
-//import { getUserData } from "../../utiles/database";
 import { database } from "../../utiles";
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
-//import { getUserData } from "../../utiles/database";
-import { editUserData, writeUserData } from "../../utiles/database";
-import { guidGenerator } from "../../utiles/database";
+import { UserData, EditData} from "../../utiles/buttonTypes";
 
 
-const Cart:React.FC = () => {
+const Cart:React.FC<UserData & EditData> = (props) => {
+    const {writeUserData, editUserData} = props;
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
-    const [counter, setCounter]  = useState<number>(1);
-    const [cart, setCart]  = useState<{}>([]);
+    const [counter, setCounter]  = useState<number>(0);
+    const [cart, setCart]  = useState<any>([]);
 
     if(user){
         console.log(user.cart);
         getUserData(user.id);
     }
 
+    // async function getUser() {
+    //     const dbRef = ref(database);
+
+    // }
+
     async function getUserData(id: string | undefined) {
         const dbRef = ref(database);
           await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
             if (snapshot.exists()) {
-              console.log(snapshot.val());
-              const data = snapshot.val();
-              console.log(data.cart);
+                console.log(snapshot.val());
+                const data = snapshot.val();
+                console.log(data.cart);
                 user.cart = data.cart;
                 console.log(user);
-              setUser(user);
-              getCart();
+                setUser(user);
+               // getCart();
             }else{
-              console.log('no data available');
+               console.log('no data available');
             }
-          }).catch((error) => {
+        }).catch((error) => {
             console.log(error);
-          })
+         })
     }
 
-    const getCart = () => {
-        user.cart.filter((item: IProduct, i: string) => {
-            if(item.id === i){
-                console.log(i)
-            }
-        })
-    }
+    // const getCart = () => {
+    //     console.log(user.cart);
+    // }
 
 
     const getToCart = (id: string): Array<IProduct> | null => {
@@ -64,13 +63,16 @@ const Cart:React.FC = () => {
             });
             console.log(currentCartProduct); 
             if(user.cart?.length > 0 ?? false ){
-                editUserData(user.id, user.name, currentCartProduct)
-            }else{
-                writeUserData(user.id,  user.name, currentCartProduct);
+                editUserData(user.id, user.name, currentCartProduct);
             }
+            //getUserData(user.id);
+            // else{
+            //     writeUserData(user.id,  user.name, currentCartProduct);
+            // }
             //editUserData(user.id, user.name, currentCartProduct); 
-            user.cart.push(currentCartProduct); 
+            //user.cart.push(currentCartProduct); 
             //getCounter(id); 
+            //setCounter(counter + 1);
         }else{
             prompt('Sign in to continue');
             //navigate(routes.profile);
@@ -78,24 +80,43 @@ const Cart:React.FC = () => {
         return user.cart;
     }
 
-    const getCounter = (id: string) => {
-        // const currentItems = user.cart.filter((item: IProduct) => {
-        //     if(item.id === id){
-        //         item.counter = counter + 1;
-        //         return item;
-        //     }
-        // })
-        // console.log(currentItems);
 
-        user.cart.map((item: IProduct) => {
-            if(item.id === id){
-                item.counter = counter + 1;
-                return item;
+    const removeOneQuantity = (id: string): Array<IProduct> | null => {
+        if(user){
+            let updatedCart = [];
+            console.log(user.cart);
+            if (user.cart?.length > 0 ?? false ) {
+            user?.cart.map((item: IProduct) => {
+                    if(item.id === id){
+                        if(item.counter <= 1){
+                            deleteFromCart(id); 
+                            //updatedCart = user.cart ? user?.cart.filter((item: IProduct) => item.id != id) : null,
+                        }else{
+                          item.counter -= 1;
+                          
+                        }
+                    }
+                })
             }
-        })
-        console.log(user.cart);
-        return user.cart;
+            const data = {
+                ...user,
+                cart: user.cart,
+            }
+            const updates = {};
+            //@ts-ignore
+            updates['mystore/' + user.id] = data;
+            update(ref(database), updates);
+            setUser(data);
+            console.log(data);
+              //setCounter(counter - 1); 
+              
+          }else{
+              prompt('Sign in to continue');
+          }
+          return user.cart;
     }
+
+
 
     const deleteFromCart = (id: string): Array<IProduct> | null => {
         if(user){
@@ -110,22 +131,19 @@ const Cart:React.FC = () => {
             setUser(data);
             //getOutOfCart(data)
             //setCounter(0);
-            
         }
         return user.cart;
     }
 
     useEffect(() => {
         getUserData(user.id);
-    }, [user.cart])
+    }, [user])
 
 
     return (
         <main className={style.main}>
             <div className={style.container}>
                 <h3>Cart</h3>
-
-                {/* <h3>{user.cart.length}</h3> */}
 
                 <div className={style.cat}>
                     <ul className={style.block}>
@@ -138,9 +156,9 @@ const Cart:React.FC = () => {
                 <div className={style.cartContainer}>
 
                     <div className={style.itemsContainer}>
-                        {user.cart.length > 0 
+                        {user && user.cart.length > 0 
                         ?
-                        user.cart.map((item: IProduct, i: string) => {
+                            user.cart.map((item: IProduct, i: string) => {
                             console.log(item);
                              
     
@@ -151,15 +169,15 @@ const Cart:React.FC = () => {
                                         <p className={style.cartDesc}></p>
                                         <div className={style.buttons}>
                                             <div className={style.fav}><img src={Like} alt="like" /></div>
-                                            <div className={style.minus}>-</div>
-                                            <div className={style.counter}>{count ? count : counter}</div>
+                                            <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
+                                            <div className={style.counter}>{count}</div>
                                             <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
                                             <div onClick={() =>{deleteFromCart(id)}} className={style.remove} ><img src={Bin} alt="bin" /></div>
                                         </div>
                                 </div>
                         }) 
-                        :
-                        <h3>Cart is empty</h3>
+                        
+                        : <h3>Cart is empty</h3>
                         }
                     </div>
 

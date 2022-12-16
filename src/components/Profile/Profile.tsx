@@ -19,7 +19,6 @@ const Profile: React.FC = () => {
     const [form, setForm] = useState<boolean>(false);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
-
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [total, setTotal] = useState<number>(0);

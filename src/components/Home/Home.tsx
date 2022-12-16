@@ -28,53 +28,52 @@ import { database } from "../../utiles";
 
 
 const Home: React.FC = () => {
-
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
 
 
-    if(user){
-        console.log(user.cart);
-        getUserData(user.id);
-    }
+    // if(user){
+    //     console.log(user.cart);
+    //     getUserData(user.id);
+    // }
 
-    async function getUserData(id: string | undefined) {
-        const dbRef = ref(database);
-          await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-            if (snapshot.exists()) {
-              console.log(snapshot.val());
-              const data = snapshot.val();
-              console.log(data.cart);
-                user.cart = data.cart;
-                console.log(user);
-              setUser(user);
-            }else{
-              console.log('no data available');
-            }
-          }).catch((error) => {
-            console.log(error);
-          })
-    }
+    // async function getUserData(id: string | undefined) {
+    //     const dbRef = ref(database);
+    //       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
+    //         if (snapshot.exists()) {
+    //           console.log(snapshot.val());
+    //           const data = snapshot.val();
+    //           console.log(data.cart);
+    //             user.cart = data.cart;
+    //             console.log(user);
+    //           setUser(user);
+    //         }else{
+    //           console.log('no data available');
+    //         }
+    //       }).catch((error) => {
+    //         console.log(error);
+    //       })
+    // }
 
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log(user);
-            const currentUser: IUser = {
-                id: user.uid,
-                name: user.displayName,
-                favProducts: [],
-                cart: [],
-            }
-            setUser(currentUser);
-        } else {
-            setUser(null); //
-            console.error('User is signed out');
-        }
-        });
-        console.log(user);
-}, []);
+//     useEffect(() => {
+//         onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//             console.log(user);
+//             const currentUser: IUser = {
+//                 id: user.uid,
+//                 name: user.displayName,
+//                 favProducts: [],
+//                 cart: [],
+//             }
+//             setUser(currentUser);
+//         } else {
+//             setUser(null); //
+//             console.error('User is signed out');
+//         }
+//         });
+//         console.log(user);
+// }, []);
     
     return (
         <div className={style.main}>

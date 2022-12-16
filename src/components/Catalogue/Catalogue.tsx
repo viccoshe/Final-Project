@@ -13,17 +13,18 @@ import { CatalogueContext } from "../../utiles/CatalogueContext";
 import {User, UserCredential} from "firebase/auth";
 import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
-import { writeUserData, editUserData } from "../../utiles/database";
+import { UserData, EditData, GetData } from "../../utiles/buttonTypes";
 
 
-const Catalogue: React.FC = () => {
-    const id: string = '';
+const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
+    const {writeUserData, editUserData, getUserData} = props;
     const [loading, setLoading] = useState<boolean>(true);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
-    const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
+    const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
+    const [cart, setCart]  = useState<any>([]);
     const navigate = useNavigate();
-
+    
 
     const getCategory = (cat: string) =>{
         const filteredResult: Array<{}> = catalogue.filter((item: { category: string}, i: string) => {
@@ -34,7 +35,6 @@ const Catalogue: React.FC = () => {
         console.log(filteredResult);
         setSelectedCategory(filteredResult);
     }
-
 
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')
@@ -49,20 +49,20 @@ const Catalogue: React.FC = () => {
             })
     }, [])
 
-   const getToCart = (id: string): Array<IProduct> | null => {
+   const  getToCart = async(id: string) => {
+        await getUserData(user.id);
         if(user){
-          let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
+            let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
                 if(item.id === id){
                     return item;
                 };
             });
-
             if(user.cart?.length > 0 ?? false ){
-                editUserData(user.id, user.name, currentCartProduct)
+                editUserData(user.id, user.name, currentCartProduct);
             }else{
                 writeUserData(user.id,  user.name, currentCartProduct);
             }
-            user.cart.push(currentCartProduct);  
+            //user.cart.push(currentCartProduct);  
             
         }else{
             prompt('Sign in to continue');
