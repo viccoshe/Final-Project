@@ -68,19 +68,19 @@ function App() {
 
   
   async function writeUserData(id: string,  name: string | null,  product: IProduct): Promise<any> {
-    const counter = 1;
-    try {
-      await set(ref(database, 'mystore/' + id), {
-          username: name,
-          cart: [{
-            ...product,
-            counter: counter
-          }],
-      });
-      console.log('Success');
-    } catch (error) {
-      console.error(`ERROR: ${error}`);
-    }
+      const counter = 1;
+      try {
+        await set(ref(database, 'mystore/' + id), {
+            username: name,
+            cart: [{
+              ...product,
+              counter: counter
+            }],
+        });
+        console.log('Success');
+      } catch (error) {
+        console.error(`ERROR: ${error}`);
+      }
   }
 
   async function editUserData(id: string,  name: string | null,  product: IProduct) {
@@ -120,6 +120,29 @@ function App() {
     }
     return null; 
   }
+
+  // async function addFavs(id: string) {
+  //   const dbRef = ref(database);
+  //   await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
+  //     if (snapshot.exists()) {
+  //         console.log(snapshot.val());
+  //         const data = snapshot.val();
+  //         console.log(data.cart);
+          
+  //         user.cart = data.cart;
+  //         console.log(user);
+  //         setUser(user);
+  //        // getCart();
+  //     }else{
+  //        console.log('no data available');
+  //     }
+  // }).catch((error) => {
+  //     console.log(error);
+  //  })
+  // }
+
+
+  
 
 
   return (

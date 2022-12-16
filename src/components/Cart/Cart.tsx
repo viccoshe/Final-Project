@@ -25,10 +25,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
         getUserData(user.id);
     }
 
-    // async function getUser() {
-    //     const dbRef = ref(database);
-
-    // }
 
     async function getUserData(id: string | undefined) {
         const dbRef = ref(database);
@@ -49,10 +45,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
          })
     }
 
-    // const getCart = () => {
-    //     console.log(user.cart);
-    // }
-
 
     const getToCart = (id: string): Array<IProduct> | null => {
         if(user.cart){
@@ -65,14 +57,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
             if(user.cart?.length > 0 ?? false ){
                 editUserData(user.id, user.name, currentCartProduct);
             }
-            //getUserData(user.id);
-            // else{
-            //     writeUserData(user.id,  user.name, currentCartProduct);
-            // }
-            //editUserData(user.id, user.name, currentCartProduct); 
-            //user.cart.push(currentCartProduct); 
-            //getCounter(id); 
-            //setCounter(counter + 1);
         }else{
             prompt('Sign in to continue');
             //navigate(routes.profile);
@@ -90,7 +74,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                     if(item.id === id){
                         if(item.counter <= 1){
                             deleteFromCart(id); 
-                            //updatedCart = user.cart ? user?.cart.filter((item: IProduct) => item.id != id) : null,
                         }else{
                           item.counter -= 1;
                           
@@ -129,11 +112,63 @@ const Cart:React.FC<UserData & EditData> = (props) => {
             updates['mystore/' + user.id] = data;
             update(ref(database), updates);
             setUser(data);
-            //getOutOfCart(data)
-            //setCounter(0);
         }
         return user.cart;
     }
+
+    async function toggleFavs(id: string) {
+        const dbRef = ref(database);
+        console.log(catalogue);
+        //getUserData(user.id);
+        await get(child(dbRef, 'mystore/'+ user.id)).then((snapshot) => {
+          if (snapshot.exists()) {
+                const data = snapshot.val();
+                const theFav = catalogue?.find((i: IProduct) => {
+                    return i.id === id
+                })
+                let updatedData= {};
+                if(data?.favProducts?.length === undefined ?? false){
+                    updatedData = {
+                        ...data,
+
+                        favProducts: [theFav],
+                    }
+                }else{
+                    if(data?.favProducts.some((i: IProduct) => {return i.id === id})){
+                        updatedData = {
+                            ...data,
+
+                            favProducts: data?.favProducts.filter((i: IProduct) => {return i.id !== id}),
+                        }
+                    }else{
+                        updatedData = {
+                            ...data,
+
+                            favProducts: [...data?.favProducts, theFav],
+                        }
+                    }
+                }
+                console.log(updatedData);
+                const updates = {};
+                //@ts-ignore
+                updates['mystore/' + user.id] = updatedData;
+                update(ref(database), updates);
+                //   user.cart = data.cart;
+                //   console.log(user);
+                let uUser = {
+                    ...updatedData,
+                    id: user.id
+                }
+                setUser(uUser);
+                // getCart();
+          }else{
+             console.log('no data available');
+          }
+      }).catch((error) => {
+          console.log(error);
+       })
+      }
+
 
     useEffect(() => {
         getUserData(user.id);
@@ -168,7 +203,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                                         <h6 className={style.cartTitle}>{title}</h6>
                                         <p className={style.cartDesc}></p>
                                         <div className={style.buttons}>
-                                            <div className={style.fav}><img src={Like} alt="like" /></div>
+                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={Like} alt="like" /></div>
                                             <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
                                             <div className={style.counter}>{count}</div>
                                             <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
