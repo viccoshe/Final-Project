@@ -61,17 +61,13 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
                 editUserData(user.id, user.name, currentCartProduct);
             }else{
                 writeUserData(user.id,  user.name, currentCartProduct);
-            }
-            //user.cart.push(currentCartProduct);  
-            
+            }      
         }else{
             prompt('Sign in to continue');
             //navigate(routes.profile);
         }
         return user.cart;
     }
-
-
     if (loading) {
         return (
             <main style={{

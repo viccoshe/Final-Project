@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import './App.css';
 import Catalogue from './components/Catalogue/Catalogue';
 import Footer from './components/Footer/Footer';
@@ -140,9 +140,6 @@ function App() {
   //     console.log(error);
   //  })
   // }
-
-
-  
 
 
   return (

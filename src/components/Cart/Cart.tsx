@@ -4,6 +4,8 @@ import style from "./Cart.module.css";
 import Bin from "../../img/musor.svg";
 //@ts-ignore
 import Like from "../../img/heart.svg";
+//@ts-ignore
+import RedLike from "../../img/heart2.svg";
 import { IProduct, UserContext } from "../../utiles/UserContext";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import { useContext, useEffect, useState } from "react";
@@ -12,7 +14,6 @@ import { database } from "../../utiles";
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
 import { UserData, EditData} from "../../utiles/buttonTypes";
 
-
 const Cart:React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
@@ -20,10 +21,10 @@ const Cart:React.FC<UserData & EditData> = (props) => {
     const [counter, setCounter]  = useState<number>(0);
     const [cart, setCart]  = useState<any>([]);
 
-    if(user){
-        console.log(user.cart);
-        getUserData(user.id);
-    }
+    // if(user){
+    //     console.log(user.cart);
+    //     getUserData(user.id);
+    // }
 
 
     async function getUserData(id: string | undefined) {
@@ -203,7 +204,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                                         <h6 className={style.cartTitle}>{title}</h6>
                                         <p className={style.cartDesc}></p>
                                         <div className={style.buttons}>
-                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={Like} alt="like" /></div>
+                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : Like} alt="like" /></div>
                                             <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
                                             <div className={style.counter}>{count}</div>
                                             <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
