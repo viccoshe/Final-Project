@@ -5,7 +5,7 @@
   max-height: -moz-fit-content;
   max-height: fit-content;
   min-height: 100vh;
-  background: #FFFFFF;
+  background: #B3A3A1;
   margin: 0 auto 0;
 }
 .main .container {
@@ -22,9 +22,10 @@
   font-size: 32px;
   line-height: 40px;
   text-align: center;
-  color: #B3A3A1;
+  color: white;
 }
 .main .container .cat {
+  border: 2px solid blue;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -54,9 +55,10 @@
 }
 .main .container .cat .block .active {
   font-weight: 600;
-  color: rgb(134, 109, 105);
+  color: rgba(126, 102, 98, 0.678);
 }
 .main .container .cartContainer {
+  position: relative;
   background: #B3A3A1;
   display: flex;
   padding: 128px 158px;
@@ -64,7 +66,12 @@
   width: 1440px;
   justify-content: center;
   align-items: center;
-  padding: 128px 0;
+  padding: 0;
+}
+.main .container .cartContainer .arrow {
+  position: absolute;
+  top: 50%;
+  right: 28%;
 }
 .main .container .cartContainer .itemsContainer {
   display: flex;
@@ -79,11 +86,16 @@
   width: -moz-fit-content;
   width: -webkit-fit-content;
   width: fit-content;
-  height: 100%;
   height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .main .container .cartContainer .itemsContainer .cartItem:not(:last-child) {
   margin-right: 24px;
+}
+.main .container .cartContainer .itemsContainer .cartItem h6 {
+  margin: 4px;
 }
 .main .container .cartContainer .itemsContainer .cartItem .img {
   height: 264px;

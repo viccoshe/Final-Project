@@ -34,7 +34,6 @@ const Profile: React.FC = () => {
                     cart: [],
                 }
                 setUser(currentUser);
-                // writeUserData(currentUser.id, currentUser.name, currentUser.favProducts, currentUser.cart);
             } else {
                 setUser(null); //
                 console.error('User is signed out');
@@ -124,7 +123,7 @@ const getTotal = () => {
         <main className={style.main}>
             <div className={style.profileContainer}>
                 <div className={style.profileHeader}>
-                    <div className={style.profileImg}><img src="" alt="" /></div>
+                    <div className={style.profileAvatar}>{user ? user?.name.slice(0, 1) : null}</div>
                     <p>Good afternoon,<br/><span>{user ? user.name : ' guest'}</span></p>
                     <div className={style.total}>Your total: {total.toFixed(2)}</div>
                     <div onClick={(e: MouseEvent) =>{logOut(e)}}><img src={Exit} alt="Exit" /></div>

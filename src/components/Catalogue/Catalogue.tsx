@@ -25,11 +25,9 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
-    const [cart, setCart]  = useState<any>([]);
     const navigate = useNavigate();
     const {toggleFavs} = useContext<any>(FavsContext);
     
-
     const getCategory = (cat: string) =>{
         const filteredResult: Array<{}> = catalogue.filter((item: { category: string}, i: string) => {
             if(item.category === cat){

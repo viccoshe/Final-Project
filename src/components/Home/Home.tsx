@@ -13,7 +13,7 @@ import bestsellersPhoto from "../../img/bestsellers_main-photo.png";
 //@ts-ignore
 import articlesPhoto from "../../img/articles_main-photo.png";
 //@ts-ignore
-import Arrow from "../../img/arrow.svg.svg";
+import Arrow from "../../img/arrow2.svg";
 import { routes } from "../../utiles/routes";
 import { useEffect, useContext } from "react";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
@@ -30,50 +30,6 @@ import { database } from "../../utiles";
 const Home: React.FC = () => {
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
-
-
-    // if(user){
-    //     console.log(user.cart);
-    //     getUserData(user.id);
-    // }
-
-    // async function getUserData(id: string | undefined) {
-    //     const dbRef = ref(database);
-    //       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-    //         if (snapshot.exists()) {
-    //           console.log(snapshot.val());
-    //           const data = snapshot.val();
-    //           console.log(data.cart);
-    //             user.cart = data.cart;
-    //             console.log(user);
-    //           setUser(user);
-    //         }else{
-    //           console.log('no data available');
-    //         }
-    //       }).catch((error) => {
-    //         console.log(error);
-    //       })
-    // }
-
-
-//     useEffect(() => {
-//         onAuthStateChanged(auth, (user) => {
-//         if (user) {
-//             console.log(user);
-//             const currentUser: IUser = {
-//                 id: user.uid,
-//                 name: user.displayName,
-//                 favProducts: [],
-//                 cart: [],
-//             }
-//             setUser(currentUser);
-//         } else {
-//             setUser(null); //
-//             console.error('User is signed out');
-//         }
-//         });
-//         console.log(user);
-// }, []);
     
     return (
         <div className={style.main}>
@@ -113,9 +69,13 @@ const Home: React.FC = () => {
             <div className={style.articles}>
                 <div><img src={articlesPhoto} alt="" /></div>
                 <div className={style.articleBlock}>
-                    <h4>5 options to highlight the workplace at home</h4>
-                    <p>During the pandemic, many have started working from home. Our editors will tell you how to separate work from personal, increase involvement in the process, and also relax as much as possible after work...</p>
-                    <a href="">Read more</a>
+                    <div className={style.textBlock}>
+                        <h4>5 options to highlight the workplace at home</h4>
+                        <p>During the pandemic, many have started working from home. Our editors will tell you how to separate work from personal, increase involvement in the process, and also relax as much as possible after work...</p>
+                        <a href="">Read more
+                            <img src={Arrow} alt="arrow" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

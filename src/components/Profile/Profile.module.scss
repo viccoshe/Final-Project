@@ -15,6 +15,19 @@
         margin: 0 auto;
         //border: 1px solid blue;
 
+        .profileAvatar{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: rgb(93, 44, 44);
+            background: #B3A3A1;
+            color: #fff;
+            font-size: 40px;
+            text-align: center;
+            line-height: 70px;
+            margin: 70px 20px 30px 0;
+        }
+
         .profileHeader {
             width: 560px;
             width: 100%;
@@ -25,6 +38,7 @@
             flex-direction: column;
             //border: 1px solid red;
             p {
+                text-align: left;
 
                 span{
                     font-weight: 600;
@@ -38,6 +52,7 @@
                 width: fit-content;
                 height: 40px;
                 //border: 1px solid red;
+                margin: 40px 0 0 0;
             }
         }
     }

@@ -2,6 +2,8 @@
 import style from "./Footer.module.css";
 //@ts-ignore
 import Arrow from "../../img/arrow2.svg";
+import { routes } from "../../utiles/routes";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
     return (
@@ -9,7 +11,7 @@ const Footer: React.FC = () => {
             <div className={style.container}>
             <div className={style.footerBlock}>
                 <ul>
-                    <li className={style.footerTitle}>Catalog</li>
+                <Link to={routes.catalogue}><li className={style.footerTitle}>Catalogue</li></Link>
                     <li>Living room</li>
                     <li>Bedroom</li>
                     <li>Wardrobe</li>
@@ -32,9 +34,9 @@ const Footer: React.FC = () => {
             <div className={style.footerBlock}>
                 <ul>
                     <li className={style.footerTitle}>Service</li>
-                    <li>Profile</li>
-                    <li>Favorites</li>
-                    <li>Cart</li>
+                    <Link to={routes.profile}><li>Profile</li></Link>
+                    <Link to={routes.favs}><li>Favorites</li></Link>
+                    <Link to={routes.cart}><li>Cart</li></Link>
                     <li>Hallway</li>
                     <li>Shipping and payment</li>
                 </ul>

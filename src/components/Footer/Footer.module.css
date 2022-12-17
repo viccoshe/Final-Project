@@ -10,6 +10,9 @@
   justify-content: center;
   align-items: center;
 }
+.footer a {
+  text-decoration: none;
+}
 .footer .container {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
@@ -40,6 +43,10 @@
 }
 .footer .container .footerBlock ul li {
   list-style: none;
+}
+.footer .container .footerBlock ul li:hover {
+  color: #6e443e;
+  cursor: pointer;
 }
 .footer .container .footerBlock ul li:not(:last-child) {
   margin-bottom: 8px;

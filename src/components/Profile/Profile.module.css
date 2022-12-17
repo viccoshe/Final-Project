@@ -13,6 +13,18 @@
   height: 100%;
   margin: 0 auto;
 }
+.main .profileContainer .profileAvatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgb(93, 44, 44);
+  background: #B3A3A1;
+  color: #fff;
+  font-size: 40px;
+  text-align: center;
+  line-height: 70px;
+  margin: 70px 20px 30px 0;
+}
 .main .profileContainer .profileHeader {
   width: 560px;
   width: 100%;
@@ -22,6 +34,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+.main .profileContainer .profileHeader p {
+  text-align: left;
 }
 .main .profileContainer .profileHeader p span {
   font-weight: 600;
@@ -34,6 +49,7 @@
   width: -moz-fit-content;
   width: fit-content;
   height: 40px;
+  margin: 40px 0 0 0;
 }
 .main .stockContainer {
   margin-left: 156px;

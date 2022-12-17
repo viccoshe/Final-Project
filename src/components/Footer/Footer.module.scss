@@ -9,6 +9,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    a{
+        text-decoration: none;
+    }
     .container{
         max-width: fit-content;
         max-height: 210px;
@@ -32,6 +35,10 @@
         ul{
             li{
                 list-style: none;
+                &:hover{
+                    color: #6e443e;
+                    cursor: pointer;
+                }
                 &:not(:last-child){
                     margin-bottom: 8px;
                 }

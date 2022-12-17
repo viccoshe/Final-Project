@@ -19,6 +19,8 @@ import { auth, database  } from './utiles';
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
 import { FavsContext } from './utiles/FavsContext';
 import Services from './components/Services/Services';
+import { CartContext } from './utiles/cartActions';
+
 
 function App() {
   
@@ -171,13 +173,91 @@ function App() {
   }
 
 
+
+  ////
+
+  const getToCart = (id: string): Array<IProduct> | null => {
+    if(user.cart){
+        let currentCartProduct: IProduct = user.cart.find((item: IProduct) => {
+            if(item.id === id){
+                return item;
+            };
+        });
+        console.log(currentCartProduct); 
+        if(user.cart?.length > 0 ?? false ){
+            editUserData(user.id, user.name, currentCartProduct);
+        }
+    }else{
+        prompt('Sign in to continue');
+        //navigate(routes.profile);
+    }
+    return user.cart;
+}
+
+
+const removeOneQuantity = (id: string): Array<IProduct> | null => {
+    if(user){
+        let updatedCart = [];
+        console.log(user.cart);
+        if (user.cart?.length > 0 ?? false ) {
+        user?.cart.map((item: IProduct) => {
+                if(item.id === id){
+                    if(item.counter <= 1){
+                        deleteFromCart(id); 
+                    }else{
+                      item.counter -= 1;
+                      
+                    }
+                }
+            })
+        }
+        const data = {
+            ...user,
+            cart: user.cart,
+        }
+        const updates = {};
+        //@ts-ignore
+        updates['mystore/' + user.id] = data;
+        update(ref(database), updates);
+        setUser(data);
+        console.log(data);
+          //setCounter(counter - 1); 
+          
+      }else{
+          prompt('Sign in to continue');
+      }
+      return user.cart;
+}
+
+
+
+const deleteFromCart = (id: string): Array<IProduct> | null => {
+    if(user){
+        const data = {
+            ...user,
+            cart: user.cart ? user?.cart.filter((item: IProduct) => item.id != id) : null,
+        }
+        const updates = {};
+        //@ts-ignore
+        updates['mystore/' + user.id] = data;
+        update(ref(database), updates);
+        setUser(data);
+    }
+    return user.cart;
+}
+
+
+  /////
+
+
   return (
     <div className="App">
         <Header/>
         <CatalogueContext.Provider value={{catalogue, setCatalogue}}>
           <UserContext.Provider value={{user, setUser}}>
             <FavsContext.Provider value={{toggleFavs}}>
-              <Routes>
+              <CartContext.Provider value={{deleteFromCart, removeOneQuantity, getToCart}}>
+                <Routes>
               <Route path={routes.home} element={<Home/>}/>
               <Route path={routes.catalogue} element={<Catalogue getUserData={getUserData} editUserData={editUserData} writeUserData={writeUserData}/>}>
                 {/* <Route index={true} path={routes.product} element={<Product/>}/> */}
@@ -185,9 +265,11 @@ function App() {
               <Route path={"catalogue/product/:id"} element={<Product editUserData={editUserData} writeUserData={writeUserData}/>}/>
               <Route path={routes.cart} element={<Cart editUserData={editUserData} writeUserData={writeUserData}/>}/>
               <Route path={routes.profile} element={<Profile />}/>
-              <Route path={routes.services} element={<Services />}/>
+              <Route path={routes.services} element={<Services editUserData={editUserData} writeUserData={writeUserData} />}/>
               
             </Routes>
+              </CartContext.Provider>
+              
             </FavsContext.Provider>
           </UserContext.Provider>  
         </CatalogueContext.Provider>

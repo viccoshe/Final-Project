@@ -182,4 +182,29 @@
   -webkit-backdrop-filter: blur(2px);
           backdrop-filter: blur(2px);
   border-radius: 24px 0px 0px 24px;
+}
+.main .articles .articleBlock .textBlock {
+  width: 488px;
+  height: 148px;
+  padding-left: 20px;
+}
+.main .articles .articleBlock h4 {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 28px;
+  color: #FFFFFF;
+}
+.main .articles .articleBlock p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #FFFFFF;
+}
+.main .articles .articleBlock a {
+  text-decoration: none;
+  color: #fff;
+}
+.main .articles .articleBlock img {
+  margin-left: 24px;
 }/*# sourceMappingURL=Home.module.css.map */
