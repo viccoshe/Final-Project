@@ -21,6 +21,9 @@
   align-items: center;
   flex-flow: nowrap column;
 }
+.main .container a {
+  text-decoration: none;
+}
 .main .container h3 {
   font-size: 32px;
   line-height: 40px;
@@ -144,7 +147,12 @@
   font-weight: 600;
   color: inherit;
 }
-.main .container .productsContainer .productItem .productInfo .button {
+.main .container .productsContainer .productItem .productInfo .buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.main .container .productsContainer .productItem .productInfo .buttons .button {
   border: 0;
   width: 201px;
   height: 44px;
@@ -154,7 +162,7 @@
   background: #FFE0DB;
   transition: background-color 0.5s ease-out;
 }
-.main .container .productsContainer .productItem .productInfo .button:hover {
+.main .container .productsContainer .productItem .productInfo .buttons .button:hover {
   color: #FFE0DB;
   background: rgba(73, 74, 74, 0.3411764706);
   cursor: pointer;

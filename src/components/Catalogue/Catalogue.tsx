@@ -5,7 +5,9 @@ import  { useEffect, useState } from "react";
 //@ts-ignore
 import Bin from "../../img/musor.svg";
 //@ts-ignore
-import Like from "../../img/heart.svg";
+import RedLike from "../../img/heart2.svg";
+//@ts-ignore
+import BrownLike from "../../img/heart-brown.svg";
 import { Link, Outlet, useNavigate} from "react-router-dom";
 //@ts-ignore
 import Loader from "../../utiles/Loader/Loader";
@@ -14,6 +16,7 @@ import {User, UserCredential} from "firebase/auth";
 import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
 import { UserData, EditData, GetData } from "../../utiles/buttonTypes";
+import { FavsContext } from "../../utiles/FavsContext";
 
 
 const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
@@ -24,6 +27,7 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
     const [cart, setCart]  = useState<any>([]);
     const navigate = useNavigate();
+    const {toggleFavs} = useContext<any>(FavsContext);
     
 
     const getCategory = (cat: string) =>{
@@ -111,7 +115,10 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
                                     <Link to={`product/:${id}`}><h5>{title}</h5></Link>
                                     <p className={style.productDesc}>{desc}</p>
                                     <p className={style.productPrice}>{price} $</p> 
-                                    <button onClick={() =>{getToCart(id)}} className={style.button} >Add</button>
+                                    <div className={style.buttons}>
+                                        <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
+                                        <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
+                                </div>
                             </div> 
                             
                         </div>
@@ -135,7 +142,10 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
                                 <Link to={`product/:${id}`}><h5>{title}</h5></Link>
                                 <p className={style.productDesc}>{desc}</p>
                                 <p className={style.productPrice}>{price} $</p> 
-                                <button onClick={() =>{getToCart(id)}} className={style.button} >Add</button>
+                                <div className={style.buttons}>
+                                    <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
+                                    <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
+                                </div>
                         </div>
                      <Outlet/>
                     </div>

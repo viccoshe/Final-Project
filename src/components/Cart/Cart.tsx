@@ -13,6 +13,7 @@ import {User, UserCredential} from "firebase/auth";
 import { database } from "../../utiles";
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
 import { UserData, EditData} from "../../utiles/buttonTypes";
+import { FavsContext } from "../../utiles/FavsContext";
 
 const Cart:React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
@@ -20,6 +21,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
     const [counter, setCounter]  = useState<number>(0);
     const [cart, setCart]  = useState<any>([]);
+    const {toggleFavs} = useContext<any>(FavsContext);
 
     // if(user){
     //     console.log(user.cart);
@@ -117,59 +119,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
         return user.cart;
     }
 
-    async function toggleFavs(id: string) {
-        const dbRef = ref(database);
-        console.log(catalogue);
-        //getUserData(user.id);
-        await get(child(dbRef, 'mystore/'+ user.id)).then((snapshot) => {
-          if (snapshot.exists()) {
-                const data = snapshot.val();
-                const theFav = catalogue?.find((i: IProduct) => {
-                    return i.id === id
-                })
-                let updatedData= {};
-                if(data?.favProducts?.length === undefined ?? false){
-                    updatedData = {
-                        ...data,
-
-                        favProducts: [theFav],
-                    }
-                }else{
-                    if(data?.favProducts.some((i: IProduct) => {return i.id === id})){
-                        updatedData = {
-                            ...data,
-
-                            favProducts: data?.favProducts.filter((i: IProduct) => {return i.id !== id}),
-                        }
-                    }else{
-                        updatedData = {
-                            ...data,
-
-                            favProducts: [...data?.favProducts, theFav],
-                        }
-                    }
-                }
-                console.log(updatedData);
-                const updates = {};
-                //@ts-ignore
-                updates['mystore/' + user.id] = updatedData;
-                update(ref(database), updates);
-                //   user.cart = data.cart;
-                //   console.log(user);
-                let uUser = {
-                    ...updatedData,
-                    id: user.id
-                }
-                setUser(uUser);
-                // getCart();
-          }else{
-             console.log('no data available');
-          }
-      }).catch((error) => {
-          console.log(error);
-       })
-      }
-
 
     useEffect(() => {
         getUserData(user.id);
@@ -181,14 +130,14 @@ const Cart:React.FC<UserData & EditData> = (props) => {
             <div className={style.container}>
                 <h3>Cart</h3>
 
-                <div className={style.cat}>
+                {/* <div className={style.cat}>
                     <ul className={style.block}>
                         <li className={style.active}>Shipping and payment</li>
                         <li>Favorites</li>
                         <li>Cart</li>
                     </ul>
                 </div>
-            
+             */}
                 <div className={style.cartContainer}>
 
                     <div className={style.itemsContainer}>

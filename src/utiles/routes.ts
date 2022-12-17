@@ -7,6 +7,8 @@ export enum routes {
     cart="cart",
     profile="profile",
     product="product/:id",
+    services="services",
+    favs="favs",
 
 }
 

@@ -17,10 +17,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { IUser } from './utiles/CatalogueContext';
 import { auth, database  } from './utiles';
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
+import { FavsContext } from './utiles/FavsContext';
+import Services from './components/Services/Services';
 
 function App() {
   
-  const [catalogue, setCatalogue] = useState<IProduct | {}>([]);
+  const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
 
   useEffect(() => {
@@ -37,9 +39,8 @@ function App() {
         console.log(currentUser);
         console.log(user);
         getUserData(user.uid);
-        // writeUserData(currentUser.id, currentUser.name, currentUser.favProducts, currentUser.cart);
     } else {
-        setUser(null); //
+        setUser(null); 
         console.error('User is signed out');
     }
     });
@@ -57,7 +58,6 @@ function App() {
             user.cart = dbCart.cart;
             console.log(user);
             setUser(user);
-            //getCart();
         }else{
            console.log('no data available');
         }
@@ -110,7 +110,6 @@ function App() {
             }
             console.log(data);
             setUser(data);  
-            //oldCart.cart = [...oldCart.cart, product];
             await update(ref(database, 'mystore/'+ id), oldCart);
         }
         try {
@@ -121,25 +120,55 @@ function App() {
     return null; 
   }
 
-  // async function addFavs(id: string) {
-  //   const dbRef = ref(database);
-  //   await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //         console.log(snapshot.val());
-  //         const data = snapshot.val();
-  //         console.log(data.cart);
-          
-  //         user.cart = data.cart;
-  //         console.log(user);
-  //         setUser(user);
-  //        // getCart();
-  //     }else{
-  //        console.log('no data available');
-  //     }
-  // }).catch((error) => {
-  //     console.log(error);
-  //  })
-  // }
+
+  async function toggleFavs(id: string) {
+    const dbRef = ref(database);
+    console.log(catalogue);
+    await get(child(dbRef, 'mystore/'+ user.id)).then((snapshot) => {
+      if (snapshot.exists()) {
+            const data = snapshot.val();
+            const theFav = catalogue?.find((i: IProduct) => {
+                return i.id === id
+            })
+            let updatedData= {};
+            if(data?.favProducts?.length === undefined ?? false){
+                updatedData = {
+                    ...data,
+
+                    favProducts: [theFav],
+                }
+            }else{
+                if(data?.favProducts.some((i: IProduct) => {return i.id === id})){
+                    updatedData = {
+                        ...data,
+
+                        favProducts: data?.favProducts.filter((i: IProduct) => {return i.id !== id}),
+                    }
+                }else{
+                    updatedData = {
+                        ...data,
+
+                        favProducts: [...data?.favProducts, theFav],
+                    }
+                }
+            }
+            console.log(updatedData);
+            const updates = {};
+            //@ts-ignore
+            updates['mystore/' + user.id] = updatedData;
+            update(ref(database), updates);
+            let uUser = {
+                ...updatedData,
+                id: user.id
+            }
+            setUser(uUser);
+      }else{
+         console.log('no data available');
+      }
+  }).catch((error) => {
+      console.log(error);
+   })
+  }
 
 
   return (
@@ -147,7 +176,8 @@ function App() {
         <Header/>
         <CatalogueContext.Provider value={{catalogue, setCatalogue}}>
           <UserContext.Provider value={{user, setUser}}>
-            <Routes>
+            <FavsContext.Provider value={{toggleFavs}}>
+              <Routes>
               <Route path={routes.home} element={<Home/>}/>
               <Route path={routes.catalogue} element={<Catalogue getUserData={getUserData} editUserData={editUserData} writeUserData={writeUserData}/>}>
                 {/* <Route index={true} path={routes.product} element={<Product/>}/> */}
@@ -155,7 +185,10 @@ function App() {
               <Route path={"catalogue/product/:id"} element={<Product editUserData={editUserData} writeUserData={writeUserData}/>}/>
               <Route path={routes.cart} element={<Cart editUserData={editUserData} writeUserData={writeUserData}/>}/>
               <Route path={routes.profile} element={<Profile />}/>
+              <Route path={routes.services} element={<Services />}/>
+              
             </Routes>
+            </FavsContext.Provider>
           </UserContext.Provider>  
         </CatalogueContext.Provider>
         <Footer/>
