@@ -23,24 +23,66 @@ const Profile: React.FC = () => {
     const [password, setPassword] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
 
-    useEffect(() => {
-            onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log(user);
-                const currentUser: IUser = {
-                    id: user.uid,
-                    name: user.displayName,
-                    favProducts: [],
-                    cart: [],
-                }
-                setUser(currentUser);
-            } else {
-                setUser(null); //
-                console.error('User is signed out');
-            }
-            });
-            console.log(user);
-    }, []);
+    // useEffect(() => {  ///убрать
+    //         onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             console.log(user);
+    //             const currentUser: IUser = {
+    //                 id: user.uid,
+    //                 name: user.displayName,
+    //                 favProducts: [],
+    //                 cart: [],
+    //             }
+    //             setUser(currentUser);
+    //         } else {
+    //             setUser(null); //
+    //             console.error('User is signed out');
+    //         }
+    //         });
+    //         console.log(user);
+    // }, []);
+
+
+    
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => {
+    //     if (user) {
+    //         console.log(user);
+    //         const currentUser: IUser = {
+    //             id: user.uid,
+    //             name: user.displayName,
+    //             favProducts: [],
+    //             cart: [],
+    //         }
+    //         //setUser(currentUser);
+    //         console.log(currentUser);
+    //         //
+    //         const dbRef = ref(database);
+    //         get(child(dbRef, 'mystore/'+ user.uid)).then((snapshot) => {
+    //           if (snapshot.exists()) {
+    //             console.log(snapshot.val());
+    //             const dbInfo = snapshot.val();
+    //             console.log(dbInfo.cart);
+    //             if(dbInfo?.cart?.length > 0 ?? false){
+    //               currentUser.cart = dbInfo.cart;
+    //             }if(dbInfo?.favProducts?.length > 0 ?? false){
+    //               currentUser.favProducts = dbInfo.favProducts;
+    //             }
+    //             setUser(currentUser);
+    //           }else{
+    //             console.log('no data available');
+    //          }
+    //         })
+            
+    //         //getUserData(user.uid);
+    //     } else {
+    //         console.error('User is signed out');
+    //     }
+    //     });
+    //     console.log(user);
+    //   }, []);
+    
+
     
 
 const registerEmailAndPass = async (e: FormEvent) => {
@@ -80,7 +122,7 @@ const logOut = async (e:FormEvent) => {
 
 useEffect(() => {
     getTotal();
-}, [])
+})
 
 const getTotal = () => {
     if(user.cart.length > 0 ?? false){

@@ -27,6 +27,11 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
     const navigate = useNavigate();
     const {toggleFavs} = useContext<any>(FavsContext);
+
+    useEffect(() => {
+      setLoading(false);      
+    
+}, [])
     
     const getCategory = (cat: string) =>{
         const filteredResult: Array<{}> = catalogue.filter((item: { category: string}, i: string) => {
@@ -38,21 +43,10 @@ const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
         setSelectedCategory(filteredResult);
     }
 
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then (response => {
-                if (response.ok) {
-                    return response.json();
-                }
-            }) 
-            .then(data => {
-                setCatalogue(data);
-                setLoading(false);
-            })
-    }, [])
+
 
    const  getToCart = async(id: string) => {
-        await getUserData(user.id);
+       // await getUserData(user.id);
         if(user){
             let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
                 if(item.id === id){

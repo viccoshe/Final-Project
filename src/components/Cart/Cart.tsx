@@ -17,52 +17,62 @@ import { FavsContext } from "../../utiles/FavsContext";
 import { CartContext } from "../../utiles/cartActions";
 //@ts-ignore
 import Arrow from "../../img/arrow.svg.svg";
-
-
+import Loader from "../../utiles/Loader/Loader";
 
 const Cart:React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
-    const [counter, setCounter]  = useState<number>(0);
-    const [cart, setCart]  = useState<any>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const {toggleFavs} = useContext<any>(FavsContext);
     const {deleteFromCart, removeOneQuantity, getToCart} = useContext<any>(CartContext);
-    //const refCont = useRef<HTMLDivElement>();
 
-    // if(user){
-    //     console.log(user.cart);
-    //     getUserData(user.id);
+    // async function getUserData(id: string | undefined){
+    //     const dbRef = ref(database);
+    //       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
+    //         if (snapshot.exists()) {
+    //             console.log(snapshot.val());
+    //             const dbInfo = snapshot.val();
+    //             console.log(dbInfo.cart);
+    //             if(dbInfo?.cart.length > 0 ?? false){
+    //               user.cart = dbInfo.cart;
+    //             }if(dbInfo?.favProducts.length > 0 ?? false){
+    //               user.favProducts = dbInfo.favProducts;
+    //             }
+    //             console.log(user);
+    //             setUser(user);
+    //         }else{
+    //            console.log('no data available');
+    //         }
+    //     }).catch((error) => {
+    //         console.log(error);
+    //      })
     // }
 
-    async function getUserData(id: string | undefined) {
-        const dbRef = ref(database);
-          await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-            if (snapshot.exists()) {
-                console.log(snapshot.val());
-                const data = snapshot.val();
-                console.log(data.cart);
-                user.cart = data.cart;
-                console.log(user);
-                setUser(user);
-               // getCart();
-            }else{
-               console.log('no data available');
-            }
-        }).catch((error) => {
-            console.log(error);
-         })
-    }
+    // useEffect(() => {
+    //     if(user?.cart.length <= 0 ?? false){
+    //         getUserData(user.id);
+    //         setLoading(false);  
+    //     }else{
+    //         setLoading(false); 
+    //     }
+        
+    // }, [])
 
-
-    useEffect(() => {
-        getUserData(user.id);
-    }, [user])
-
-
-
-
+    
+    if (loading) {
     return (
+        <main style={{
+            minHeight: '70vh',
+            height: 'fit-content',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'}}>
+            <div><Loader/></div> 
+        </main>
+        
+    )
+    }else return (
         <main className={style.main}>
             <div className={style.container}>
                 <h3>Cart</h3>
@@ -70,9 +80,9 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                     
 
                     <div className={style.itemsContainer}>
-                        {user && user.cart.length > 0 
+                        {user && user?.cart.length > 0 
                         ?
-                            user.cart.map((item: IProduct, i: string) => {
+                            user?.cart.map((item: IProduct, i: string) => {
                             console.log(item);
                             const {id, title, price, description: desc, category: cat, image, counter: count} = item;
                             return  <div key={id} className={style.cartItem}>
@@ -98,9 +108,9 @@ const Cart:React.FC<UserData & EditData> = (props) => {
 
                     <div className={style.orderContainer}>
                         <h3>Your order</h3>
-                    {user.cart.length > 0
+                    {user?.cart.length > 0
                     ?
-                    user.cart.map((item: IProduct, i: string) =>{
+                    user?.cart.map((item: IProduct, i: string) =>{
                         const {id, title, price, description: desc, category: cat, image, counter: count} = item;
                         return <div className={style.orderItem}>
                             <div>
@@ -118,36 +128,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                     </div>
                 </div>
             </div>
-
-
-
-            {/* <div className={style.recommenContainer}>
-
-            <div className={style.recommendItems}>
-                        {user && user.cart.length > 0 
-                        ?
-                            catalogue?.cart.map((item: IProduct, i: string) => {
-                            console.log(item);
-                            const {id, title, price, description: desc, category: cat, image, counter: count} = item;
-                            return  <div key={id} className={style.cartItem}>
-                                        <div className={style.img}><img src={image} alt="product" /></div>
-                                        <h6 className={style.cartTitle}>{title}</h6>
-                                        <p className={style.cartDesc}></p>
-                                        <div className={style.buttons}>
-                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : Like} alt="like" /></div>
-                                            <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
-                                            <div className={style.counter}>{count}</div>
-                                            <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
-                                            <div onClick={() =>{deleteFromCart(id)}} className={style.remove} ><img src={Bin} alt="bin" /></div>
-                                        </div>
-                                </div>
-                                
-                        }) 
-                        : <h3>Cart is empty</h3>
-                        }
-                    </div>
-                    <div className={style.arrow}><img src={Arrow} alt="arrow" /></div>
-            </div> */}
         </main>
     )
 }   

@@ -26,28 +26,70 @@ function App() {
   
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
+  // const dbUser  = auth.currentUser;
+  let currentUser: any;
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log(user);
-        const currentUser: IUser = {
-            id: user.uid,
-            name: user.displayName,
-            favProducts: [],
-            cart: [],
-        }
-        setUser(currentUser);
-        console.log(currentUser);
-        console.log(user);
-        getUserData(user.uid);
-    } else {
-        setUser(null); 
-        console.error('User is signed out');
+//   useEffect(() => {
+
+// }, []);
+
+async function getNewUserData(){
+  const dbUser  = auth.currentUser;
+  const dbRef = ref(database);
+  if(!user ??  user === null){
+    if(dbUser){
+    console.log(dbUser);
+    currentUser = {
+                  id: dbUser.uid,
+                  name: dbUser.displayName,
+                  favProducts: [],
+                  cart: [],
     }
-    });
-    console.log(user);
-  }, []);
+    console.log(currentUser);
+    }
+  }
+      await get(child(dbRef, 'mystore/'+ currentUser.id)).then((snapshot) => {
+        if (snapshot.exists()) {
+            console.log(snapshot.val());
+            const userInfo = snapshot.val();
+            console.log(userInfo.cart);
+            if(userInfo?.cart?.length > 0 ?? false){
+              currentUser.cart = userInfo.cart;
+            }if(userInfo?.favProducts?.length > 0 ?? false){
+              currentUser.favProducts = userInfo.favProducts;
+            }
+            console.log(currentUser);
+            setUser(currentUser);
+        }else{
+           console.log('no data available');
+        }
+    }).catch((error) => {
+        console.log(error);
+     })
+}
+
+
+  
+//   useEffect(() => {
+//     onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//         console.log(user);
+//         const currentUser: IUser = {
+//             id: user.uid,
+//             name: user.displayName,
+//             favProducts: [],
+//             cart: [],
+//         }
+//         setUser(currentUser);
+//         console.log(currentUser);
+//         console.log(user);
+//         getUserData(user.uid);
+//     } else {
+//         console.error('User is signed out');
+//     }
+//     });
+//     console.log(user);
+//   }, []);
 
   
   async function getUserData(id: string | undefined){
@@ -55,9 +97,14 @@ function App() {
       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
         if (snapshot.exists()) {
             console.log(snapshot.val());
-            const dbCart = snapshot.val();
-            console.log(dbCart.cart);
-            user.cart = dbCart.cart;
+            const dbInfo = snapshot.val();
+            console.log(dbInfo.cart);
+            if(dbInfo?.cart?.length > 0 ?? false){
+              user.cart = dbInfo.cart;
+            }if(dbInfo?.favProducts?.length > 0 ?? false){
+              user.favProducts = dbInfo.favProducts;
+            }
+            
             console.log(user);
             setUser(user);
         }else{
@@ -68,7 +115,6 @@ function App() {
      })
 }
 
-  
   async function writeUserData(id: string,  name: string | null,  product: IProduct): Promise<any> {
       const counter = 1;
       try {
@@ -121,7 +167,7 @@ function App() {
     }
     return null; 
   }
-
+  
 
   async function toggleFavs(id: string) {
     const dbRef = ref(database);
@@ -172,8 +218,6 @@ function App() {
    })
   }
 
-
-
   ////
 
   const getToCart = (id: string): Array<IProduct> | null => {
@@ -206,7 +250,6 @@ const removeOneQuantity = (id: string): Array<IProduct> | null => {
                         deleteFromCart(id); 
                     }else{
                       item.counter -= 1;
-                      
                     }
                 }
             })
@@ -247,7 +290,19 @@ const deleteFromCart = (id: string): Array<IProduct> | null => {
 }
 
 
-  /////
+useEffect(() => {
+  fetch('https://fakestoreapi.com/products')
+      .then (response => {
+          if (response.ok) {
+              return response.json();
+          }
+      }) 
+      .then(data => {
+          setCatalogue(data);
+      })
+      getNewUserData();
+      
+}, [])
 
 
   return (
@@ -256,14 +311,14 @@ const deleteFromCart = (id: string): Array<IProduct> | null => {
         <CatalogueContext.Provider value={{catalogue, setCatalogue}}>
           <UserContext.Provider value={{user, setUser}}>
             <FavsContext.Provider value={{toggleFavs}}>
-              <CartContext.Provider value={{deleteFromCart, removeOneQuantity, getToCart}}>
+              <CartContext.Provider value={{deleteFromCart, removeOneQuantity, getToCart, getUserData}}>
                 <Routes>
               <Route path={routes.home} element={<Home/>}/>
               <Route path={routes.catalogue} element={<Catalogue getUserData={getUserData} editUserData={editUserData} writeUserData={writeUserData}/>}>
                 {/* <Route index={true} path={routes.product} element={<Product/>}/> */}
               </Route>
-              <Route path={"catalogue/product/:id"} element={<Product editUserData={editUserData} writeUserData={writeUserData}/>}/>
-              <Route path={routes.cart} element={<Cart editUserData={editUserData} writeUserData={writeUserData}/>}/>
+              <Route path={"catalogue/product/:id"} element={<Product/>}/>
+              <Route path={routes.cart} element={<Cart  editUserData={editUserData} writeUserData={writeUserData}/>}/>
               <Route path={routes.profile} element={<Profile />}/>
               <Route path={routes.services} element={<Services editUserData={editUserData} writeUserData={writeUserData} />}/>
               
