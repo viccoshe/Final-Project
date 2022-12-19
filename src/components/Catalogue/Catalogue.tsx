@@ -109,7 +109,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                                     <p className={style.productPrice}>{price} $</p> 
                                     <div className={style.buttons}>
                                         <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
-                                        <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
+                                        <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
                                 </div>
                             </div> 
                             

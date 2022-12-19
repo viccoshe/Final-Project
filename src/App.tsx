@@ -27,8 +27,6 @@ function App() {
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
  
-
-  async function getNewUserData(){
     let currentUser: any;
     const dbRef = ref(database);
     if(!user ??  user === null){
@@ -37,20 +35,29 @@ function App() {
                 currentUser = {
                     id: newUser.uid,
                     name: newUser.displayName,
-                    // favProducts: [],
-                    // cart: [],
+                    favProducts: [],
+                    cart: [],
                 }
             console.log(currentUser);
+            getNewUserData(currentUser)
             } else {
                 console.error('User is signed out');
             }
         });
+}  
 
+async function getNewUserData(currentUser: IUser){
         await get(child(dbRef, 'mystore/'+ currentUser?.id)).then((snapshot) => {
             if (snapshot.exists()) {
                 console.log(snapshot.val());
-                let dbUser = snapshot.val();
-                setUser(dbUser);
+                const dbUser = snapshot.val();
+                  if(dbUser?.cart?.length > 0 ?? false){
+                    currentUser.cart = dbUser.cart;
+                  }if(dbUser?.favProducts?.length > 0 ?? false){
+                    currentUser.favProducts = dbUser.favProducts;
+                  }
+                console.log(currentUser);
+                setUser(currentUser);
             }else{
               console.log('no data available');
             }
@@ -58,7 +65,6 @@ function App() {
             console.log(error);
         })     
     }
-}
 
 // const resp = await get(child(ref(database), 'mystore/'+ currentUser?.id));
 // if(resp != null){
@@ -232,7 +238,7 @@ function App() {
 
   const getToCart = (id: string): Array<IProduct> | null => {
     if(user.cart){
-        let currentCartProduct: IProduct = user.cart.find((item: IProduct) => {
+        let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
             if(item.id === id){
                 return item;
             };
@@ -310,7 +316,8 @@ useEffect(() => {
       .then(data => {
           setCatalogue(data);
       })
-      getNewUserData();
+      //getNewUserData();
+      console.error('tap');
 }, [])
 
 

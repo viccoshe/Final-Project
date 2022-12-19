@@ -90,7 +90,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                                         <h6 className={style.cartTitle}>{title}</h6>
                                         <p className={style.cartDesc}></p>
                                         <div className={style.buttons}>
-                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : Like} alt="like" /></div>
+                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : Like} alt="like" /></div>
                                             <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
                                             <div className={style.counter}>{count}</div>
                                             <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
