@@ -311,7 +311,7 @@ useEffect(() => {
           setCatalogue(data);
       })
       getNewUserData();
-}, [user, setUser])
+}, [])
 
 
 
