@@ -19,8 +19,8 @@ import { UserData, EditData, GetData } from "../../utiles/buttonTypes";
 import { FavsContext } from "../../utiles/FavsContext";
 
 
-const Catalogue: React.FC<UserData & EditData & GetData> = (props) => {
-    const {writeUserData, editUserData, getUserData} = props;
+const Catalogue: React.FC<UserData & EditData> = (props) => {
+    const {writeUserData, editUserData} = props;
     const [loading, setLoading] = useState<boolean>(true);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);

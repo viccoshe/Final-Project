@@ -1,7 +1,7 @@
 import { FormEvent, MouseEvent, useEffect, useState, useContext} from "react";
 import { UserContext } from "../../utiles/UserContext";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utiles";
+
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 //@ts-ignore
 import style from "./Profile.module.css";
@@ -13,6 +13,8 @@ import { app } from "../../utiles";
 import { UserCredential, User } from "firebase/auth";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import { IProduct } from "../../utiles/UserContext";
+import {auth,  database  } from '../../utiles';
+import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
 
 
 const Profile: React.FC = () => {
@@ -41,6 +43,51 @@ const Profile: React.FC = () => {
     //         });
     //         console.log(user);
     // }, []);
+
+
+
+// let currentUser: any;
+
+
+// async function getNewUserData(){
+//     const dbRef = ref(database);
+//     if(!user ??  user === null){
+//         onAuthStateChanged(auth, (newUser) => {
+//             if(newUser) {
+//                 currentUser = {
+//                     id: newUser.uid,
+//                     name: newUser.displayName,
+//                     favProducts: [],
+//                     cart: [],
+//                 }
+//             console.log(currentUser);
+//             } else {
+//                 console.error('User is signed out');
+//             }
+//         });
+
+//         await get(child(dbRef, 'mystore/'+ currentUser?.id)).then((snapshot) => {
+//             if (snapshot.exists()) {
+//                 console.log(snapshot?.val());
+//                 const userInfo = snapshot?.val();
+//                 console.log(userInfo?.cart);
+//                 if(userInfo?.cart?.length > 0 ?? false){
+//                   currentUser.cart = userInfo.cart;
+//                 }if(userInfo?.favProducts?.length > 0 ?? false){
+//                   currentUser.favProducts = userInfo.favProducts;
+//                 }
+//                 console.log(currentUser);
+//                 setUser(currentUser);
+//             }else{
+//               console.log('no data available');
+//             }
+//         }).catch((error) => {
+//             console.log(error);
+//         })     
+//     }
+// }
+        
+
 
 
     

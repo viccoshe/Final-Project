@@ -57,7 +57,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
     //         setLoading(false); 
     //     }
         
-    // }, [])
+    // })
 
     
     if (loading) {

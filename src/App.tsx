@@ -15,7 +15,7 @@ import { UserCredential } from 'firebase/auth';
 import {User} from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { IUser } from './utiles/CatalogueContext';
-import { auth, database  } from './utiles';
+import {auth,  database  } from './utiles';
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
 import { FavsContext } from './utiles/FavsContext';
 import Services from './components/Services/Services';
@@ -26,47 +26,55 @@ function App() {
   
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
-  // const dbUser  = auth.currentUser;
-  let currentUser: any;
+ 
 
-//   useEffect(() => {
-
-// }, []);
-
-async function getNewUserData(){
-  const dbUser  = auth.currentUser;
-  const dbRef = ref(database);
-  if(!user ??  user === null){
-    if(dbUser){
-    console.log(dbUser);
-    currentUser = {
-                  id: dbUser.uid,
-                  name: dbUser.displayName,
-                  favProducts: [],
-                  cart: [],
-    }
-    console.log(currentUser);
-    }
-  }
-      await get(child(dbRef, 'mystore/'+ currentUser.id)).then((snapshot) => {
-        if (snapshot.exists()) {
-            console.log(snapshot.val());
-            const userInfo = snapshot.val();
-            console.log(userInfo.cart);
-            if(userInfo?.cart?.length > 0 ?? false){
-              currentUser.cart = userInfo.cart;
-            }if(userInfo?.favProducts?.length > 0 ?? false){
-              currentUser.favProducts = userInfo.favProducts;
-            }
+  async function getNewUserData(){
+    let currentUser: any;
+    const dbRef = ref(database);
+    if(!user ??  user === null){
+        onAuthStateChanged(auth, (newUser) => {
+            if(newUser) {
+                currentUser = {
+                    id: newUser.uid,
+                    name: newUser.displayName,
+                    // favProducts: [],
+                    // cart: [],
+                }
             console.log(currentUser);
-            setUser(currentUser);
-        }else{
-           console.log('no data available');
-        }
-    }).catch((error) => {
-        console.log(error);
-     })
+            } else {
+                console.error('User is signed out');
+            }
+        });
+
+        await get(child(dbRef, 'mystore/'+ currentUser?.id)).then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log(snapshot.val());
+                let dbUser = snapshot.val();
+                setUser(dbUser);
+            }else{
+              console.log('no data available');
+            }
+        }).catch((error) => {
+            console.log(error);
+        })     
+    }
 }
+
+// const resp = await get(child(ref(database), 'mystore/'+ currentUser?.id));
+// if(resp != null){
+//   console.log(resp.val());
+//   const userInfo = resp.val();
+//   console.log(userInfo?.cart);
+//   if(userInfo?.cart?.length > 0 ?? false){
+//     currentUser.cart = userInfo.cart;
+//   }if(userInfo?.favProducts?.length > 0 ?? false){
+//     currentUser.favProducts = userInfo.favProducts;
+//   }
+//   console.log(currentUser);
+//   setUser(currentUser);
+// }else{
+//     console.error('no data available');
+// }
 
 
   
@@ -92,28 +100,30 @@ async function getNewUserData(){
 //   }, []);
 
   
-  async function getUserData(id: string | undefined){
-    const dbRef = ref(database);
-      await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-        if (snapshot.exists()) {
-            console.log(snapshot.val());
-            const dbInfo = snapshot.val();
-            console.log(dbInfo.cart);
-            if(dbInfo?.cart?.length > 0 ?? false){
-              user.cart = dbInfo.cart;
-            }if(dbInfo?.favProducts?.length > 0 ?? false){
-              user.favProducts = dbInfo.favProducts;
-            }
+//   async function getUserData(id: string | undefined){
+
+//     const dbRef = ref(database);
+
+//       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
+//         if (snapshot.exists()) {
+//             console.log(snapshot.val());
+//             const dbInfo = snapshot.val();
+//             console.log(dbInfo.cart);
+//             if(dbInfo?.cart?.length > 0 ?? false){
+//               user.cart = dbInfo.cart;
+//             }if(dbInfo?.favProducts?.length > 0 ?? false){
+//               user.favProducts = dbInfo.favProducts;
+//             }
             
-            console.log(user);
-            setUser(user);
-        }else{
-           console.log('no data available');
-        }
-    }).catch((error) => {
-        console.log(error);
-     })
-}
+//             console.log(user);
+//             setUser(user);
+//         }else{
+//            console.log('no data available');
+//         }
+//     }).catch((error) => {
+//         console.log(error);
+//      })
+// }
 
   async function writeUserData(id: string,  name: string | null,  product: IProduct): Promise<any> {
       const counter = 1;
@@ -301,8 +311,9 @@ useEffect(() => {
           setCatalogue(data);
       })
       getNewUserData();
-      
-}, [])
+}, [user, setUser])
+
+
 
 
   return (
@@ -311,10 +322,10 @@ useEffect(() => {
         <CatalogueContext.Provider value={{catalogue, setCatalogue}}>
           <UserContext.Provider value={{user, setUser}}>
             <FavsContext.Provider value={{toggleFavs}}>
-              <CartContext.Provider value={{deleteFromCart, removeOneQuantity, getToCart, getUserData}}>
+              <CartContext.Provider value={{deleteFromCart, removeOneQuantity, getToCart}}>
                 <Routes>
               <Route path={routes.home} element={<Home/>}/>
-              <Route path={routes.catalogue} element={<Catalogue getUserData={getUserData} editUserData={editUserData} writeUserData={writeUserData}/>}>
+              <Route path={routes.catalogue} element={<Catalogue editUserData={editUserData} writeUserData={writeUserData}/>}>
                 {/* <Route index={true} path={routes.product} element={<Product/>}/> */}
               </Route>
               <Route path={"catalogue/product/:id"} element={<Product/>}/>
