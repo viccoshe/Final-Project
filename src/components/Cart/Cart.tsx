@@ -16,8 +16,11 @@ import { UserData, EditData} from "../../utiles/buttonTypes";
 import { FavsContext } from "../../utiles/FavsContext";
 import { CartContext } from "../../utiles/cartActions";
 //@ts-ignore
-import Arrow from "../../img/arrow.svg.svg";
+import ArrowRight from "../../img/arrow-right.svg";
+//@ts-ignore
+import ArrowLeft from "../../img/arrow-left.svg";
 import Loader from "../../utiles/Loader/Loader";
+
 
 const Cart:React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
@@ -26,38 +29,25 @@ const Cart:React.FC<UserData & EditData> = (props) => {
     const [loading, setLoading] = useState<boolean>(false);
     const {toggleFavs} = useContext<any>(FavsContext);
     const {deleteFromCart, removeOneQuantity, getToCart} = useContext<any>(CartContext);
+    const windowRef = useRef<HTMLDivElement>(null);
+    const [offset, setOffset] = useState<number>(0);
 
-    // async function getUserData(id: string | undefined){
-    //     const dbRef = ref(database);
-    //       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-    //         if (snapshot.exists()) {
-    //             console.log(snapshot.val());
-    //             const dbInfo = snapshot.val();
-    //             console.log(dbInfo.cart);
-    //             if(dbInfo?.cart.length > 0 ?? false){
-    //               user.cart = dbInfo.cart;
-    //             }if(dbInfo?.favProducts.length > 0 ?? false){
-    //               user.favProducts = dbInfo.favProducts;
-    //             }
-    //             console.log(user);
-    //             setUser(user);
-    //         }else{
-    //            console.log('no data available');
-    //         }
-    //     }).catch((error) => {
-    //         console.log(error);
-    //      })
-    // }
+    const itemWidth = 288;
 
-    // useEffect(() => {
-    //     if(user?.cart.length <= 0 ?? false){
-    //         getUserData(user.id);
-    //         setLoading(false);  
-    //     }else{
-    //         setLoading(false); 
-    //     }
-        
-    // })
+
+    const dragToTheLeft = () => {
+        setOffset((currentOffset) => {
+            const newOffset = currentOffset - itemWidth
+            const maxOffset = -(itemWidth * (user?.cart?.length - 3));
+            return Math.max(newOffset, maxOffset);
+        });
+    }
+    const dragToTheRight = () => {
+        setOffset((currentOffset) => {
+            const newOffset = currentOffset + itemWidth
+            return Math.min(newOffset, 0);
+        });
+    }
 
     
     if (loading) {
@@ -78,8 +68,12 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                 <h3>Cart</h3>
                 <div className={style.cartContainer}>
                     
+                <div className={style.window}>
+                    <div style={{
+                            transform: `translateX(${offset}px)`
+                        }}  
+                        className={style.itemsContainer}>
 
-                    <div className={style.itemsContainer}>
                         {user && user?.cart.length > 0 
                         ?
                             user?.cart.map((item: IProduct, i: string) => {
@@ -101,29 +95,32 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                         }) 
                         : <h3>Cart is empty</h3>
                         }
-                    </div>
+                    </div>                                 
+                </div>
 
-                    <div className={style.arrow}><img src={Arrow} alt="arrow" /></div>
-                      
+                <div onClick={() =>{dragToTheLeft()}} className={style.arrow}><img src={ArrowRight} alt="arrow" /></div>
+                <div onClick={() =>{dragToTheRight()}} className={style.arrowRight}><img src={ArrowLeft} alt="arrow" /></div>
 
+
+                
                     <div className={style.orderContainer}>
                         <h3>Your order</h3>
-                    {user?.cart.length > 0
-                    ?
-                    user?.cart.map((item: IProduct, i: string) =>{
-                        const {id, title, price, description: desc, category: cat, image, counter: count} = item;
-                        return <div className={style.orderItem}>
-                            <div>
-                                <div className={style.orderTitle}>{title}</div>
-                                <div className={style.orderDesc}></div>
-                                <div>x {count}</div>
-                            </div>
-                            <div className={style.orderPrice}>{price} $</div>
-                        </div>                        
-                    })
-                    :
-                        <h3>Add something to your cart</h3>
-                    }
+                        {user?.cart.length > 0
+                        ?
+                        user?.cart.map((item: IProduct, i: string) =>{
+                            const {id, title, price, description: desc, category: cat, image, counter: count} = item;
+                            return <div className={style.orderItem}>
+                                <div>
+                                    <div className={style.orderTitle}>{title}</div>
+                                    <div className={style.orderDesc}></div>
+                                    <div>x {count}</div>
+                                </div>
+                                <div className={style.orderPrice}>{price} $</div>
+                            </div>                        
+                        })
+                        :
+                            <h3>Add something to your cart</h3>
+                        }
                         <button className={style.button}>Make order</button>
                     </div>
                 </div>

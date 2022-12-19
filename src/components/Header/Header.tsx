@@ -6,11 +6,14 @@ import Cart from "../../img/ico-cart.svg";
 import Search from "../../img/ico-profile1.svg";
 //@ts-ignore
 import style from "./Header.module.css";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utiles/routes";
 
 
+
 const Header: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <header className={style.header}>
             <nav className={style.nav}>
@@ -22,8 +25,7 @@ const Header: React.FC = () => {
                 </ul>
             </nav>
             <div className={style.header_buttons}>
-                <div className={style.icon}><img src={Search} alt="search" /></div>
-                
+                {/* <div className={style.icon}><img src={Search} alt="search" /></div> */}
                 <div className={style.icon}>
                     <Link to={routes.cart}><img src={Cart} alt="cart" /></Link>    
                 </div>

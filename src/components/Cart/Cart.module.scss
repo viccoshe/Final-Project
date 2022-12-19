@@ -53,6 +53,12 @@
                 }
             }
 
+            .window{
+                height: 100%;
+                max-width: 860px;
+                overflow: hidden;
+            }
+
 
             .cartContainer{
                 position: relative;
@@ -60,14 +66,26 @@
                 display: flex;
                 padding: 128px 158px;
                 max-width: 1440px;
-                width: 1440px;
-                justify-content: center;
+                width: 100%;
+                justify-content: space-between;
                 align-items: center;
                 padding: 0;
+                
+                
+                
                 .arrow{
                     position: absolute;
-                    top: 50%;
-                    right: 28%;
+                    top: 42%;
+                    right: 25%;
+                    z-index: 6;
+                    cursor: pointer;
+                }
+                .arrowRight{
+                    position: absolute;
+                    left: -2.5%;
+                    top: 42%;
+                    z-index: 6;
+                    cursor: pointer; 
                 }
 
                 .itemsContainer{
@@ -75,8 +93,16 @@
                     max-width: 867px;
                     width: 100%;
                     align-items: center;
-                    overflow: scroll;
+                    // overflow: scroll;
                     margin-right: 20px;
+                    //transform: translateX(-32%);
+                    transition: translate;
+                    transition-property: transorm;
+                    transition-duration: 300ms;
+                    -webkit-transition: 0.5s ease-out;
+                    -moz-transition:  0.5s ease-out;
+                    -o-transition:  0.5s ease-out;
+                    transition:  0.5s ease-out;
 
                     .cartItem{
                         max-width: 264px;
@@ -139,6 +165,7 @@
 
                 }
             }
+
 
             .orderContainer {
                 min-height: 332px;

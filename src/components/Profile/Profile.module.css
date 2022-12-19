@@ -11,7 +11,7 @@
   width: 100%;
   max-height: 580px;
   height: 100%;
-  margin: 0 auto;
+  margin: 0 15em 0;
 }
 .main .profileContainer .profileAvatar {
   width: 70px;
@@ -23,9 +23,37 @@
   font-size: 40px;
   text-align: center;
   line-height: 70px;
-  margin: 70px 20px 30px 0;
+  margin: 0 20px 30px 0;
 }
-.main .profileContainer .profileHeader {
+.main .profileContainer .settings {
+  list-style: none;
+  text-decoration: none;
+  letter-spacing: 0.1px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  padding: 0;
+}
+.main .profileContainer .settings a {
+  text-decoration: none;
+  display: block;
+  color: #B3A3A1;
+  padding-bottom: 20px;
+}
+.main .profileContainer .settings a:hover {
+  color: rgb(93, 44, 44);
+}
+.main .profileContainer .settings a li {
+  list-style: none;
+}
+.main .profileContainer .avatarContainer {
+  border: 3px solid red;
+  display: flex;
+  justify-content: start;
+  margin-top: 70px;
+}
+.main .profileContainer .avatarContainer .profileHeader {
   width: 560px;
   width: 100%;
   height: -webkit-fit-content;
@@ -35,16 +63,16 @@
   justify-content: center;
   flex-direction: column;
 }
-.main .profileContainer .profileHeader p {
+.main .profileContainer .avatarContainer .profileHeader p {
   text-align: left;
 }
-.main .profileContainer .profileHeader p span {
+.main .profileContainer .avatarContainer .profileHeader p span {
   font-weight: 600;
   font-size: 22px;
   line-height: 28px;
   color: #494A4A;
 }
-.main .profileContainer .profileHeader .total {
+.main .profileContainer .avatarContainer .total {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;

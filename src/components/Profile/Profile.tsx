@@ -25,113 +25,6 @@ const Profile: React.FC = () => {
     const [password, setPassword] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
 
-    // useEffect(() => {  ///убрать
-    //         onAuthStateChanged(auth, (user) => {
-    //         if (user) {
-    //             console.log(user);
-    //             const currentUser: IUser = {
-    //                 id: user.uid,
-    //                 name: user.displayName,
-    //                 favProducts: [],
-    //                 cart: [],
-    //             }
-    //             setUser(currentUser);
-    //         } else {
-    //             setUser(null); //
-    //             console.error('User is signed out');
-    //         }
-    //         });
-    //         console.log(user);
-    // }, []);
-
-
-
-// let currentUser: any;
-
-
-// async function getNewUserData(){
-//     const dbRef = ref(database);
-//     if(!user ??  user === null){
-//         onAuthStateChanged(auth, (newUser) => {
-//             if(newUser) {
-//                 currentUser = {
-//                     id: newUser.uid,
-//                     name: newUser.displayName,
-//                     favProducts: [],
-//                     cart: [],
-//                 }
-//             console.log(currentUser);
-//             } else {
-//                 console.error('User is signed out');
-//             }
-//         });
-
-//         await get(child(dbRef, 'mystore/'+ currentUser?.id)).then((snapshot) => {
-//             if (snapshot.exists()) {
-//                 console.log(snapshot?.val());
-//                 const userInfo = snapshot?.val();
-//                 console.log(userInfo?.cart);
-//                 if(userInfo?.cart?.length > 0 ?? false){
-//                   currentUser.cart = userInfo.cart;
-//                 }if(userInfo?.favProducts?.length > 0 ?? false){
-//                   currentUser.favProducts = userInfo.favProducts;
-//                 }
-//                 console.log(currentUser);
-//                 setUser(currentUser);
-//             }else{
-//               console.log('no data available');
-//             }
-//         }).catch((error) => {
-//             console.log(error);
-//         })     
-//     }
-// }
-        
-
-
-
-    
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //         console.log(user);
-    //         const currentUser: IUser = {
-    //             id: user.uid,
-    //             name: user.displayName,
-    //             favProducts: [],
-    //             cart: [],
-    //         }
-    //         //setUser(currentUser);
-    //         console.log(currentUser);
-    //         //
-    //         const dbRef = ref(database);
-    //         get(child(dbRef, 'mystore/'+ user.uid)).then((snapshot) => {
-    //           if (snapshot.exists()) {
-    //             console.log(snapshot.val());
-    //             const dbInfo = snapshot.val();
-    //             console.log(dbInfo.cart);
-    //             if(dbInfo?.cart?.length > 0 ?? false){
-    //               currentUser.cart = dbInfo.cart;
-    //             }if(dbInfo?.favProducts?.length > 0 ?? false){
-    //               currentUser.favProducts = dbInfo.favProducts;
-    //             }
-    //             setUser(currentUser);
-    //           }else{
-    //             console.log('no data available');
-    //          }
-    //         })
-            
-    //         //getUserData(user.uid);
-    //     } else {
-    //         console.error('User is signed out');
-    //     }
-    //     });
-    //     console.log(user);
-    //   }, []);
-    
-
-    
-
 const registerEmailAndPass = async (e: FormEvent) => {
     e.preventDefault();
     console.log(email, password);
@@ -194,13 +87,13 @@ const getTotal = () => {
                     <form onSubmit={registerEmailAndPass} action="" className="form">
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
                         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"/>
-                        <button type="submit">Sing Up / Зарегисртироваться</button>
+                        <button type="submit">Sing Up</button>
                     </form>
                     :
                     <form onSubmit={loginEmailAndPass} action="" className="form">
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
                         <input onChange={(e) => setPassword(e.target.value)} type="text" placeholder="Name and Surname"/>
-                        <button type="submit">Sing In / Войти</button>
+                        <button type="submit">Sing In</button>
                     </form>
                 }
                 <div>or</div>
@@ -212,9 +105,18 @@ const getTotal = () => {
         <main className={style.main}>
             <div className={style.profileContainer}>
                 <div className={style.profileHeader}>
-                    <div className={style.profileAvatar}>{user ? user?.name.slice(0, 1) : null}</div>
-                    <p>Good afternoon,<br/><span>{user ? user.name : ' guest'}</span></p>
-                    <div className={style.total}>Your total: {total.toFixed(2)}</div>
+                    <div className={style.avatarContainer}>
+                        <div className={style.profileAvatar}>{user ? user?.name.slice(0, 1) : null}</div>
+                        <p>Good afternoon,<br/><span>{user ? user.name : ' guest'}</span></p>
+                    </div>
+                    <ul className={style.settings}>
+                        <a href="#href"><li>My purchases</li></a>
+                        <a href="#href"><li>Points piggy bank</li></a>
+                        <a href="#href"><li>Payment settings</li></a>
+                        <a href="#href"><li>Settings</li></a>
+                        <a href="#href"><li>Support</li></a>
+                    </ul>
+                    <div className={style.total}>Your total:   {total.toFixed(2)}</div>
                     <div onClick={(e: MouseEvent) =>{logOut(e)}}><img src={Exit} alt="Exit" /></div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 //@ts-ignore
 import style from "./Catalogue.module.css";
 import  { useEffect, useState } from "react";
@@ -17,6 +17,7 @@ import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
 import { UserData, EditData, GetData } from "../../utiles/buttonTypes";
 import { FavsContext } from "../../utiles/FavsContext";
+import SearchBar from "../Header/SearchBar/SearchBar";
 
 
 const Catalogue: React.FC<UserData & EditData> = (props) => {
@@ -24,6 +25,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
     const [loading, setLoading] = useState<boolean>(true);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const [query, setQuery] = useState<Array<string>>([]);
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
     const navigate = useNavigate();
     const {toggleFavs} = useContext<any>(FavsContext);
@@ -43,6 +45,17 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
         setSelectedCategory(filteredResult);
     }
 
+//
+    const getQuery = (query: string) => {
+        const filteredResult: Array<{}> = catalogue.filter((item: { title: string}, i: string) => {
+            if(item.title.includes(query)){
+                return item;
+            }
+        })
+        console.log(filteredResult);
+        setSelectedCategory(filteredResult);
+    }
+//
 
 
    const  getToCart = async(id: string) => {
@@ -87,6 +100,20 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                     <div onClick={() => {getCategory('electronics')}} className={style.productCategory}>Electronics</div>
                     <div onClick={() => {getCategory('jewelery')}} className={style.productCategory}>Jewelery</div>
                 </div>
+
+                {/* <div className="search">
+                <form action="/" method="get">
+                    <label htmlFor="header-search">
+                        <span className={style.visuallyHidden}>Search</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        // name="s" 
+                    />
+                    <button onSubmit={(e:  React.FormEvent<HTMLInputElement>) => getQuery(e.currentTarget.value)} value={query} type="submit">Search</button>
+                </form>
+                </div> */}
 
                 <div className={style.productsContainer}>
 
