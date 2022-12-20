@@ -7,6 +7,7 @@
 .main .homeContainer {
   width: 100%;
   margin: 0 auto;
+  padding: auto 10px;
 }
 .main .homeContainer .promo {
   position: relative;
@@ -82,14 +83,13 @@
 .main .homeContainer .bestsellers {
   max-width: 1440px;
   width: 100%;
-  max-height: 900px;
+  max-height: 890px;
   height: 100%;
   background: #FFFFFF;
   display: flex;
   flex-flow: wrap;
   justify-content: center;
   align-items: center;
-  padding: 200px 0;
 }
 .main .homeContainer .bestsellers .bestsellers_article {
   position: relative;
@@ -105,7 +105,7 @@
   font-size: 178%;
   line-height: 40px;
   color: #B3A3A1;
-  margin: 0;
+  margin: 0 0 10%;
 }
 .main .homeContainer .bestsellers .bestsellers_article p {
   color: #494A4A;
@@ -115,6 +115,7 @@
   letter-spacing: 0.15px;
 }
 .main .homeContainer .bestsellers .bestsellers_article .slider {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -182,6 +183,8 @@
   width: 100%;
   max-height: 515.75px;
   height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .main .homeContainer .bestsellers .bestsellersPhoto img {
   width: 100%;
@@ -225,48 +228,171 @@
   top: 64%;
 }
 .main .homeContainer .articles {
-  width: 1440px;
-  height: 900px;
+  max-width: 1440px;
+  width: 100%;
+  max-height: 900px;
+  height: 100%;
   position: relative;
+  margin-top: 200px;
+}
+.main .homeContainer .articles .articleImg {
+  max-width: 1440px;
 }
 .main .homeContainer .articles .articleBlock {
+  z-index: 15;
   position: absolute;
-  width: 708px;
-  height: 280px;
-  left: 732px;
-  top: 310px;
+  max-width: 708px;
+  max-height: 280px;
+  right: 0%;
+  top: 30%;
   background: #B3A3A1;
   opacity: 0.95;
   -webkit-backdrop-filter: blur(2px);
-          backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   border-radius: 24px 0px 0px 24px;
-}
-.main .homeContainer .articles .articleBlock .articleImg {
-  max-width: 1440px;
   width: 100%;
-}
-.main .homeContainer .articles .articleBlock .articleImg img {
-  width: 100%;
+  height: 100%;
 }
 .main .homeContainer .articles .articleBlock .textBlock {
-  width: 488px;
-  height: 148px;
-  padding-left: 20px;
+  padding: 8% 5%;
+  max-width: 488px;
+  max-height: 148px;
+  text-align: left;
 }
-.main .homeContainer .articles .articleBlock h4 {
+.main .homeContainer .articles .articleBlock .textBlock h4 {
   font-weight: 500;
+  padding-bottom: 5%;
   font-size: 22px;
   line-height: 28px;
   color: #FFFFFF;
 }
-.main .homeContainer .articles .articleBlock p {
+.main .homeContainer .articles .articleBlock .textBlock p {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.15px;
   color: #FFFFFF;
+  padding-bottom: 5%;
 }
-.main .homeContainer .articles .articleBlock a {
+.main .homeContainer .articles .articleBlock .textBlock a {
   text-decoration: none;
   color: #fff;
+}
+.main .homeContainer .articles .articleBlock .textBlock a img {
+  width: 32px;
+  padding-left: 30px;
+}
+
+@media screen and (max-width: 750px) {
+  .main .homeContainer .articles {
+    margin-top: 200px;
+  }
 }/*# sourceMappingURL=Home.module.css.map */
+
+@media screen and (max-width: 1152px) {
+  .main .homeContainer .bestsellers {
+    max-height: 1106px;
+  }
+  
+  .articles{
+      margin-top: 200px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .main .homeContainer .promo .promo1 {
+    left: -10%;
+    top: -1%;
+  }
+  .main .homeContainer .promo .promo2 {
+    left: -12%;
+    top: 31%;
+  }
+
+  .main .homeContainer .promo .content{
+    width: 48%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main .homeContainer .promo .promo1 {
+    left: -10%;
+    top: -1%;
+  }
+  .main .homeContainer .promo .promo2 {
+    left: -12%;
+    top: 31%;
+  }
+
+  .main .homeContainer .promo .content{
+    width: 48%;
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+  .main .homeContainer .promo .promo1 {
+    left: 12%;
+    top: 54%;
+  }
+
+  .main .homeContainer .promo .promo2 {
+    display: none;
+  }
+
+  .main .homeContainer .promo .content {
+    width: 82%;
+    margin: 10% auto 10% auto;
+  }
+
+  .main .homeContainer .articles .articleBlock{
+    max-height: 301px;
+  }
+}
+
+
+@media screen and (max-width: 376px) {
+  h3, h4, p{
+    text-align: center;
+  }
+
+  p{
+    text-align: center;
+  }
+  .main .homeContainer .promo .promo1 {
+    left: 7%;
+  }
+
+  .main .homeContainer .promo .content {
+    width: 82%;
+    margin: 10% auto 10% auto;
+  }
+
+  .main .homeContainer .bestsellers {
+    margin: 70px auto 0;
+  }
+
+  .main .homeContainer .bestsellers h4, p {
+    text-align: center;
+}
+
+.main .homeContainer .bestsellers .bestsellers_article {
+  min-width: 300px;
+  padding-bottom: 10px;
+}
+
+.main .homeContainer .bestsellers .bestsellers_article  .slider {
+  max-width: 243px;
+  height: 260px;
+}
+
+.main .homeContainer .articles .articleBlock .textBlock {
+  text-align: center;
+}  
+
+}
+
+
+
+
+

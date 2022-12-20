@@ -61,8 +61,8 @@ const Home: React.FC = () => {
             <div className={style.homeContainer}>
                 <div className={style.promo}>
 
-                        <img className={style.promo2} src={Promo1} alt="" />
-                        <img className={style.promo1} src={Promo2} alt="" />
+                    <img className={style.promo2} src={Promo1} alt="" />
+                    <img className={style.promo1} src={Promo2} alt="" />
 
                     <div className={style.content}>
                         <h3>Everything that surrounds us makes us stronger</h3>
@@ -121,15 +121,17 @@ const Home: React.FC = () => {
 
                 <div className={style.articles}>
                     <div className={style.articleImg}><img src={articlesPhoto} alt="" /></div>
-                    <div className={style.articleBlock}>
-                        <div className={style.textBlock}>
-                            <h4>5 options to highlight the workplace at home</h4>
-                            <p>During the pandemic, many have started working from home. Our editors will tell you how to separate work from personal, increase involvement in the process, and also relax as much as possible after work...</p>
-                            <a href="">Read more
-                                <img src={Arrow} alt="arrow" />
-                            </a>
-                        </div>
-                    </div>
+                        <div className={style.articleBlock}>
+                            <div className={style.textBlock}>
+                                <h4>5 options to highlight the workplace at home</h4>
+                                <p>During the pandemic, many have started working from home. Our editors will tell you how to separate work from personal, increase involvement in the process, and also relax as much as possible after work...</p>
+                                <a href="">Read more
+                                    <img src={Arrow} alt="arrow" />
+                                </a>
+                            </div>
+                        </div>                    
+                    
+
                 </div>
             </div>
 

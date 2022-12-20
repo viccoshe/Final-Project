@@ -1,33 +1,29 @@
+a {
+  text-decoration: none;
+}
+
 .footer {
   max-width: 1440px;
   width: 100%;
-  max-height: 260px;
+  min-height: 260px;
   height: 100%;
   background: #B3A3A1;
   margin-left: auto;
   margin-right: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.footer a {
-  text-decoration: none;
+  padding-top: 8%;
 }
 .footer .container {
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-  max-height: 210px;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 48px 156px 40px;
+  flex-flow: wrap;
+  line-height: 1.5rem;
 }
 .footer .container .footerBlock {
   max-width: 290px;
-  -moz-text-align-last: left;
-       text-align-last: left;
+  text-align: left;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -36,10 +32,13 @@
   height: fit-content;
   font-weight: 400;
   font-size: 14px;
-  text-align: center;
+  text-align: left;
   letter-spacing: 0.1px;
   color: rgba(255, 255, 255, 0.6862745098);
   position: relative;
+}
+.footer .container .footerBlock:not(:last-child) {
+  margin-right: 10%;
 }
 .footer .container .footerBlock ul li {
   list-style: none;
@@ -57,18 +56,61 @@
 }
 .footer .container .footerBlock a img {
   position: absolute;
-  bottom: 11%;
+  bottom: 2%;
   margin-left: 24px;
-}
-.footer .container .footerBlock:not(:last-child) {
-  margin-right: 164px;
 }
 .footer .container .footerBlock .footerTitle {
   margin-bottom: 16px;
   color: white;
   font-weight: 600;
   font-size: 16px;
-  line-height: 24px;
-  text-align: center;
+  text-align: left;
   letter-spacing: 0.15px;
+}
+
+@media screen and (max-width: 1152px) {
+  .footerBlock {
+    max-width: 131px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .footer .container .footerBlock:not(:last-child) {
+    margin-right: 4%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .footer .container {
+    width: 92%;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 750px) {
+  .footer .container {
+    padding-bottom: 5%;
+  }
+  .footer .container .footerBlock {
+    height: 100%;
+  }
+  .footer .container .footerBlock:not(:last-child) {
+    margin: 3% 3%;
+  }
+  .footer .container .footerBlock:last-child {
+    text-align: center;
+  }
+  .footer .container .footerBlock:last-child .footerTitle {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 425px) {
+  .footer .container {
+    padding-bottom: 5%;
+  }
+  .footer .container .footerBlock {
+    text-align: center;
+    height: 100%;
+    padding-bottom: 5%;
+  }
+  .footer .container .footerBlock .footerTitle {
+    text-align: center;
+  }
 }/*# sourceMappingURL=Footer.module.css.map */
