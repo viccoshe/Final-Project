@@ -45,21 +45,8 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
         setSelectedCategory(filteredResult);
     }
 
-//
-    const getQuery = (query: string) => {
-        const filteredResult: Array<{}> = catalogue.filter((item: { title: string}, i: string) => {
-            if(item.title.includes(query)){
-                return item;
-            }
-        })
-        console.log(filteredResult);
-        setSelectedCategory(filteredResult);
-    }
-//
-
 
    const  getToCart = async(id: string) => {
-       // await getUserData(user.id);
         if(user){
             let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
                 if(item.id === id){
@@ -100,20 +87,6 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                     <div onClick={() => {getCategory('electronics')}} className={style.productCategory}>Electronics</div>
                     <div onClick={() => {getCategory('jewelery')}} className={style.productCategory}>Jewelery</div>
                 </div>
-
-                {/* <div className="search">
-                <form action="/" method="get">
-                    <label htmlFor="header-search">
-                        <span className={style.visuallyHidden}>Search</span>
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        // name="s" 
-                    />
-                    <button onSubmit={(e:  React.FormEvent<HTMLInputElement>) => getQuery(e.currentTarget.value)} value={query} type="submit">Search</button>
-                </form>
-                </div> */}
 
                 <div className={style.productsContainer}>
 
