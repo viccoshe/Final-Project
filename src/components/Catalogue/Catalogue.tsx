@@ -32,7 +32,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
     
     const getCategory = (cat: string) =>{
         const filteredResult: Array<{}> = catalogue.filter((item: { category: string}, i: string) => {
-            if(item.category === cat){
+            if(item?.category === cat){
                 return item;
             }
         })
@@ -44,14 +44,14 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
    const  getToCart = async(id: string) => {
         if(user){
             let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
-                if(item.id === id){
+                if(item?.id === id){
                     return item;
                 };
             });
             if(user.cart?.length > 0 ?? false ){
-                editUserData(user.id, user.name, currentCartProduct);
+                editUserData(user?.id, user?.name, currentCartProduct);
             }else{
-                writeUserData(user.id,  user.name, currentCartProduct);
+                writeUserData(user?.id,  user?.name, currentCartProduct);
             }      
         }else{
             alert('Sign in to continue');
@@ -110,7 +110,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                             
                         </div>
                         })
-                    :  selectedCategory.length <= 0 && catalogue.length > 0
+                    :  selectedCategory?.length <= 0 && catalogue?.length > 0
                     
                     ? catalogue.map((item: {id: string, title: string, price: string, description: string, category: string, image: string}, i: string) => {
                         console.log(item);
@@ -128,7 +128,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                                 <p className={style.productPrice}>{price} $</p> 
                                 <div className={style.buttons}>
                                     <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
-                                    <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
+                                    <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
                                 </div>
                         </div>
                      <Outlet/>
