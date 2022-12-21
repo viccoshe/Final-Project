@@ -1,21 +1,17 @@
 import { FormEvent, MouseEvent, useEffect, useState, useContext} from "react";
 import { UserContext } from "../../utiles/UserContext";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 //@ts-ignore
 import style from "./Profile.module.css";
 //@ts-ignore
 import Exit from "../../img/exit.svg";
-import { IUser } from "../../utiles/CatalogueContext";
-import { onAuthStateChanged } from "firebase/auth";
-import { app } from "../../utiles";
 import { UserCredential, User } from "firebase/auth";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import { IProduct } from "../../utiles/UserContext";
-import {auth,  database  } from '../../utiles';
-import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
+import {auth} from '../../utiles';
 import { GetNewData } from "../../utiles/buttonTypes";
+import Loader from "../../utiles/Loader/Loader";
 
 
 const Profile: React.FC<GetNewData> = (props) => {
@@ -26,23 +22,7 @@ const Profile: React.FC<GetNewData> = (props) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
-
-//     let currentUser: any;
-
-// onAuthStateChanged(auth, (newUser) => {
-//     if(newUser) {
-//         currentUser = {
-//             id: newUser.uid,
-//             name: newUser.displayName,
-//             favProducts: [],
-//             cart: [],
-//         }
-//     console.log(currentUser);
-//    getNewUserData(currentUser)
-//     } else {
-//         console.error('User is signed out');
-//     }
-// });
+    const [loading, setLoading] = useState<boolean>(true);
 
 const registerEmailAndPass = async (e: FormEvent) => {
     e.preventDefault();
@@ -62,7 +42,6 @@ const loginViaGoogle = async (e:FormEvent) => {
     e.preventDefault();
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
-    console.log(user);
     return setUser(result);
 }
 
@@ -74,34 +53,48 @@ const logOut = async (e:FormEvent) => {
         }
         setUser(null);
     }).catch((error) => {
-        console.error('user is still here')
+        console.log('user is still here')
     });
-    console.log(user);
+
 }
 
 useEffect(() => {
     if(user){
         getTotal(); 
+        setLoading(false); 
+    }
+    if(user || user === null){
+        setLoading(false); 
     }
 
 })
 
 const getTotal = () => {
-    if(user.cart.length > 0 ?? false){
+    if(user?.cart?.length > 0 ?? false){
         const prices: any[] = [];
-        user?.cart.filter((item: IProduct) => {
+        user?.cart?.filter((item: IProduct) => {
             if(item?.price){
                 prices.push(+item?.price);
-                console.log(prices);
             }
             const totalPrice = prices.reduce((acc, initVal) => acc + initVal, 0);
-            console.log(totalPrice);
             setTotal(totalPrice);
         })
     }
 }
 
-    return !user || user === null || user === undefined  ? (
+if (loading) {
+    return (
+        <main style={{
+            minHeight: '70vh',
+            height: 'fit-content',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'}}>
+           <div><Loader/></div> 
+        </main>
+        
+    )
+}else return !user?.id  ? (
         <main className={style.main}>
             <div className={style.formContainer}>
                 <button onClick={()=>setForm(!form)}>Sign Up</button>
@@ -109,18 +102,18 @@ const getTotal = () => {
                     <form className={style.form} onSubmit={registerEmailAndPass} action="">
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
                         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"/>
-                        <button type="submit">Sing Up</button>
+                        <button className={style.signButton} type="submit">Sing Up</button>
                     </form>
                     :
-                    <form onSubmit={loginEmailAndPass} action="" className="form">
+                    <form className={style.form} onSubmit={loginEmailAndPass} action="">
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
                         <input onChange={(e) => setPassword(e.target.value)} type="text" placeholder="Name and Surname"/>
-                        <button type="submit">Sing In</button>
+                        <button className={style.signButton}  type="submit">Sing In</button>
                     </form>
                 }
                 <div>or</div>
-                <hr />
-                <button onClick={(e:FormEvent) =>{loginViaGoogle(e)}} type="submit">Sing In via Google</button>
+                <div className={style.line} ></div>
+                <button className={style.googleButton} onClick={(e:FormEvent) =>{loginViaGoogle(e)}} type="submit">Sing In via Google</button>
             </div>
         </main>
     ):(
@@ -142,23 +135,22 @@ const getTotal = () => {
                     <div className={style.total}>Your total:   {total.toFixed(2)}</div>
                     
                 </div>
-            </div>
 
-            <div className={style.stockContainer}>
-                <h4>Stock</h4>
-                <div className={style.stock}>
-                    <div className={style.stockItem}> 
-                        <p><span>-15%<br/></span>for any chair</p>
-                    </div>
-                    <div className={style.stockItem}>
-                        <p><span>for any chair<br/></span>Hand over old furniture and get</p>
-                    </div>
-                    <div className={style.stockItem}>
-                        <p><span>200 welcome points<br/></span>for the first purchase</p>
+                <div className={style.stockContainer}>
+                    <h4>Stock</h4>
+                    <div className={style.stock}>
+                        <div className={style.stockItem}> 
+                            <p><span>-15%<br/></span>for any chair</p>
+                        </div>
+                        <div className={style.stockItem}>
+                            <p><span>for any chair<br/></span>Hand over old furniture and get</p>
+                        </div>
+                        <div className={style.stockItem}>
+                            <p><span>200 welcome points<br/></span>for the first purchase</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </main>
     )
 }

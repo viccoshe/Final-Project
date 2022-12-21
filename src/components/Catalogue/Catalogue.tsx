@@ -1,9 +1,7 @@
-import { FormEvent, useContext } from "react";
+import { useContext } from "react";
 //@ts-ignore
 import style from "./Catalogue.module.css";
 import  { useEffect, useState } from "react";
-//@ts-ignore
-import Bin from "../../img/musor.svg";
 //@ts-ignore
 import RedLike from "../../img/heart2.svg";
 //@ts-ignore
@@ -15,17 +13,14 @@ import { CatalogueContext } from "../../utiles/CatalogueContext";
 import {User, UserCredential} from "firebase/auth";
 import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
-import { UserData, EditData, GetData } from "../../utiles/buttonTypes";
+import { UserData, EditData} from "../../utiles/buttonTypes";
 import { FavsContext } from "../../utiles/FavsContext";
-import SearchBar from "../Header/SearchBar/SearchBar";
-
 
 const Catalogue: React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
     const [loading, setLoading] = useState<boolean>(true);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
-    const [query, setQuery] = useState<Array<string>>([]);
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
     const navigate = useNavigate();
     const {toggleFavs} = useContext<any>(FavsContext);
@@ -59,7 +54,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                 writeUserData(user.id,  user.name, currentCartProduct);
             }      
         }else{
-            prompt('Sign in to continue');
+            alert('Sign in to continue');
             //navigate(routes.profile);
         }
         return user.cart;
@@ -123,12 +118,9 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
                         return <div key={id} className={style.productItem}> 
                             <div className={style.img}>
                                 <div className={style.productCat}>{cat}</div>
-                                
                                 <Link to={`product/:${id}`}>
                                     <div className={style.img}><img src={image} alt="product"/></div>
-                                </Link>
-                                
-                                
+                                </Link>     
                             </div>
                             <div className={style.productInfo}>
                                 <Link to={`product/:${id}`}><h5>{title}</h5></Link>

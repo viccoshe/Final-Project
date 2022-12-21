@@ -66,18 +66,17 @@ const Cart:React.FC<UserData & EditData> = (props) => {
         <main className={style.main}>
             <div className={style.container}>
                 <h3>Cart</h3>
-                <div className={style.cartContainer}>
 
+                {user && user?.cart.length > 0 
+                ?                 
+                <div className={style.cartContainer}>
                 <div className={style.arrowContainer}>
                     <div className={style.window}>
                         <div style={{
                                 transform: `translateX(${offset}px)`
                             }}  
                             className={style.itemsContainer}>
-
-                            {user && user?.cart.length > 0 
-                            ?
-                                user?.cart.map((item: IProduct, i: string) => {
+                                {user?.cart.map((item: IProduct, i: string) => {
                                 console.log(item);
                                 const {id, title, price, description: desc, category: cat, image, counter: count} = item;
                                 return  <div key={id} className={style.cartItem}>
@@ -93,21 +92,13 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                                             </div>
                                     </div>
                                     
-                            }) 
-                            : <h3>Cart is empty</h3>
-                            }
+                            }) }
+
                         </div>   
                     </div> 
                     <div onClick={() =>{dragToTheLeft()}} className={style.arrow}><img src={ArrowRight} alt="arrow" /></div>
                     <div onClick={() =>{dragToTheRight()}} className={style.arrowRight}><img src={ArrowLeft} alt="arrow" /></div>                          
                 </div>    
-
-
-            
-
-                
-
-                
                     <div className={style.orderContainer}>
                         <h3>Your order</h3>
                         {user?.cart.length > 0
@@ -129,6 +120,8 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                         <button className={style.button}>Make order</button>
                     </div>
                 </div>
+                : <h3>Cart is empty</h3>
+            }
             </div>
         </main>
     )

@@ -1,6 +1,7 @@
 .main {
   max-width: 1440px;
   width: 100%;
+  min-height: 50vh;
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;

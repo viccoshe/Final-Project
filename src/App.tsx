@@ -42,7 +42,7 @@ function App() {
             getNewUserData(currentUser)
             } else {
               setUser(null);
-              console.error('User is signed out');
+              console.log('User is signed out');
             }
         });
 }  
@@ -67,70 +67,6 @@ async function getNewUserData(currentUser: IUser){
         })     
     }
 
-// const resp = await get(child(ref(database), 'mystore/'+ currentUser?.id));
-// if(resp != null){
-//   console.log(resp.val());
-//   const userInfo = resp.val();
-//   console.log(userInfo?.cart);
-//   if(userInfo?.cart?.length > 0 ?? false){
-//     currentUser.cart = userInfo.cart;
-//   }if(userInfo?.favProducts?.length > 0 ?? false){
-//     currentUser.favProducts = userInfo.favProducts;
-//   }
-//   console.log(currentUser);
-//   setUser(currentUser);
-// }else{
-//     console.error('no data available');
-// }
-
-
-  
-//   useEffect(() => {
-//     onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//         console.log(user);
-//         const currentUser: IUser = {
-//             id: user.uid,
-//             name: user.displayName,
-//             favProducts: [],
-//             cart: [],
-//         }
-//         setUser(currentUser);
-//         console.log(currentUser);
-//         console.log(user);
-//         getUserData(user.uid);
-//     } else {
-//         console.error('User is signed out');
-//     }
-//     });
-//     console.log(user);
-//   }, []);
-
-  
-//   async function getUserData(id: string | undefined){
-
-//     const dbRef = ref(database);
-
-//       await get(child(dbRef, 'mystore/'+ id)).then((snapshot) => {
-//         if (snapshot.exists()) {
-//             console.log(snapshot.val());
-//             const dbInfo = snapshot.val();
-//             console.log(dbInfo.cart);
-//             if(dbInfo?.cart?.length > 0 ?? false){
-//               user.cart = dbInfo.cart;
-//             }if(dbInfo?.favProducts?.length > 0 ?? false){
-//               user.favProducts = dbInfo.favProducts;
-//             }
-            
-//             console.log(user);
-//             setUser(user);
-//         }else{
-//            console.log('no data available');
-//         }
-//     }).catch((error) => {
-//         console.log(error);
-//      })
-// }
 
   async function writeUserData(id: string,  name: string | null,  product: IProduct): Promise<any> {
       const counter = 1;
@@ -144,7 +80,7 @@ async function getNewUserData(currentUser: IUser){
         });
         console.log('Success');
       } catch (error) {
-        console.error(`ERROR: ${error}`);
+        console.log(`ERROR: ${error}`);
       }
   }
 
@@ -235,7 +171,6 @@ async function getNewUserData(currentUser: IUser){
    })
   }
 
-  ////
 
   const getToCart = (id: string): Array<IProduct> | null => {
     if(user.cart){
@@ -279,14 +214,11 @@ const removeOneQuantity = (id: string): Array<IProduct> | null => {
         //@ts-ignore
         updates['mystore/' + user.id] = data;
         update(ref(database), updates);
-        setUser(data);
-        console.log(data);
-          //setCounter(counter - 1); 
-          
+        setUser(data); 
       }else{
           prompt('Sign in to continue');
       }
-      return user.cart;
+      return user?.cart;
 }
 
 
@@ -303,7 +235,7 @@ const deleteFromCart = (id: string): Array<IProduct> | null => {
         update(ref(database), updates);
         setUser(data);
     }
-    return user.cart;
+    return user?.cart;
 }
 
 
@@ -317,8 +249,6 @@ useEffect(() => {
       .then(data => {
           setCatalogue(data);
       })
-      //getNewUserData();
-      console.error('tap');
 }, [])
 
 
