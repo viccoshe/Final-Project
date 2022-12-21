@@ -15,15 +15,34 @@ import { CatalogueContext } from "../../utiles/CatalogueContext";
 import { IProduct } from "../../utiles/UserContext";
 import {auth,  database  } from '../../utiles';
 import { get, ref, set, child, push, update, getDatabase, onValue  } from "firebase/database";
+import { GetNewData } from "../../utiles/buttonTypes";
 
 
-const Profile: React.FC = () => {
+const Profile: React.FC<GetNewData> = (props) => {
+    const {getNewUserData} = props;
     const [form, setForm] = useState<boolean>(false);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
+
+//     let currentUser: any;
+
+// onAuthStateChanged(auth, (newUser) => {
+//     if(newUser) {
+//         currentUser = {
+//             id: newUser.uid,
+//             name: newUser.displayName,
+//             favProducts: [],
+//             cart: [],
+//         }
+//     console.log(currentUser);
+//    getNewUserData(currentUser)
+//     } else {
+//         console.error('User is signed out');
+//     }
+// });
 
 const registerEmailAndPass = async (e: FormEvent) => {
     e.preventDefault();
@@ -61,15 +80,18 @@ const logOut = async (e:FormEvent) => {
 }
 
 useEffect(() => {
-    getTotal();
+    if(user){
+        getTotal(); 
+    }
+
 })
 
 const getTotal = () => {
     if(user.cart.length > 0 ?? false){
         const prices: any[] = [];
-        user.cart.filter((item: IProduct) => {
-            if(item.price){
-                prices.push(+item.price);
+        user?.cart.filter((item: IProduct) => {
+            if(item?.price){
+                prices.push(+item?.price);
                 console.log(prices);
             }
             const totalPrice = prices.reduce((acc, initVal) => acc + initVal, 0);
@@ -79,12 +101,12 @@ const getTotal = () => {
     }
 }
 
-    return !user ? (
+    return !user || user === null || user === undefined  ? (
         <main className={style.main}>
             <div className={style.formContainer}>
                 <button onClick={()=>setForm(!form)}>Sign Up</button>
                 {form ?
-                    <form onSubmit={registerEmailAndPass} action="" className="form">
+                    <form className={style.form} onSubmit={registerEmailAndPass} action="">
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
                         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"/>
                         <button type="submit">Sing Up</button>
@@ -106,8 +128,9 @@ const getTotal = () => {
             <div className={style.profileContainer}>
                 <div className={style.profileHeader}>
                     <div className={style.avatarContainer}>
-                        <div className={style.profileAvatar}>{user ? user?.name.slice(0, 1) : null}</div>
-                        <p>Good afternoon,<br/><span>{user ? user.name : ' guest'}</span></p>
+                        <div className={style.profileAvatar}>{user ? user?.name?.slice(0, 1) : null}</div>
+                        <p>Good afternoon,<br/><span>{user ? user?.name : ' guest'}</span></p>
+                        <div className={style.logout} onClick={(e: MouseEvent) =>{logOut(e)}}><img src={Exit} alt="Exit" /></div>
                     </div>
                     <ul className={style.settings}>
                         <a href="#href"><li>My purchases</li></a>
@@ -117,7 +140,7 @@ const getTotal = () => {
                         <a href="#href"><li>Support</li></a>
                     </ul>
                     <div className={style.total}>Your total:   {total.toFixed(2)}</div>
-                    <div onClick={(e: MouseEvent) =>{logOut(e)}}><img src={Exit} alt="Exit" /></div>
+                    
                 </div>
             </div>
 

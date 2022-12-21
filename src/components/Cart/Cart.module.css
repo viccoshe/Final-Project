@@ -1,22 +1,26 @@
 .main {
   max-width: 1440px;
-  width: 100vw;
+  width: 100%;
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
-  min-height: 100vh;
+  height: 100%;
+
+  /* min-height: 100vh; */
   background: #B3A3A1;
   margin: 0 auto 0;
 }
 .main .container {
-  width: 1200px;
-  min-height: 100vh;
+  max-width: 1200px;
   height: 100%;
   margin: 0 auto 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: nowrap column;
+  width: 100%;
+  margin: 0 auto;
+  padding: auto 10px;
 }
 .main .container h3 {
   font-size: 32px;
@@ -57,31 +61,38 @@
   color: rgba(126, 102, 98, 0.678);
 }
 .main .container .window {
-  height: 100%;
+  max-height: 100%;
   max-width: 860px;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 .main .container .cartContainer {
-  position: relative;
   background: #B3A3A1;
   display: flex;
+  flex-flow: wrap;
   padding: 128px 158px;
   max-width: 1440px;
   width: 100%;
+  max-height: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 0;
 }
-.main .container .cartContainer .arrow {
+
+.arrowContainer{
+  position: relative;
+}
+.main .container .cartContainer .arrowContainer .arrow {
   position: absolute;
   top: 42%;
-  right: 25%;
+  right: -3%;;
   z-index: 6;
   cursor: pointer;
 }
-.main .container .cartContainer .arrowRight {
+.main .container .cartContainer .arrowContainer .arrowRight {
   position: absolute;
-  left: -2.5%;
+  left: -3.5%;
   top: 42%;
   z-index: 6;
   cursor: pointer;
@@ -154,7 +165,10 @@
 }
 .main .container .orderContainer {
   min-height: 332px;
-  width: 264px;
+  max-width: 264px;
+  /* max-width: 1440px; */
+  width: 100%;
+  height: 100%;
   color: #fff;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -176,6 +190,7 @@
   border-radius: 32px;
   margin: 32px auto;
   transition: background-color 0.5s ease-out;
+  
 }
 .main .container .orderContainer .button:hover {
   color: #FFE0DB;
@@ -194,3 +209,106 @@
   width: 100%;
   text-align: initial;
 }/*# sourceMappingURL=Cart.module.css.map */
+
+
+@media screen and (max-width: 1152px){
+  .main .container .window {
+    max-width: 1440px;
+  }
+  .main .container .cartContainer .orderContainer {
+    max-width: 64%;
+    margin-top: 8%
+  }
+
+  .main .container .cartContainer .orderContainer h3{
+    margin-bottom: 8%;
+  }
+
+  .main .container .cartContainer{
+    justify-content: center;
+  }
+
+  .main .container .cartContainer .itemsContainer{
+    display: flex;
+    max-width: 828px;
+    width: 100%;
+    align-items: center;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 800px){
+  .main .container .cartContainer .itemsContainer{
+    max-width: 550px;
+  }
+
+  .main .container .cartContainer.arrowContainer .arrow{
+    right: -5%;
+  }
+  .main .container .cartContainer.arrowContainer .arrowRight{
+    left: -4.5%;
+  }
+  
+}
+
+@media screen and (max-width: 768px){
+  .main .container .cartContainer .itemsContainer{
+    max-width: 550px;
+  }
+  .main .container .cartContainer .arrowContainer .arrow{
+    right: -6%;
+  }
+  
+}
+
+@media screen and (max-width: 425px){
+  .main .container .cartContainer .itemsContainer{
+    max-width: 255px;
+  }
+
+  .main .container .cartContainer .arrowContainer .arrow{
+    right: -15%;
+  }
+  .main .container .cartContainer .arrowContainer .arrowRight{
+    left: -11.5%;
+  }
+
+  
+}
+
+
+
+
+/* 
+
+@media screen and (max-width: 1440px){
+
+}
+
+@media screen and (max-width: 1280px){
+  
+}
+
+@media screen and (max-width: 1152px){
+  
+}
+
+@media screen and (max-width: 1024px){
+  
+}
+
+@media screen and (max-width: 800px){
+  
+}
+
+@media screen and (max-width: 768px){
+  
+}
+
+@media screen and (max-width: 425px){
+  
+}
+
+@media screen and (max-width: 375px){
+  
+} */

@@ -67,40 +67,45 @@ const Cart:React.FC<UserData & EditData> = (props) => {
             <div className={style.container}>
                 <h3>Cart</h3>
                 <div className={style.cartContainer}>
-                    
-                <div className={style.window}>
-                    <div style={{
-                            transform: `translateX(${offset}px)`
-                        }}  
-                        className={style.itemsContainer}>
 
-                        {user && user?.cart.length > 0 
-                        ?
-                            user?.cart.map((item: IProduct, i: string) => {
-                            console.log(item);
-                            const {id, title, price, description: desc, category: cat, image, counter: count} = item;
-                            return  <div key={id} className={style.cartItem}>
-                                        <div className={style.img}><img src={image} alt="product" /></div>
-                                        <h6 className={style.cartTitle}>{title}</h6>
-                                        <p className={style.cartDesc}></p>
-                                        <div className={style.buttons}>
-                                            <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : Like} alt="like" /></div>
-                                            <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
-                                            <div className={style.counter}>{count}</div>
-                                            <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
-                                            <div onClick={() =>{deleteFromCart(id)}} className={style.remove} ><img src={Bin} alt="bin" /></div>
-                                        </div>
-                                </div>
-                                
-                        }) 
-                        : <h3>Cart is empty</h3>
-                        }
-                    </div>                                 
-                </div>
+                <div className={style.arrowContainer}>
+                    <div className={style.window}>
+                        <div style={{
+                                transform: `translateX(${offset}px)`
+                            }}  
+                            className={style.itemsContainer}>
 
-                <div onClick={() =>{dragToTheLeft()}} className={style.arrow}><img src={ArrowRight} alt="arrow" /></div>
-                <div onClick={() =>{dragToTheRight()}} className={style.arrowRight}><img src={ArrowLeft} alt="arrow" /></div>
+                            {user && user?.cart.length > 0 
+                            ?
+                                user?.cart.map((item: IProduct, i: string) => {
+                                console.log(item);
+                                const {id, title, price, description: desc, category: cat, image, counter: count} = item;
+                                return  <div key={id} className={style.cartItem}>
+                                            <div className={style.img}><img src={image} alt="product" /></div>
+                                            <h6 className={style.cartTitle}>{title}</h6>
+                                            <p className={style.cartDesc}></p>
+                                            <div className={style.buttons}>
+                                                <div onClick={() =>{toggleFavs(id)}}className={style.fav}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : Like} alt="like" /></div>
+                                                <div onClick={() =>{removeOneQuantity(id)}}  className={style.minus}>-</div>
+                                                <div className={style.counter}>{count}</div>
+                                                <div onClick={() =>{getToCart(id)}} className={style.plus} >+</div>
+                                                <div onClick={() =>{deleteFromCart(id)}} className={style.remove} ><img src={Bin} alt="bin" /></div>
+                                            </div>
+                                    </div>
+                                    
+                            }) 
+                            : <h3>Cart is empty</h3>
+                            }
+                        </div>   
+                    </div> 
+                    <div onClick={() =>{dragToTheLeft()}} className={style.arrow}><img src={ArrowRight} alt="arrow" /></div>
+                    <div onClick={() =>{dragToTheRight()}} className={style.arrowRight}><img src={ArrowLeft} alt="arrow" /></div>                          
+                </div>    
 
+
+            
+
+                
 
                 
                     <div className={style.orderContainer}>

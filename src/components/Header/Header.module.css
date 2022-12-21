@@ -14,12 +14,12 @@
   display: block;
   letter-spacing: 0.1px;
   color: #FCFFF5;
-  padding-right: 122px;
+  padding-right: 4%;
 }
 .header .nav ul {
   display: flex;
   justify-content: end;
-  width: 260px;
+  width: 94%;
 }
 .header .nav ul a {
   text-decoration: none;
@@ -40,9 +40,9 @@
 }
 .header .header_buttons {
   display: flex;
-  min-width: 125px;
+  min-width: 0%;
   max-height: 100%;
-  padding-right: 156px;
+  padding-right: 9%;
 }
 .header .header_buttons .icon {
   width: 24px;
@@ -54,3 +54,27 @@
 .header .header_buttons .icon:not(:last-child) {
   margin-right: 24px;
 }/*# sourceMappingURL=Header.module.css.map */
+
+
+@media screen and (max-width: 425px){
+  .header .header_buttons {
+    flex-direction: column;
+    min-height: 60px;
+    max-width: 60px;
+    padding-right: 0;
+  }
+
+  .header .header_buttons .icon{
+    margin: 9px;
+  }
+}
+
+@media screen and (max-width: 376px){
+  .header .nav{
+    width: 105%;
+    padding: 0;
+  }
+}
+
+
+

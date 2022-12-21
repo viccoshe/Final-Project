@@ -373,22 +373,22 @@
   }
 
   .main .homeContainer .bestsellers h4, p {
+      text-align: center;
+  }
+
+  .main .homeContainer .bestsellers .bestsellers_article {
+    min-width: 300px;
+    padding-bottom: 10px;
+  }
+
+  .main .homeContainer .bestsellers .bestsellers_article  .slider {
+    max-width: 243px;
+    height: 260px;
+  }
+
+  .main .homeContainer .articles .articleBlock .textBlock {
     text-align: center;
-}
-
-.main .homeContainer .bestsellers .bestsellers_article {
-  min-width: 300px;
-  padding-bottom: 10px;
-}
-
-.main .homeContainer .bestsellers .bestsellers_article  .slider {
-  max-width: 243px;
-  height: 260px;
-}
-
-.main .homeContainer .articles .articleBlock .textBlock {
-  text-align: center;
-}  
+  }  
 
 }
 

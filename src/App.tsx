@@ -41,7 +41,8 @@ function App() {
             console.log(currentUser);
             getNewUserData(currentUser)
             } else {
-                console.error('User is signed out');
+              setUser(null);
+              console.error('User is signed out');
             }
         });
 }  
@@ -337,7 +338,7 @@ useEffect(() => {
               </Route>
               <Route path={"catalogue/product/:id"} element={<Product/>}/>
               <Route path={routes.cart} element={<Cart  editUserData={editUserData} writeUserData={writeUserData}/>}/>
-              <Route path={routes.profile} element={<Profile />}/>
+              <Route path={routes.profile} element={<Profile getNewUserData={getNewUserData} />}/>
               <Route path={routes.services} element={<Services editUserData={editUserData} writeUserData={writeUserData} />}/>
               
             </Routes>
