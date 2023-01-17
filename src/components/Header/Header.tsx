@@ -8,7 +8,7 @@ import Search from "../../img/ico-profile1.svg";
 import style from "./Header.module.css";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utiles/routes";
-
+import SearchBar from "./SearchBar/SearchBar";
 
 
 const Header: React.FC = () => {
@@ -26,6 +26,9 @@ const Header: React.FC = () => {
             </nav>
             <div className={style.header_buttons}>
                 {/* <div className={style.icon}><img src={Search} alt="search" /></div> */}
+                <div className={style.icon}><img src={Search} alt="search" />
+                    <SearchBar/>
+                </div> 
                 <div className={style.icon}>
                     <Link to={routes.cart}><img src={Cart} alt="cart" /></Link>    
                 </div>

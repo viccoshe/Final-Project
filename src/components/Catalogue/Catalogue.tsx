@@ -9,12 +9,15 @@ import BrownLike from "../../img/heart-brown.svg";
 import { Link, Outlet, useNavigate} from "react-router-dom";
 //@ts-ignore
 import Loader from "../../utiles/Loader/Loader";
-import { CatalogueContext } from "../../utiles/CatalogueContext";
+import { CatalogueContext, FilterContext } from "../../utiles/CatalogueContext";
 import {User, UserCredential} from "firebase/auth";
 import { IProduct } from "../../utiles/UserContext";
 import { UserContext } from "../../utiles/UserContext";
 import { UserData, EditData} from "../../utiles/buttonTypes";
 import { FavsContext } from "../../utiles/FavsContext";
+import ProductItem from "./ProductItem.tsx/ProductsItem";
+import { getProductToCart } from "../../utiles/cartActions";
+import { PropsProduct } from "../../utiles/UserContext";
 
 const Catalogue: React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
@@ -22,12 +25,31 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
+    const {filteredTitle, setFilteredTitle} = useContext<any>(FilterContext);
     const navigate = useNavigate();
     const {toggleFavs} = useContext<any>(FavsContext);
 
-    useEffect(() => {
-      setLoading(false);      
+    let currentCatalogue: Array<IProduct> | null | any = [];
+    let filteredCatalogue: Array<IProduct> | null = [];
+
+    if(filteredTitle){
+        currentCatalogue = catalogue?.filter((i: IProduct) =>{
+            const require = i?.title.toLowerCase();
+            if(require.includes(filteredTitle.toLowerCase())) {
+                currentCatalogue = [...currentCatalogue, i];
+            }
+            return currentCatalogue;
+        })
+    }if(selectedCategory){
+        currentCatalogue = selectedCategory;
+    }else{
+        currentCatalogue = catalogue;
+    }
     
+
+
+useEffect(() => {
+    setLoading(false);
 }, [])
     
     const getCategory = (cat: string) =>{
@@ -41,7 +63,7 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
     }
 
 
-   const  getToCart = async(id: string) => {
+   const  getToCart = async(id: string | undefined): Promise<void> => {
         if(user){
             let currentCartProduct: IProduct = catalogue.find((item: IProduct) => {
                 if(item?.id === id){
@@ -72,6 +94,84 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
             
         )
     }else return ( 
+        <main className={style.main}>
+            <div className={style.container}>
+                <h3>Catalogue</h3>
+                <div className={style.cat}>
+                    <div onClick={() => {setSelectedCategory([])}} className={style.productCategory}>All</div>
+                    <div onClick={() => {getCategory(`men's clothing`)}} className={style.productCategory}>Men</div>
+                    <div onClick={() => {getCategory(`women's clothing`)}} className={style.productCategory}>Women</div>
+                    <div onClick={() => {getCategory('electronics')}} className={style.productCategory}>Electronics</div>
+                    <div onClick={() => {getCategory('jewelery')}} className={style.productCategory}>Jewelery</div>
+                </div>
+
+                <div className={style.productsContainer}>
+
+                    {selectedCategory?.length > 0 
+                    ? selectedCategory?.map((item: IProduct, i: string) => {
+                            console.log(item);
+                            const {id, title, price, description: desc, category: cat, image} = item;
+                            return <div key={id} className={style.productItem}> 
+                                <div className={style.img}>
+                                    <div className={style.productCat}>{cat}</div>
+                                    <Link to={`product/:${id}`}>
+                                        <div className={style.img}><img src={image} alt="product"/></div>
+                                    </Link>
+                                    
+                                </div>
+                                <div className={style.productInfo}>
+                                    <Link to={`product/:${id}`}><h5>{title}</h5></Link>
+                                    <p className={style.productDesc}>{desc}</p>
+                                    <p className={style.productPrice}>{price} $</p> 
+                                    <div className={style.buttons}>
+                                        <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
+                                        <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
+                                </div>
+                            </div> 
+                            
+                        </div>
+                        })
+                    :  selectedCategory?.length <= 0 && catalogue?.length > 0
+                    
+                    ? catalogue.map((item: IProduct, i: string) => {
+                        console.log(item);
+                        // <ProductItem 
+                        //     pProduct={item} 
+                        //     getToCart={getToCart}/>
+                            
+                        const {id, title, price, description: desc, category: cat, image} = item;
+                        return <div key={id} className={style.productItem}> 
+                            <div className={style.img}>
+                                <div className={style.productCat}>{cat}</div>
+                                <Link to={`product/:${id}`}>
+                                    <div className={style.img}><img src={image} alt="product"/></div>
+                                </Link>     
+                            </div>
+                            <div className={style.productInfo}>
+                                <Link to={`product/:${id}`}><h5>{title}</h5></Link>
+                                <p className={style.productDesc}>{desc}</p>
+                                <p className={style.productPrice}>{price} $</p> 
+                                <div className={style.buttons}>
+                                    <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
+                                    <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
+                                </div>
+                        </div>
+                     <Outlet/>
+                    </div>
+                    
+                    })
+                    : <h3>THERE'S AN ERROR :C</h3>
+                    }
+                </div>
+
+            </div>
+        </main>
+    )
+}
+
+export default Catalogue;
+
+/*
         <main className={style.main}>
             <div className={style.container}>
                 <h3>Catalogue</h3>
@@ -141,7 +241,5 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
 
             </div>
         </main>
-    )
-}
 
-export default Catalogue;
+*/

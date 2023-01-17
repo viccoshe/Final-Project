@@ -20,12 +20,14 @@ import { get, ref, set, child, push, update, getDatabase, onValue  } from "fireb
 import { FavsContext } from './utiles/FavsContext';
 import Services from './components/Services/Services';
 import { CartContext } from './utiles/cartActions';
+import { FilterContext } from './utiles/CatalogueContext';
 
 
 function App() {
   
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
+  const [filteredTitle, setFilteredTitle] = useState<any>('')
  
     let currentUser: any;
     const dbRef = ref(database);
@@ -256,8 +258,9 @@ useEffect(() => {
 
   return (
     <div className="App">
-        <Header/>
-        <CatalogueContext.Provider value={{catalogue, setCatalogue}}>
+       <CatalogueContext.Provider value={{catalogue, setCatalogue}}>
+          <FilterContext.Provider value={{filteredTitle, setFilteredTitle}}>
+          <Header/>
           <UserContext.Provider value={{user, setUser}}>
             <FavsContext.Provider value={{toggleFavs}}>
               <CartContext.Provider value={{deleteFromCart, removeOneQuantity, getToCart}}>
@@ -265,21 +268,25 @@ useEffect(() => {
               <Route path={routes.home} element={<Home/>}/>
               <Route path={routes.catalogue} element={<Catalogue editUserData={editUserData} writeUserData={writeUserData}/>}>
                 {/* <Route index={true} path={routes.product} element={<Product/>}/> */}
-              </Route>
-              <Route path={"catalogue/product/:id"} element={<Product/>}/>
-              <Route path={routes.cart} element={<Cart  editUserData={editUserData} writeUserData={writeUserData}/>}/>
-              <Route path={routes.profile} element={<Profile getNewUserData={getNewUserData} />}/>
-              <Route path={routes.services} element={<Services editUserData={editUserData} writeUserData={writeUserData} />}/>
-              
-            </Routes>
-              </CartContext.Provider>
-              
-            </FavsContext.Provider>
-          </UserContext.Provider>  
-        </CatalogueContext.Provider>
-        <Footer/>
+                </Route>
+                <Route path={"catalogue/product/:id"} element={<Product/>}/>
+                <Route path={routes.cart} element={<Cart editUserData={editUserData} writeUserData={writeUserData}/>}/>
+                <Route path={routes.profile} element={<Profile getNewUserData={getNewUserData} />}/>
+                <Route path={routes.services} element={<Services editUserData={editUserData} writeUserData={writeUserData} />}/>
+                
+              </Routes>
+                </CartContext.Provider>
+                
+              </FavsContext.Provider>
+            </UserContext.Provider>  
+            </FilterContext.Provider>
+          </CatalogueContext.Provider>
+          <Footer/>
     </div>
   );
 }
 
 export default App;
+
+
+

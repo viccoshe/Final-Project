@@ -13,7 +13,6 @@ import {auth} from '../../utiles';
 import { GetNewData } from "../../utiles/buttonTypes";
 import Loader from "../../utiles/Loader/Loader";
 
-
 const Profile: React.FC<GetNewData> = (props) => {
     const {getNewUserData} = props;
     const [form, setForm] = useState<boolean>(false);
@@ -42,7 +41,7 @@ const loginViaGoogle = async (e:FormEvent) => {
     e.preventDefault();
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
-    return setUser(result);
+    return result;
 }
 
 const logOut = async (e:FormEvent) => {
