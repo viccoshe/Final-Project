@@ -6,7 +6,7 @@ import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import Cart from './components/Cart/Cart';
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { routes } from './utiles/routes';
 import { CatalogueContext } from './utiles/CatalogueContext';
 import { IProduct, UserContext } from './utiles/UserContext';
@@ -27,7 +27,35 @@ function App() {
   
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
-  const [filteredTitle, setFilteredTitle] = useState<any>('')
+  const [filteredTitle, setFilteredTitle] = useState<Array<IProduct> | any>([])
+  const navigate = useNavigate();
+
+  const currentSearch = window.location.search.slice(3);
+
+  useEffect(() => {
+  if(window.location.search){
+    navigate("/catalogue" +  "/" + window.location.search);
+  }
+}, filteredTitle);
+
+
+  // useEffect(() => {
+  //     navigate("/catalogue" +  "/" + window.location.search)
+  // }, filteredTitle)
+
+
+//   if(window.location.search && catalogue.length > 0){
+//       let filteredResult = catalogue.filter((i: IProduct) => {
+//       let require = i?.title.toLowerCase();
+//         if(require.includes(currentSearch.toLowerCase())) {
+//             return i; 
+//         }
+//       })
+//     setFilteredTitle(filteredResult); 
+//     navigate("/catalogue" +  "/" + window.location.search);
+// }
+
+
  
     let currentUser: any;
     const dbRef = ref(database);
@@ -92,13 +120,13 @@ async function getNewUserData(currentUser: IUser){
         if(response.exists()) {
             console.log(product.id);
             const oldCart = response.val();
-            let exists = oldCart.cart.some((item:IProduct) => {
-              return item.id === product.id;
+            let exists = oldCart?.cart.some((item: IProduct) => {
+              return item?.id === product?.id;
             })
 
             if(exists){
-              oldCart.cart.map((item: IProduct) => {
-                if(item.id === product.id){
+              oldCart?.cart.map((item: IProduct) => {
+                if(item?.id === product.id){
                   item.counter += 1;
                   oldCart.cart = [...oldCart.cart];
                 }
