@@ -34,7 +34,6 @@ const Cart:React.FC<UserData & EditData> = (props) => {
 
     const itemWidth = 288;
 
-
     const dragToTheLeft = () => {
         setOffset((currentOffset) => {
             const newOffset = currentOffset - itemWidth
@@ -111,7 +110,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                                     <div className={style.orderDesc}></div>
                                     <div>x {count}</div>
                                 </div>
-                                <div className={style.orderPrice}>{price} $</div>
+                                <div className={style.orderPrice}>{price.toFixed(2)} $</div>
                             </div>                        
                         })
                         :

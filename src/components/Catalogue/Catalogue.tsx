@@ -25,60 +25,37 @@ const Catalogue: React.FC<UserData & EditData> = (props) => {
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     const {user, setUser} = useContext<any | UserCredential | User >(UserContext);
-    const {filteredTitle, setFilteredTitle} = useContext<Array<IProduct> | any>(FilterContext);
+    const {filteredTitle, setFilteredTitle} = useContext<Array<IProduct> | Array<[]> | any>(FilterContext);
     const navigate = useNavigate();
     const {toggleFavs} = useContext<any>(FavsContext);
     const [search, setSearch] = useState<string>('');
     
     const currentSearch = window.location.search.slice(3);
 
-    let currentProducts: Array<IProduct>;
+    let currentProducts: Array<IProduct> = catalogue;
     
-    if(window.location.search && catalogue?.length > 0){
-            let filteredResult = catalogue.filter((i: IProduct) => {
-            let require = i?.title.toLowerCase();
-            if(require.includes(currentSearch.toLowerCase())) {
-                return i; 
-            }
-        })
-        setFilteredTitle(filteredResult); 
-    }
-
-
     // filteredTitle.length > 0 ? currentProducts = filteredTitle 
     //         : selectedCategory.length > 0 ?  currentProducts = selectedCategory 
     //         : currentProducts = catalogue;
-
-
 
 
 useEffect(() => {
     setLoading(false);
 }, [])
 
-    
-// if(currentSearch && catalogue?.length > 0){
-//     let filteredResult = catalogue.filter((i: IProduct) => {
-//         let require = i?.title.toLowerCase();
-//         if(require.includes(currentSearch.toLowerCase())) {
-//             return i; 
-//         }
-//     })
-//     setFilteredTitle(filteredResult); 
-// }
-    
 
+
+if(catalogue){
     if(filteredTitle?.length > 0){
         currentProducts = filteredTitle;
-}else{
-    if(selectedCategory?.length > 0){
+    }if(selectedCategory?.length > 0){
         currentProducts = selectedCategory;
-    }else{
+    }if(filteredTitle?.length === 0 && selectedCategory?.length === 0){
         currentProducts = catalogue;
     }
 }
-
 console.log(currentProducts)
+
     
     const getCategory = (cat: string) =>{
         const filteredResult: Array<IProduct> = catalogue.filter((item: { category: string}, i: string) => {

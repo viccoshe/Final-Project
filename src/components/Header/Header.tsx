@@ -9,10 +9,14 @@ import style from "./Header.module.css";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utiles/routes";
 import SearchBar from "./SearchBar/SearchBar";
+import { useContext}  from "react";
+import { IProduct } from "../../utiles/UserContext";
+import { FilterContext } from "../../utiles/CatalogueContext";
 
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
+    const {filteredTitle, setFilteredTitle} = useContext<Array<IProduct> | Array<[]> | any>(FilterContext);
 
     return (
         <header className={style.header}>

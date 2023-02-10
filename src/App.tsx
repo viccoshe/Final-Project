@@ -6,7 +6,7 @@ import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import Cart from './components/Cart/Cart';
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { Route, Routes, Link, useNavigate, useLocation } from "react-router-dom";
 import { routes } from './utiles/routes';
 import { CatalogueContext } from './utiles/CatalogueContext';
 import { IProduct, UserContext } from './utiles/UserContext';
@@ -27,39 +27,40 @@ function App() {
   
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
-  const [filteredTitle, setFilteredTitle] = useState<Array<IProduct> | any>([])
+  const [filteredTitle, setFilteredTitle] = useState<Array<IProduct> | Array<[]> | any>([])
   const navigate = useNavigate();
 
   const currentSearch = window.location.search.slice(3);
 
-  useEffect(() => {
-  if(window.location.search){
-    navigate("/catalogue" +  "/" + window.location.search);
-  }
-}, filteredTitle);
+const location = useLocation();
+console.log(location)
 
+let filteredResult: Array<any | []> = [];
+
+useEffect(() => {   
+        if(window.location.search && catalogue?.length > 0){
+          navigate("/catalogue");
+            filteredResult = catalogue.filter((i: IProduct) => {
+            let require = i?.title.toLowerCase();
+            if(require.includes(currentSearch.toLowerCase())) {
+                return i; 
+            }
+        })
+    
+    //navigate("/catalogue" +  "/" + window.location.search)
+    setFilteredTitle(filteredResult); 
+    }
+  })
+    
 
   // useEffect(() => {
   //     navigate("/catalogue" +  "/" + window.location.search)
   // }, filteredTitle)
 
 
-//   if(window.location.search && catalogue.length > 0){
-//       let filteredResult = catalogue.filter((i: IProduct) => {
-//       let require = i?.title.toLowerCase();
-//         if(require.includes(currentSearch.toLowerCase())) {
-//             return i; 
-//         }
-//       })
-//     setFilteredTitle(filteredResult); 
-//     navigate("/catalogue" +  "/" + window.location.search);
-// }
-
-
- 
     let currentUser: any;
     const dbRef = ref(database);
-    if(!user ??  user === null){
+    if(!user ??  user === null ?? user?.cart?.length === 0 ?? user?.favProducts?.length === 0){
         onAuthStateChanged(auth, (newUser) => {
             if(newUser) {
                 currentUser = {
@@ -115,6 +116,7 @@ async function getNewUserData(currentUser: IUser){
   }
 
   async function editUserData(id: string,  name: string | null,  product: IProduct) {
+    let initialPrice: number | string = product?.price;
     if(id){
         const response = await get(child(ref(database), 'mystore/'+ id));
         if(response.exists()) {
@@ -128,6 +130,7 @@ async function getNewUserData(currentUser: IUser){
               oldCart?.cart.map((item: IProduct) => {
                 if(item?.id === product.id){
                   item.counter += 1;
+                  item.price += initialPrice;
                   oldCart.cart = [...oldCart.cart];
                 }
               })
@@ -222,16 +225,25 @@ async function getNewUserData(currentUser: IUser){
 
 
 const removeOneQuantity = (id: string): Array<IProduct> | null => {
+
+  let initialPrice: number | string | any;
+
+  catalogue?.map((item: IProduct) => {
+    if(item?.id === id){
+      initialPrice = item?.price;
+    }
+  })
+
     if(user){
-        let updatedCart = [];
-        console.log(user.cart);
-        if (user.cart?.length > 0 ?? false ) {
+        console.log(user?.cart);
+        if (user?.cart?.length > 0 ?? false ) {
         user?.cart.map((item: IProduct) => {
                 if(item.id === id){
                     if(item.counter <= 1){
                         deleteFromCart(id); 
                     }else{
                       item.counter -= 1;
+                      item.price -= initialPrice;
                     }
                 }
             })
