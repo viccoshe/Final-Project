@@ -105,7 +105,7 @@ const Cart:React.FC<UserData & EditData> = (props) => {
                         user?.cart.map((item: IProduct, i: string) =>{
                             const {id, title, price, description: desc, category: cat, image, counter: count} = item;
                             return <div className={style.orderItem}>
-                                <div>
+                                <div key={id}>
                                     <div className={style.orderTitle}>{title}</div>
                                     <div className={style.orderDesc}></div>
                                     <div>x {count}</div>

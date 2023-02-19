@@ -14,12 +14,12 @@
   display: block;
   letter-spacing: 0.1px;
   color: #FCFFF5;
-  padding-right: 4%;
+  padding-right: 122px;
 }
 .header .nav ul {
   display: flex;
   justify-content: end;
-  width: 94%;
+  width: 260px;
 }
 .header .nav ul a {
   text-decoration: none;
@@ -40,9 +40,9 @@
 }
 .header .header_buttons {
   display: flex;
-  min-width: 0%;
+  min-width: 325px;
   max-height: 100%;
-  padding-right: 9%;
+  padding-right: 156px;
 }
 .header .header_buttons .icon {
   width: 24px;
@@ -53,28 +53,43 @@
 }
 .header .header_buttons .icon:not(:last-child) {
   margin-right: 24px;
+}
+.header .header_buttons form {
+  margin-right: 24px;
+}
+.header .header_buttons form input {
+  border: 1px solid #463c3b;
+  border-radius: 4px;
+  padding: 1px;
+  padding-left: 4px;
+}
+.header .header_buttons form input:hover {
+  background-color: #e8e1e0;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease-out;
+}
+.header .header_buttons form button {
+  border: none;
+  padding: 3px;
+  border-radius: 0 4px 4px 0;
+  background-color: rgba(152, 129, 126, 0.9960784314);
+  color: #ffffff;
+}
+.header .header_buttons form button:hover {
+  background-color: rgba(126, 103, 100, 0.9411764706);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.5s ease-out;
+  color: #ffffff;
+  cursor: pointer;
+}
+.header .header_buttons form button:active {
+  border: none;
+  color: #ffffff;
+}
+.header .header_buttons .search {
+  background-color: blueviolet;
+  width: 100%;
+  height: 24px;
 }/*# sourceMappingURL=Header.module.css.map */
-
-
-@media screen and (max-width: 425px){
-  .header .header_buttons {
-    flex-direction: column;
-    min-height: 60px;
-    max-width: 60px;
-    padding-right: 0;
-  }
-
-  .header .header_buttons .icon{
-    margin: 9px;
-  }
-}
-
-@media screen and (max-width: 376px){
-  .header .nav{
-    width: 105%;
-    padding: 0;
-  }
-}
-
-
-

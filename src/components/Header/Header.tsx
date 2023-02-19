@@ -1,5 +1,5 @@
 //@ts-ignore
-import Profile from "../../img/Group.png";
+import Profile from "../../img/profile-main.svg";
 //@ts-ignore
 import Cart from "../../img/ico-cart.svg";
 //@ts-ignore
@@ -12,11 +12,17 @@ import SearchBar from "./SearchBar/SearchBar";
 import { useContext}  from "react";
 import { IProduct } from "../../utiles/UserContext";
 import { FilterContext } from "../../utiles/CatalogueContext";
+import { useState } from "react";
 
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
     const {filteredTitle, setFilteredTitle} = useContext<Array<IProduct> | Array<[]> | any>(FilterContext);
+    const [toggleSearch, setToggleSearch] = useState<boolean>(false);
+
+    const setToggle = () => {
+        setToggleSearch(true);
+    }
 
     return (
         <header className={style.header}>
@@ -30,8 +36,14 @@ const Header: React.FC = () => {
             </nav>
             <div className={style.header_buttons}>
                 {/* <div className={style.icon}><img src={Search} alt="search" /></div> */}
-                <div className={style.icon}><img src={Search} alt="search" />
-                    <SearchBar/>
+            <div className={style.seacrh} onClick={()=>{setToggleSearch(true)}}>
+                {/* <img src={Search} alt="search" /> */}
+                   
+            <SearchBar toggleS={{toggleSearch}}/>
+             {/* {toggleSearch ?
+                    <SearchBar toggleS={{toggleSearch}}/>
+                : <img src={Search} alt="search" />} */}
+                    
                 </div> 
                 <div className={style.icon}>
                     <Link to={routes.cart}><img src={Cart} alt="cart" /></Link>    

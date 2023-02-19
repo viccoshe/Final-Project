@@ -47,27 +47,9 @@
     }
     .header_buttons{
         display: flex;
-        min-width: 125px;
+        min-width: 325px;
         max-height: 100%;
         padding-right: 156px;
-        // .button {
-        //     border: 0;
-        //     //padding: 16px 56px;
-        //     width: 201px;
-        //     height: 44px;
-        //     color: #494A4A;
-        //     border-radius: 32px;
-        //     width: 150px;
-        //     background: #FFE0DB;
-        //     -webkit-transition: background-color 0.5s ease-out;
-        //     -moz-transition: background-color 0.5s ease-out;
-        //     -o-transition: background-color 0.5s ease-out;
-        //     transition: background-color 0.5s ease-out;
-        //     &:hover{
-        //         background: #e7a99f;
-        //         cursor: pointer;
-        //     }
-        // }
         .icon{
             width: 24px;
             height: 24px;
@@ -77,6 +59,55 @@
            &:not(:last-child) {
             margin-right: 24px;  
             } 
+        }
+        form{
+            margin-right: 24px; 
+            input{
+                border: 1px solid #463c3b;
+                border-radius: 4px;
+                padding: 1px;
+                padding-left: 4px;
+                
+            }
+            input:hover{
+                background-color: #e8e1e0;
+                text-decoration: none;
+                color: inherit;
+                -webkit-transition: background-color 0.3s ease-out;
+                -moz-transition: background-color 0.3s ease-out;
+                -o-transition: background-color 0.3s ease-out;
+                transition: background-color 0.3s ease-out;
+                
+            }
+            button{
+                    border: none;
+                    padding: 3px;
+                    border-radius: 0 4px 4px 0;
+                    background-color: #98817efe; 
+                    color:#ffffff
+                }
+            button:hover{
+                background-color: #7e6764f0;
+                text-decoration: none;
+                color: inherit;
+                -webkit-transition: background-color 0.5s ease-out;
+                -moz-transition: background-color 0.5s ease-out;
+                -o-transition: background-color 0.5s ease-out;
+                transition: background-color 0.5s ease-out;
+                color:#ffffff;
+                cursor: pointer;
+            }
+            button:active{
+                border: none;
+                color:#ffffff
+            }
+        }
+        .search{
+            background-color: blueviolet;
+            width: 100%;
+            height: 24px;
+            
+
         }
     }
 }

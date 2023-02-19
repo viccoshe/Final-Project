@@ -21,9 +21,12 @@ import { FavsContext } from './utiles/FavsContext';
 import Services from './components/Services/Services';
 import { CartContext } from './utiles/cartActions';
 import { FilterContext } from './utiles/CatalogueContext';
+import {products} from "./utiles/data/data";
+
 
 
 function App() {
+  const currentProducts: any = products.data;
   
   const [catalogue, setCatalogue] = useState<Array<IProduct> | any>([]);
   const [user, setUser] = useState<any | UserCredential | User | null>(null);
@@ -52,10 +55,6 @@ useEffect(() => {
     }
   })
     
-
-  // useEffect(() => {
-  //     navigate("/catalogue" +  "/" + window.location.search)
-  // }, filteredTitle)
 
 
     let currentUser: any;
@@ -289,7 +288,9 @@ useEffect(() => {
           }
       }) 
       .then(data => {
-          setCatalogue(data);
+        if(currentProducts){
+          setCatalogue(currentProducts);             
+        }
       })
 }, [])
 

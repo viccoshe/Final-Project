@@ -54,8 +54,6 @@ if(catalogue){
         currentProducts = catalogue;
     }
 }
-console.log(currentProducts)
-
     
     const getCategory = (cat: string) =>{
         const filteredResult: Array<IProduct> = catalogue.filter((item: { category: string}, i: string) => {
@@ -66,7 +64,6 @@ console.log(currentProducts)
         console.log(filteredResult);
         setSelectedCategory(filteredResult);
     }
-
 
    const  getToCart = (id: string | undefined): Array<IProduct> | null => {
         if(user){
@@ -104,10 +101,10 @@ console.log(currentProducts)
                 <h3>Catalogue</h3>
                 <div className={style.cat}>
                     <div onClick={() => {setSelectedCategory([])}} className={style.productCategory}>All</div>
-                    <div onClick={() => {getCategory(`men's clothing`)}} className={style.productCategory}>Men</div>
-                    <div onClick={() => {getCategory(`women's clothing`)}} className={style.productCategory}>Women</div>
-                    <div onClick={() => {getCategory('electronics')}} className={style.productCategory}>Electronics</div>
-                    <div onClick={() => {getCategory('jewelery')}} className={style.productCategory}>Jewelery</div>
+                    <div onClick={() => {getCategory(`living-room`)}} className={style.productCategory}>Living-room</div>
+                    <div onClick={() => {getCategory(`light & mirrors`)}} className={style.productCategory}>Light & mirrors</div>
+                    <div onClick={() => {getCategory('kitchen')}} className={style.productCategory}>Kitchen</div>
+                    <div onClick={() => {getCategory('bedroom')}} className={style.productCategory}>Bedroom</div>
                 </div>
 
                 <div className={style.productsContainer}>
