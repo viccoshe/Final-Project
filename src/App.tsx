@@ -79,7 +79,7 @@ useEffect(() => {
 
 async function getNewUserData(currentUser: IUser){
         await get(child(dbRef, 'mystore/'+ currentUser?.id)).then((snapshot) => {
-            if (snapshot.exists()) {
+            if (snapshot) {
                 console.log(snapshot.val());
                 const dbUser = snapshot.val();
                   if(dbUser?.cart?.length > 0 ?? false){
@@ -118,7 +118,7 @@ async function getNewUserData(currentUser: IUser){
     let initialPrice: number | string = product?.price;
     if(id){
         const response = await get(child(ref(database), 'mystore/'+ id));
-        if(response.exists()) {
+        if(response) {
             console.log(product.id);
             const oldCart = response.val();
             let exists = oldCart?.cart.some((item: IProduct) => {

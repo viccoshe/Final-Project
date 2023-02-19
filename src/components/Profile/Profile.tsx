@@ -41,6 +41,17 @@ const loginViaGoogle = async (e:FormEvent) => {
     e.preventDefault();
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
+    let currentUser: any;
+    if(result){
+            currentUser = {
+                id: result?.user?.uid,
+                name: result?.user?.displayName,
+                favProducts: [],
+                cart: [],
+            }
+        console.log(currentUser);
+        getNewUserData(currentUser)
+    }
     return result;
 }
 
