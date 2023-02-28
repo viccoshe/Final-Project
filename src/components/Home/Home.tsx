@@ -26,8 +26,6 @@ import { get, ref, set, child, push, update, getDatabase, onValue  } from "fireb
 import { database } from "../../utiles";
 import { IProduct } from "../../utiles/UserContext";
 
-
-
 const Home: React.FC = () => {
     const {catalogue, setCatalogue} = useContext<any>(CatalogueContext);
     const {user, setUser} = useContext<any | User | UserCredential>(UserContext);
@@ -55,14 +53,13 @@ const Home: React.FC = () => {
         setSelectedItem(filteredResult);
     }
 
-
     return (
         <div className={style.main}>
             <div className={style.homeContainer}>
                 <div className={style.promo}>
 
-                    <img className={style.promo2} src={Promo1} alt="" />
-                    <img className={style.promo1} src={Promo2} alt="" />
+                    <img className={style.promo2} src={Promo1} alt="chairs" />
+                    <img className={style.promo1} src={Promo2} alt="chairs" />
 
                     <div className={style.content}>
                         <h3>Everything that surrounds us makes us stronger</h3>
@@ -109,13 +106,11 @@ const Home: React.FC = () => {
                     </div>
                     <div className={style.bestsellersPhoto}>
                         <img src={bestsellersPhoto} alt="" />
-                        
-                        <div className={style.itemButton1} onClick={() => {getItem('1')}}></div>
+                        <div className={style.itemButton1} onClick={() => {getItem('10')}}></div>
                         <div className={style.itemButton2} onClick={() => {getItem('2')}}></div>
                         <div className={style.itemButton3} onClick={() => {getItem('3')}}></div>
                         <div className={style.itemButton4} onClick={() => {getItem('4')}}></div>
                         <div className={style.itemButton5} onClick={() => {getItem('5')}}></div>
-                    
                     </div>
                 </div>
 
@@ -130,11 +125,8 @@ const Home: React.FC = () => {
                                 </a>
                             </div>
                         </div>                    
-                    
-
                 </div>
             </div>
-
         </div>
     )
 }

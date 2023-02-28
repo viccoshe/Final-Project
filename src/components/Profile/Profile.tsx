@@ -6,6 +6,8 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import style from "./Profile.module.css";
 //@ts-ignore
 import Exit from "../../img/exit.svg";
+//@ts-ignore
+import ExitHover from "../../img/exitHover.svg";
 import { UserCredential, User } from "firebase/auth";
 import { CatalogueContext } from "../../utiles/CatalogueContext";
 import { IProduct } from "../../utiles/UserContext";
@@ -22,6 +24,9 @@ const Profile: React.FC<GetNewData> = (props) => {
     const [password, setPassword] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
+    const [activeHover, setActiveHover] = useState<boolean>(false);
+
+
 
 const registerEmailAndPass = async (e: FormEvent) => {
     e.preventDefault();
@@ -54,6 +59,10 @@ const loginViaGoogle = async (e:FormEvent) => {
     }
     return result;
 }
+
+// const registerNewUser = async () => {
+
+// }
 
 const logOut = async (e:FormEvent) => {
     e.preventDefault();
@@ -131,9 +140,21 @@ if (loading) {
             <div className={style.profileContainer}>
                 <div className={style.profileHeader}>
                     <div className={style.avatarContainer}>
-                        <div className={style.profileAvatar}>{user ? user?.name?.slice(0, 1) : null}</div>
+                        <div className={style.profileAvatar}>{user ? user?.name?.slice(0, 1) : null}</div>  
                         <p>Good afternoon,<br/><span>{user ? user?.name : ' guest'}</span></p>
-                        <div className={style.logout} onClick={(e: MouseEvent) =>{logOut(e)}}><img src={Exit} alt="Exit" /></div>
+                        {activeHover ?
+                            <div className={style.logout} 
+                                onMouseEnter={() => setActiveHover(!activeHover)} 
+                                onMouseLeave={() => setActiveHover(!activeHover)}
+                                onClick={(e: MouseEvent) =>{logOut(e)}}>
+                                    <img src={ExitHover} alt="Exit" /></div>
+                            : <div className={style.logout} 
+                                    onMouseEnter={() => setActiveHover(!activeHover)}
+                                    onMouseLeave={() => setActiveHover(!activeHover)} 
+                                    onClick={(e: MouseEvent) =>{logOut(e)}}>
+                                        <img src={Exit} alt="Exit" /></div>
+                        }
+                        
                     </div>
                     <ul className={style.settings}>
                         <a href="#href"><li>My purchases</li></a>

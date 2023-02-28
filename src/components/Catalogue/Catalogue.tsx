@@ -102,7 +102,7 @@ if(catalogue){
                 <div className={style.cat}>
                     <div onClick={() => {setSelectedCategory([])}} className={style.productCategory}>All</div>
                     <div onClick={() => {getCategory(`living-room`)}} className={style.productCategory}>Living-room</div>
-                    <div onClick={() => {getCategory(`light & mirrors`)}} className={style.productCategory}>Light & mirrors</div>
+                    <div onClick={() => {getCategory(`light & mirrors`)}} className={style.productCategory}>Light & Mirrors</div>
                     <div onClick={() => {getCategory('kitchen')}} className={style.productCategory}>Kitchen</div>
                     <div onClick={() => {getCategory('bedroom')}} className={style.productCategory}>Bedroom</div>
                 </div>
@@ -119,123 +119,9 @@ if(catalogue){
                     : <h3>THERE'S AN ERROR :C</h3>
                     }
                 </div>
-
             </div>
         </main>
     )
 }
 
 export default Catalogue;
-
-/*
-
-                {selectedCategory?.length > 0 
-                    ? selectedCategory?.map((item: IProduct, i: string) => {
-                        return <ProductItem 
-                                    pProduct={item} 
-                                    getToCart={getToCart}/>
-                        })
-                    :  selectedCategory?.length <= 0 && catalogue?.length > 0
-                    
-                    ? catalogue.map((item: IProduct, i: string) => {
-                        console.log(item);
-                        return <ProductItem 
-                                    pProduct={item} 
-                                    getToCart={getToCart}/>
-                    })
-                    : <h3>THERE'S AN ERROR :C</h3>
-                    }
-*/
-
-/*
-{selectedCategory?.length > 0 
-                    ? selectedCategory?.map((item: IProduct, i: string) => {
-                        return <ProductItem 
-                                    pProduct={item} 
-                                    getToCart={getToCart}/>
-                        })
-                    :  selectedCategory?.length <= 0 && catalogue?.length > 0
-                    
-                    ? catalogue.map((item: IProduct, i: string) => {
-                        console.log(item);
-                        return <ProductItem 
-                                    pProduct={item} 
-                                    getToCart={getToCart}/>
-                    })
-                    : <h3>THERE'S AN ERROR :C</h3>
-                    }
-*/
-
-
-/*
-        <main className={style.main}>
-            <div className={style.container}>
-                <h3>Catalogue</h3>
-                <div className={style.cat}>
-                    <div onClick={() => {setSelectedCategory([])}} className={style.productCategory}>All</div>
-                    <div onClick={() => {getCategory(`men's clothing`)}} className={style.productCategory}>Men</div>
-                    <div onClick={() => {getCategory(`women's clothing`)}} className={style.productCategory}>Women</div>
-                    <div onClick={() => {getCategory('electronics')}} className={style.productCategory}>Electronics</div>
-                    <div onClick={() => {getCategory('jewelery')}} className={style.productCategory}>Jewelery</div>
-                </div>
-
-                <div className={style.productsContainer}>
-
-                    {selectedCategory.length > 0 
-                    
-                    ? selectedCategory.map((item: IProduct, i: string) => {
-                            console.log(item);
-                            const {id, title, price, description: desc, category: cat, image} = item;
-                            return <div key={id} className={style.productItem}> 
-                                <div className={style.img}>
-                                    <div className={style.productCat}>{cat}</div>
-                                    <Link to={`product/:${id}`}>
-                                        <div className={style.img}><img src={image} alt="product"/></div>
-                                    </Link>
-                                    
-                                </div>
-                                <div className={style.productInfo}>
-                                    <Link to={`product/:${id}`}><h5>{title}</h5></Link>
-                                    <p className={style.productDesc}>{desc}</p>
-                                    <p className={style.productPrice}>{price} $</p> 
-                                    <div className={style.buttons}>
-                                        <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
-                                        <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
-                                </div>
-                            </div> 
-                            
-                        </div>
-                        })
-                    :  selectedCategory?.length <= 0 && catalogue?.length > 0
-                    
-                    ? catalogue.map((item: {id: string, title: string, price: string, description: string, category: string, image: string}, i: string) => {
-                        console.log(item);
-                        const {id, title, price, description: desc, category: cat, image} = item;
-                        return <div key={id} className={style.productItem}> 
-                            <div className={style.img}>
-                                <div className={style.productCat}>{cat}</div>
-                                <Link to={`product/:${id}`}>
-                                    <div className={style.img}><img src={image} alt="product"/></div>
-                                </Link>     
-                            </div>
-                            <div className={style.productInfo}>
-                                <Link to={`product/:${id}`}><h5>{title}</h5></Link>
-                                <p className={style.productDesc}>{desc}</p>
-                                <p className={style.productPrice}>{price} $</p> 
-                                <div className={style.buttons}>
-                                    <button className={style.button} onClick={() =>{getToCart(id)}}>Add</button>
-                                    <div onClick={() =>{toggleFavs(id)}}><img src={user?.favProducts?.some((i: IProduct) => {return i.id === id}) ? RedLike : BrownLike} alt="like" /></div>
-                                </div>
-                        </div>
-                     <Outlet/>
-                    </div>
-                    
-                    })
-                    : <h3>THERE'S AN ERROR :C</h3>
-                    }
-                </div>
-
-            </div>
-        </main>
-
-*/

@@ -49,22 +49,22 @@ useEffect(() => {
                 return i; 
             }
         })
-    
-    //navigate("/catalogue" +  "/" + window.location.search)
     setFilteredTitle(filteredResult); 
     }
   })
+
+  const dbRef = ref(database);
     
 
-
+  useEffect(() => {
     let currentUser: any;
-    const dbRef = ref(database);
+    //const dbRef = ref(database);
     if(!user ??  user === null ?? user?.cart?.length === 0 ?? user?.favProducts?.length === 0){
         onAuthStateChanged(auth, (newUser) => {
             if(newUser) {
                 currentUser = {
-                    id: newUser.uid,
-                    name: newUser.displayName,
+                    id: newUser?.uid,
+                    name: newUser?.displayName,
                     favProducts: [],
                     cart: [],
                 }
@@ -76,6 +76,7 @@ useEffect(() => {
             }
         });
 }  
+});
 
 async function getNewUserData(currentUser: IUser){
         await get(child(dbRef, 'mystore/'+ currentUser?.id)).then((snapshot) => {
@@ -293,9 +294,6 @@ useEffect(() => {
         }
       })
 }, [])
-
-
-
 
   return (
     <div className="App">
