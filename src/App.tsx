@@ -158,52 +158,56 @@ async function getNewUserData(currentUser: IUser){
   async function toggleFavs(id: string) {
     const dbRef = ref(database);
     console.log(catalogue);
-    await get(child(dbRef, 'mystore/'+ user.id)).then((snapshot) => {
-      if (snapshot.exists()) {
-            const data = snapshot.val();
-            const theFav = catalogue?.find((i: IProduct) => {
-                return i.id === id
-            })
-            let updatedData= {};
-            if(data?.favProducts?.length === undefined ?? false){
-                updatedData = {
-                    ...data,
-
-                    favProducts: [theFav],
-                }
-            }else{
-                if(data?.favProducts.some((i: IProduct) => {return i.id === id})){
+    if(user){
+          await get(child(dbRef, 'mystore/'+ user.id)).then((snapshot) => {
+          if (snapshot.exists()) {
+                const data = snapshot.val();
+                const theFav = catalogue?.find((i: IProduct) => {
+                    return i.id === id
+                })
+                let updatedData= {};
+                if(data?.favProducts?.length === undefined ?? false){
                     updatedData = {
                         ...data,
 
-                        favProducts: data?.favProducts.filter((i: IProduct) => {return i.id !== id}),
+                        favProducts: [theFav],
                     }
                 }else{
-                    updatedData = {
-                        ...data,
+                    if(data?.favProducts.some((i: IProduct) => {return i.id === id})){
+                        updatedData = {
+                            ...data,
 
-                        favProducts: [...data?.favProducts, theFav],
+                            favProducts: data?.favProducts.filter((i: IProduct) => {return i.id !== id}),
+                        }
+                    }else{
+                        updatedData = {
+                            ...data,
+
+                            favProducts: [...data?.favProducts, theFav],
+                        }
                     }
                 }
-            }
-            console.log(updatedData);
-            const updates = {};
-            //@ts-ignore
-            updates['mystore/' + user.id] = updatedData;
-            update(ref(database), updates);
-            let uUser = {
-                ...updatedData,
-                id: user.id
-            }
-            setUser(uUser);
-      }else{
-         console.log('no data available');
-      }
-  }).catch((error) => {
-      console.log(error);
-   })
+                console.log(updatedData);
+                const updates = {};
+                //@ts-ignore
+                updates['mystore/' + user.id] = updatedData;
+                update(ref(database), updates);
+                let uUser = {
+                    ...updatedData,
+                    id: user.id
+                }
+                setUser(uUser);
+          }else{
+            console.log('no data available');
+          }
+      }).catch((error) => {
+          console.log(error);
+      })
+    }else{
+      alert('Sign in to continue');
+      navigate("/profile");
+    }
   }
-
 
   const getToCart = (id: string): Array<IProduct> | null => {
     if(user.cart){
@@ -223,11 +227,8 @@ async function getNewUserData(currentUser: IUser){
     return user.cart;
 }
 
-
 const removeOneQuantity = (id: string): Array<IProduct> | null => {
-
   let initialPrice: number | string | any;
-
   catalogue?.map((item: IProduct) => {
     if(item?.id === id){
       initialPrice = item?.price;
@@ -282,7 +283,7 @@ const deleteFromCart = (id: string): Array<IProduct> | null => {
 
 
 useEffect(() => {
-  fetch('https://fakestoreapi.com/products')
+  fetch('https://fakestoreapi.com/products') //API could be used here
       .then (response => {
           if (response.ok) {
               return response.json();
@@ -306,7 +307,6 @@ useEffect(() => {
                 <Routes>
               <Route path={routes.home} element={<Home/>}/>
               <Route path={routes.catalogue} element={<Catalogue editUserData={editUserData} writeUserData={writeUserData}/>}>
-                {/* <Route index={true} path={routes.product} element={<Product/>}/> */}
                 </Route>
                 <Route path={"catalogue/product/:id"} element={<Product/>}/>
                 <Route path={routes.cart} element={<Cart editUserData={editUserData} writeUserData={writeUserData}/>}/>

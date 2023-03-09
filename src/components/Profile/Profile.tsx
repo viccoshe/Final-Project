@@ -1,6 +1,6 @@
 import { FormEvent, MouseEvent, useEffect, useState, useContext} from "react";
 import { UserContext } from "../../utiles/UserContext";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 //@ts-ignore
 import style from "./Profile.module.css";
@@ -30,16 +30,48 @@ const Profile: React.FC<GetNewData> = (props) => {
 
 const registerEmailAndPass = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(email, password);
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    return setUser(result);
+    const auth = getAuth();
+    let result = await createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential: UserCredential) => {
+        let currentUser: any;
+        console.log(userCredential)
+        if(userCredential){        
+            const user = userCredential.user;
+
+                currentUser = {
+                    id: user?.uid,
+                    name: user?.displayName,
+                    favProducts: [],
+                    cart: [],
+                }
+            console.log(currentUser);
+            getNewUserData(currentUser)
+        }
+        return currentUser;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert('Your password is weak / Email is not valid: try again');
+      });
 }
 
 const loginEmailAndPass = async (e: FormEvent) => {
     e.preventDefault();
     console.log(email, password);
     const result = await signInWithEmailAndPassword(auth, email, password);
-    return  setUser(result);
+    let currentUser: any;
+    if(result){
+            currentUser = {
+                id: result?.user?.uid,
+                name: result?.user?.displayName,
+                favProducts: [],
+                cart: [],
+            }
+        console.log(currentUser);
+        getNewUserData(currentUser)
+    }
+    return result;
 }
 
 const loginViaGoogle = async (e:FormEvent) => {
@@ -59,10 +91,6 @@ const loginViaGoogle = async (e:FormEvent) => {
     }
     return result;
 }
-
-// const registerNewUser = async () => {
-
-// }
 
 const logOut = async (e:FormEvent) => {
     e.preventDefault();

@@ -18,6 +18,7 @@ import { FavsContext } from "../../utiles/FavsContext";
 import ProductItem from "./ProductItem.tsx/ProductsItem";
 import { getProductToCart } from "../../utiles/cartActions";
 import { PropsProduct } from "../../utiles/UserContext";
+import { routes } from "../../utiles/routes";
 
 const Catalogue: React.FC<UserData & EditData> = (props) => {
     const {writeUserData, editUserData} = props;
@@ -79,7 +80,7 @@ if(catalogue){
             }      
         }else{
             alert('Sign in to continue');
-            //navigate(routes.profile);
+            navigate("/profile");
         }
         return user.cart;
     }
