@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 800px;
     .formContainer{
         min-width: 50%;
         width: 100px;
@@ -102,10 +103,11 @@
     }
     .profileContainer {
         max-width: 560px;
-        width: 100%;
+        //width: 100%;
         max-height: 580px;
         height: 100%;
         margin: 0 15em 0;
+
         .profileAvatar{
             width: 70px;
             height: 70px;
@@ -184,6 +186,8 @@
 
         .stock {
             display: flex;
+            height: 100%;
+            width: 100%;
 
             .stockItem {
                 text-align: center;

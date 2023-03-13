@@ -58,8 +58,8 @@ const Home: React.FC = () => {
             <div className={style.homeContainer}>
                 <div className={style.promo}>
 
-                    <img className={style.promo2} src={Promo1} alt="chairs" />
-                    <img className={style.promo1} src={Promo2} alt="chairs" />
+                    <img className={style.promo2} src={Promo1}/>
+                    <img className={style.promo1} src={Promo2}/>
 
                     <div className={style.content}>
                         <h3>Everything that surrounds us makes us stronger</h3>

@@ -112,7 +112,7 @@ if(catalogue){
 
                 {currentProducts?.length > 0 
                     ? currentProducts?.map((item: IProduct) => {
-                        return <ProductItem 
+                        return <ProductItem key={item?.id}
                                     pProduct={item} 
                                     getToCart={getToCart}/>
                         })

@@ -139,7 +139,6 @@ if (loading) {
             alignItems: 'center'}}>
            <div><Loader/></div> 
         </main>
-        
     )
 }else return !user?.id  ? (
         <main className={style.main}>
