@@ -14,7 +14,7 @@ A user can add/remove different amount of products to "Favourits" and "Cart", tr
 :star: **API** *(able to use API instead of given data)*
 
 ### Home Page
-<img src="![image](https://github.com/viccoshe/Final-Project/assets/109619263/326a0477-2fe8-4e9f-920c-e32b1eb1d81e)"><img>
+![image](https://github.com/viccoshe/Final-Project/assets/109619263/326a0477-2fe8-4e9f-920c-e32b1eb1d81e)
 
 
 
