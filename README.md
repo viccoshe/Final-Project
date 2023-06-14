@@ -6,6 +6,8 @@ A user can add/remove different amount of products to "Favourits" and "Cart", tr
 
 The website was created to raise the level of my personal skills and have fun :hand_over_mouth:. 
 
+🍀[Tap here to deploy](https://wooden-furniture-d32f1.firebaseapp.com/)  
+
 ## Tools
 :star:  **Typescript**
 
