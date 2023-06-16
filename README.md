@@ -15,7 +15,7 @@ The website was created to raise the level of my personal skills and have fun :h
 
 :star: **Firebase: Authentication** *(Ability to login with Google and password / login)*
 
-:star: **API** *(able to use API instead of given data)*
+:star: **API** *(able to use API instead of the given data)*
 
 ### Home Page
 ![image](https://github.com/viccoshe/Final-Project/assets/109619263/326a0477-2fe8-4e9f-920c-e32b1eb1d81e)
