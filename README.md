@@ -1,4 +1,4 @@
-# React Online Furniture E-commerce Website
+# React Furniture E-commerce Website
 
 An online furniture e-commerce store built with React, Typescript. 
 It's got an ability to register / sign in and sign out via Firebase Auth, get and filter the catalogue of products.
